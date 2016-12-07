@@ -40,7 +40,6 @@ public class BroadbandExcelView extends AbstractXlsView {
         Sheet sheet = workbook.createSheet("宽带续费率");
         Row titleRow = sheet.createRow(0);
 
-
         Iterator<ExcelTitle> iExcelTitleList = Common.getBroadbandExcelTitleList().iterator();
         while (iExcelTitleList.hasNext()) {
             ExcelTitle excelTitle = iExcelTitleList.next();
@@ -50,7 +49,7 @@ public class BroadbandExcelView extends AbstractXlsView {
         }
 
         Iterator<Broadband> iBroadbandList = broadbandList.iterator();
-        
+
         int lineNum = 1;
 
         while (iBroadbandList.hasNext()) {
@@ -61,8 +60,12 @@ public class BroadbandExcelView extends AbstractXlsView {
             broadbandRow.createCell(2).setCellValue(broadband.getCustomer() == null ? "" : broadband.getCustomer().getCustomerName());
             broadbandRow.createCell(3).setCellValue(broadband.getCustomer() == null ? "" : broadband.getCustomer().getCustomerTelphone());
             broadbandRow.createCell(4).setCellValue(broadband.getBroadbandSystemType());
-            if (broadband.getCustomer() == null ? false : (broadband.getCustomer().getCustomerQualityVoice() > 200 || broadband.getCustomer().getCustomerQualityData() > 500))
-                broadbandRow.createCell(5).setCellValue("高质用户");
+            try {
+                if (broadband.getCustomer().getCustomerQualityVoice() > 500 || broadband.getCustomer().getCustomerQualityData() > 500)
+                    broadbandRow.createCell(5).setCellValue("高质用户");
+            } catch (Exception e) {
+
+            }
             lineNum++;
 
 
