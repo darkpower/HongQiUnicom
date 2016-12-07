@@ -50,6 +50,7 @@ public class BroadbandExcelView extends AbstractXlsView {
         }
 
         Iterator<Broadband> iBroadbandList = broadbandList.iterator();
+        
         int lineNum = 1;
 
         while (iBroadbandList.hasNext()) {
