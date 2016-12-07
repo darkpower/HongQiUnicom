@@ -1,7 +1,9 @@
 package com.hongqiunicom.crm.common;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author Hongten
@@ -19,6 +21,19 @@ public class Common {
     public static final String STUDENT_INFO_XLSX_PATH = LIB_PATH + "/student_info" + POINT + OFFICE_EXCEL_2010_POSTFIX;
     public static final String NOT_EXCEL_FILE = " : Not the Excel file!";
     public static final String PROCESSING = "Processing...";
+
+
+    public static final List<ExcelTitle> getBroadbandExcelTitleList(){
+        List<ExcelTitle> broadbandExcelTitleList = new ArrayList<ExcelTitle>();
+        broadbandExcelTitleList.add(new ExcelTitle(0, 3800, "宽带账号"));
+        broadbandExcelTitleList.add(new ExcelTitle(1, 2300, "续费状态"));
+        broadbandExcelTitleList.add(new ExcelTitle(2, 2300, "机主姓名"));
+        broadbandExcelTitleList.add(new ExcelTitle(3, 3800, "联系电话"));
+        broadbandExcelTitleList.add(new ExcelTitle(4, 2300, "系统状态"));
+        broadbandExcelTitleList.add(new ExcelTitle(5, 2300, "客户分类"));
+        broadbandExcelTitleList.add(new ExcelTitle(6, 3000, "备注"));
+        return broadbandExcelTitleList;
+    }
 
     public static Date getLastMonthFirstDay() {
         Calendar lastMonthFirstDayCal = Calendar.getInstance();

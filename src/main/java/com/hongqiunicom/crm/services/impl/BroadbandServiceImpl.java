@@ -1,6 +1,7 @@
 package com.hongqiunicom.crm.services.impl;
 
 import com.hongqiunicom.crm.bean.Page;
+import com.hongqiunicom.crm.common.Common;
 import com.hongqiunicom.crm.dao.BroadbandDao;
 import com.hongqiunicom.crm.dao.CustomerDao;
 import com.hongqiunicom.crm.entity.Broadband;
@@ -78,7 +79,6 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
         }
 
     }
-
 
     private List<Broadband> getBroadbandByExcel(File excelFile) {
         List<Broadband> broadbandList = new ArrayList<Broadband>();
@@ -177,6 +177,8 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
         return broadbandList;
     }
 
+
+
     @Override
     public Page<Broadband> getBroadbandPage(Integer pageSize, Integer nowPage) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
@@ -202,65 +204,6 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
     }
 
     @Override
-    public Page<Broadband> getBroadbandPageWithExpireDate(Date firstDay, Date lastDay, Integer pageSize, Integer nowPage) {
-
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("----------------日期范围：" + format.format(firstDay) + "-----------" + format.format(lastDay));
-        DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
-        criteria.add(Restrictions.ge("broadbandExpireDate", firstDay));
-        criteria.add(Restrictions.le("broadbandExpireDate", lastDay));
-        Page<Broadband> page = new Page<Broadband>();
-        page.setOrderBy("broadbandExpireDate");
-        page.setPageSize(pageSize);
-        page.setNowPage(nowPage);
-        return broadbandDao.getPage(criteria, page);
-    }
-
-    @Override
-    public Page<Broadband> getBroadbandPageWithExpireDate(Date firstDay, Date lastDay, String switchOption, Integer pageSize, Integer nowPage) {
-
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        System.out.println("----------------日期范围：" + format.format(firstDay) + "-----------" + format.format(lastDay));
-        DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
-        criteria.add(Restrictions.ge("broadbandExpireDate", firstDay));
-        criteria.add(Restrictions.le("broadbandExpireDate", lastDay));
-        if (!"全部".equals(switchOption))
-            criteria.add(Restrictions.eq("broadbandXuFeiState", switchOption));
-        Page<Broadband> page = new Page<Broadband>();
-        page.setOrderBy("broadbandExpireDate");
-        page.setPageSize(pageSize);
-        page.setNowPage(nowPage);
-        return broadbandDao.getPage(criteria, page);
-    }
-
-    @Override
-    public Integer getAllCount(String switchOption) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
-        if (!"全部".equals(switchOption))
-            criteria.add(Restrictions.eq("broadbandXuFeiState", switchOption));
-        return broadbandDao.getCount(criteria);
-    }
-
-    @Override
-    public Integer getCountWithExpireDate(Date firstDay, Date lastDay) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
-        criteria.add(Restrictions.ge("broadbandExpireDate", firstDay));
-        criteria.add(Restrictions.le("broadbandExpireDate", lastDay));
-        return broadbandDao.getCount(criteria);
-    }
-
-    @Override
-    public Integer getCountWithExpireDate(Date firstDay, Date lastDay, String switchOption) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
-        criteria.add(Restrictions.ge("broadbandExpireDate", firstDay));
-        criteria.add(Restrictions.le("broadbandExpireDate", lastDay));
-        if (!"全部".equals(switchOption))
-            criteria.add(Restrictions.eq("broadbandXuFeiState", switchOption));
-        return broadbandDao.getCount(criteria);
-    }
-
-    @Override
     public Broadband manualUpdate(Broadband broadband) {
         Broadband oBroadband = broadbandDao.get(broadband.getBroadbandId());
         if (oBroadband.getCustomer() == null) {
@@ -283,6 +226,69 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
         oBroadband.setBroadbandXuFeiState(broadband.getBroadbandXuFeiState());
         broadbandDao.update(oBroadband);
         return oBroadband;
+    }
+
+    @Override
+    public Integer getCountsWithOptions(String list, String xuFeiType, String systemType) {
+        return broadbandDao.getCount(this.getCriteriaWithOption(list, xuFeiType, systemType));
+    }
+
+    @Override
+    public Page<Broadband> getBroadbandPageWithOption(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType) {
+
+
+        Page<Broadband> page = new Page<Broadband>();
+        page.setOrderBy("broadbandExpireDate");
+        page.setPageSize(pageSize);
+        page.setNowPage(nowPage);
+        return broadbandDao.getPage(this.getCriteriaWithOption(list, xuFeiType, systemType), page);
+    }
+
+    @Override
+    public List<Broadband> getBroadbandsWithOptions(String list, String xuFeiType, String systemType) {
+        return broadbandDao.list(this.getCriteriaWithOption(list, xuFeiType, systemType));
+    }
+
+    private DetachedCriteria getCriteriaWithOption(String list, String xuFeiType, String systemType) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
+        switch (list) {
+            case "全部宽带续费清单":
+                break;
+            case "次月宽带续费清单":
+                criteria.add(Restrictions.ge("broadbandExpireDate", Common.getLastMonthFirstDay()));
+                criteria.add(Restrictions.le("broadbandExpireDate", Common.getLastMonthLastDay()));
+                break;
+            case "当月宽带续费清单":
+                criteria.add(Restrictions.ge("broadbandExpireDate", Common.getThisMonthFirstDay()));
+                criteria.add(Restrictions.le("broadbandExpireDate", Common.getThisMonthLastDay()));
+                break;
+        }
+
+        switch (xuFeiType) {
+            case "全部":
+                break;
+            case "已续费":
+                criteria.add(Restrictions.eq("broadbandXuFeiState", xuFeiType));
+                break;
+            case "未续费":
+                criteria.add(Restrictions.eq("broadbandXuFeiState", xuFeiType));
+                break;
+            case "有问题":
+                criteria.add(Restrictions.eq("broadbandXuFeiState", xuFeiType));
+                break;
+        }
+
+        switch (systemType) {
+            case "全部":
+                break;
+            case "BSS":
+                criteria.add(Restrictions.eq("broadbandSystemType", systemType));
+                break;
+            case "CBSS":
+                criteria.add(Restrictions.eq("broadbandSystemType", systemType));
+                break;
+        }
+        return criteria;
     }
 
 

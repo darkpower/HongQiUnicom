@@ -61,8 +61,8 @@
                            data-show-preview="false">
                 </div>
                 <div class="col-sm-6 pull-left">
-                    {{@functionOption}}　中　{{@switchOption}}　{{@totalCounts}}　户
-                    <button class="btn btn-primary">导出</button>
+                    {{@option.list}}　中　{{@option.xuFeiType}} 共　{{@totalCounts}}　户
+                    <input id="exportExcelButton" type="submit" class="btn btn-primary" value="导出Excel"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
@@ -108,21 +108,21 @@
             <!-- 右侧导航内容 Start -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
-                <div id="functionList" class="list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" functionOption="全部宽带续费清单">全部宽带续费清单</a>
-                    <a class="list-group-item" functionOption="当月宽带续费清单">当月宽带续费清单</a>
-                    <a class="list-group-item" functionOption="次月宽带续费清单">次月宽带续费清单</a>
+                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                    <a class="list-group-item active" list="全部宽带续费清单">全部宽带续费清单</a>
+                    <a class="list-group-item" list="当月宽带续费清单">当月宽带续费清单</a>
+                    <a class="list-group-item" list="次月宽带续费清单">次月宽带续费清单</a>
                 </div>
-                <div id="switchList" class="list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" switchOption="全部">全部</a>
-                    <a class="list-group-item" switchOption="未续费">未续费</a>
-                    <a class="list-group-item" switchOption="已续费">已续费</a>
-                    <a class="list-group-item" switchOption="有问题">有问题</a>
+                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                    <a class="list-group-item active" xuFeiType="全部">全部</a>
+                    <a class="list-group-item" xuFeiType="未续费">未续费</a>
+                    <a class="list-group-item" xuFeiType="已续费">已续费</a>
+                    <a class="list-group-item" xuFeiType="有问题">有问题</a>
                 </div>
-                <div id="systemList" class="list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" systemOption="全部">全部</a>
-                    <a class="list-group-item" systemOption="BSS">BSS</a>
-                    <a class="list-group-item" systemOption="CBSS">CBSS</a>
+                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                    <a class="list-group-item active" systemType="全部">全部</a>
+                    <a class="list-group-item" systemType="BSS">BSS</a>
+                    <a class="list-group-item" systemType="CBSS">CBSS</a>
                 </div>
                 <div class="list-group">
                     <a href="#" class="list-group-item">当月沃店考核指标导航</a>
@@ -166,9 +166,9 @@
                                 <label for="broadbandXuFeiState" class="col-sm-2 control-label">续费状态</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="broadbandXuFeiState" ms-duplex="@broadband.broadbandXuFeiState">
-                                        <option value="已续费">已续费</option >
-                                        <option value="未续费">未续费</option >
-                                        <option value="有问题">有问题</option >
+                                        <option value="已续费">已续费</option>
+                                        <option value="未续费">未续费</option>
+                                        <option value="有问题">有问题</option>
                                     </select>
                                 </div>
                             </div>
@@ -235,8 +235,9 @@
             type: "post",
             dataType: "json",
             data: {
-                'functionOption': vm.functionOption,
-                'switchOption': vm.switchOption
+                'list': vm.option.list,
+                'xuFeiType': vm.option.xuFeiType,
+                'systemType': vm.option.systemType
             },
             success: function (data) {
                 vm.totalCounts = data;
@@ -283,8 +284,9 @@
             dataType: "json",
             data: {
                 'page': vm.nowPage,
-                'functionOption': vm.functionOption,
-                'switchOption': vm.switchOption
+                'list': vm.option.list,
+                'xuFeiType': vm.option.xuFeiType,
+                'systemType': vm.option.systemType
             },
             success: function (data) {
                 vm.broadbands = [];
@@ -345,8 +347,11 @@
 //        初始化avalon
         var vm = avalon.define({
             $id: "broadband_list",
-            functionOption: "全部宽带续费清单",
-            switchOption: "全部",
+            option: {
+                list: "全部宽带续费清单",
+                xuFeiType: "全部",
+                systemType: "全部"
+            },
             nowPage: 1,
             totalPages: 1,
             totalCounts: 1,
@@ -362,25 +367,19 @@
 
         avalon.scan(document.body);
 
-        $('#functionList a').click(function () {
-            $('#functionList a').removeClass("active");
+        $('.optionSwitch a').click(function () {
+            $(this).nextAll().removeClass("active");
+            $(this).prevAll().removeClass("active");
             $(this).addClass("active");
-            vm.functionOption = $(this).attr("functionOption");
+            vm.option.list = $(this).attr("list") != null ? $(this).attr("list") : vm.option.list;
+            vm.option.xuFeiType = $(this).attr("xuFeiType") != null ? $(this).attr("xuFeiType") : vm.option.xuFeiType;
+            vm.option.systemType = $(this).attr("systemType") != null ? $(this).attr("systemType") : vm.option.systemType;
             vm.nowPage = 1;
             ajaxBroadbandsTotalPages(vm);
             ajaxBroadbands(vm);
         });
 
-        $('#switchList a').click(function () {
-            $("#switchList a").removeClass("active");
-            $(this).addClass("active");
-            vm.switchOption = $(this).attr("switchOption");
-            vm.nowPage = 1;
-            ajaxBroadbandsTotalPages(vm);
-            ajaxBroadbands(vm);
-        });
-
-        $('#saveBroadbandButton').click(function(){
+        $('#saveBroadbandButton').click(function () {
 
 
             $.ajax({
@@ -388,14 +387,21 @@
                 type: "post",
                 contentType: "application/json",
                 dataType: "json",
-                data:  JSON.stringify(vm.broadband),
+                data: JSON.stringify(vm.broadband),
                 success: function (data) {
                     alert("success");
                 },
-                error: function(){
+                error: function () {
                     alert("error");
                 }
             });
+        });
+
+        $('#exportExcelButton').click(function () {
+            $("<form>").attr({
+                "action": "Export",
+                "method": "POST"
+            }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
         });
 
 

@@ -8,10 +8,13 @@ import com.hongqiunicom.crm.entity.Broadband;
 import com.hongqiunicom.crm.entity.Customer;
 import com.hongqiunicom.crm.entity.User;
 import com.hongqiunicom.crm.services.BroadbandService;
+import com.hongqiunicom.crm.web.springmvc.view.BroadbandExcelView;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +22,9 @@ import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Darkpower on 2016/11/17.
@@ -43,37 +48,20 @@ public class XuFeiController {
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
     @ResponseBody
     public Integer page(HttpServletRequest request) {
-        String functionOption = request.getParameter("functionOption");
-        String switchOption = request.getParameter("switchOption");
-        switch (functionOption) {
-            case "全部宽带续费清单":
-                return broadbandService.getAllCount(switchOption);
-            case "次月宽带续费清单":
-                return broadbandService.getCountWithExpireDate(Common.getLastMonthFirstDay(), Common.getLastMonthLastDay(), switchOption);
-            case "当月宽带续费清单":
-                return broadbandService.getCountWithExpireDate(Common.getThisMonthFirstDay(), Common.getThisMonthLastDay(), switchOption);
-            default:
-                return null;
-        }
+        String list = request.getParameter("list");
+        String xuFeiType = request.getParameter("xuFeiType");
+        String systemType = request.getParameter("systemType");
+        return broadbandService.getCountsWithOptions(list, xuFeiType, systemType);
+
     }
 
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     @ResponseBody
     public List<Broadband> list(HttpServletRequest request) {
-        String functionOption = request.getParameter("functionOption");
-        String switchOption = request.getParameter("switchOption");
-
-        switch (functionOption) {
-            case "全部宽带续费清单":
-                return broadbandService.getBroadbandPage(10, Integer.parseInt(request.getParameter("page")), switchOption).getList();
-            case "次月宽带续费清单":
-                return broadbandService.getBroadbandPageWithExpireDate(Common.getLastMonthFirstDay(), Common.getLastMonthLastDay(), switchOption, 10, Integer.parseInt(request.getParameter("page"))).getList();
-            case "当月宽带续费清单":
-                return broadbandService.getBroadbandPageWithExpireDate(Common.getThisMonthFirstDay(), Common.getThisMonthLastDay(), switchOption, 10, Integer.parseInt(request.getParameter("page"))).getList();
-            default:
-                return null;
-
-        }
+        String list = request.getParameter("list");
+        String xuFeiType = request.getParameter("xuFeiType");
+        String systemType = request.getParameter("systemType");
+        return broadbandService.getBroadbandPageWithOption(10, Integer.parseInt(request.getParameter("page")), list, xuFeiType, systemType).getList();
     }
 
     @RequestMapping(value = "/Show", method = RequestMethod.POST)
@@ -123,8 +111,22 @@ public class XuFeiController {
     }
 
     @RequestMapping(value = "/Update", method = RequestMethod.POST)
-    public @ResponseBody Broadband update(@RequestBody Broadband broadband, HttpServletRequest request){
+    @ResponseBody
+    public Broadband update(@RequestBody Broadband broadband, HttpServletRequest request) {
         return broadbandService.manualUpdate(broadband);
     }
 
+
+    @RequestMapping(value = "/Export", method = RequestMethod.POST)
+    public ModelAndView export(ModelMap model, HttpServletRequest request) {
+        String list = request.getParameter("list");
+        String xuFeiType = request.getParameter("xuFeiType");
+        String systemType = request.getParameter("systemType");
+        List<Broadband> broadbandList = broadbandService.getBroadbandsWithOptions(list, xuFeiType, systemType);
+        Map<String, Object> attributesMap = new HashMap<String, Object>();
+        attributesMap.put("list", broadbandList);
+        BroadbandExcelView broadbandExcelView = new BroadbandExcelView();
+        broadbandExcelView.setAttributesMap(attributesMap);
+        return new ModelAndView(broadbandExcelView, model);
+    }
 }
