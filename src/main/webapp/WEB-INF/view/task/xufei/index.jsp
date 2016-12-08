@@ -8,8 +8,6 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-
-
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/lib/bootstrap-fileinput/css/fileinput.css"/>
@@ -68,11 +66,11 @@
                     <table id="vmTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th>宽带账号</th>
+                            <th style="width: 15%">宽带账号</th>
                             <th>当前续费状态</th>
                             <th>当前状态</th>
                             <th>系统标识</th>
-                            <th>联系人</th>
+                            <th style="width: 15%">联系人</th>
                             <th>电话</th>
                             <th>相关操作</th>
                         </tr>
@@ -109,13 +107,13 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" list="全部宽带续费清单">全部宽带续费清单</a>
+                    <a class="list-group-item" list="全部宽带续费清单">全部宽带续费清单</a>
                     <a class="list-group-item" list="当月宽带续费清单">当月宽带续费清单</a>
-                    <a class="list-group-item" list="次月宽带续费清单">次月宽带续费清单</a>
+                    <a class="list-group-item active" list="次月宽带续费清单">次月宽带续费清单</a>
                 </div>
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" xuFeiType="全部">全部</a>
-                    <a class="list-group-item" xuFeiType="未续费">未续费</a>
+                    <a class="list-group-item" xuFeiType="全部">全部</a>
+                    <a class="list-group-item active" xuFeiType="未续费">未续费</a>
                     <a class="list-group-item" xuFeiType="已续费">已续费</a>
                     <a class="list-group-item" xuFeiType="有问题">有问题</a>
                 </div>
@@ -348,8 +346,8 @@
         var vm = avalon.define({
             $id: "broadband_list",
             option: {
-                list: "全部宽带续费清单",
-                xuFeiType: "全部",
+                list: "次月宽带续费清单",
+                xuFeiType: "未续费",
                 systemType: "全部"
             },
             nowPage: 1,

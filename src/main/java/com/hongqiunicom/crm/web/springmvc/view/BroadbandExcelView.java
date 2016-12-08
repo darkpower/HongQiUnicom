@@ -57,12 +57,13 @@ public class BroadbandExcelView extends AbstractXlsView {
             Row broadbandRow = sheet.createRow(lineNum);
             broadbandRow.createCell(0).setCellValue(broadband.getBroadbandAccount());
             broadbandRow.createCell(1).setCellValue(broadband.getBroadbandXuFeiState());
-            broadbandRow.createCell(2).setCellValue(broadband.getCustomer() == null ? "" : broadband.getCustomer().getCustomerName());
-            broadbandRow.createCell(3).setCellValue(broadband.getCustomer() == null ? "" : broadband.getCustomer().getCustomerTelphone());
-            broadbandRow.createCell(4).setCellValue(broadband.getBroadbandSystemType());
+            broadbandRow.createCell(2).setCellValue(broadband.getBroadbandState());
+            broadbandRow.createCell(3).setCellValue(broadband.getCustomer() == null ? "" : broadband.getCustomer().getCustomerName());
+            broadbandRow.createCell(4).setCellValue(broadband.getCustomer() == null ? "" : broadband.getCustomer().getCustomerTelphone());
+            broadbandRow.createCell(5).setCellValue(broadband.getBroadbandSystemType());
             try {
                 if (broadband.getCustomer().getCustomerQualityVoice() > 500 || broadband.getCustomer().getCustomerQualityData() > 500)
-                    broadbandRow.createCell(5).setCellValue("高质用户");
+                    broadbandRow.createCell(6).setCellValue("高质用户");
             } catch (Exception e) {
 
             }

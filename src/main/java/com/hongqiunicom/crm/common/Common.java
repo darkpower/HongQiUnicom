@@ -27,11 +27,12 @@ public class Common {
         List<ExcelTitle> broadbandExcelTitleList = new ArrayList<ExcelTitle>();
         broadbandExcelTitleList.add(new ExcelTitle(0, 3800, "宽带账号"));
         broadbandExcelTitleList.add(new ExcelTitle(1, 2300, "续费状态"));
-        broadbandExcelTitleList.add(new ExcelTitle(2, 2300, "机主姓名"));
-        broadbandExcelTitleList.add(new ExcelTitle(3, 3800, "联系电话"));
-        broadbandExcelTitleList.add(new ExcelTitle(4, 2300, "系统状态"));
-        broadbandExcelTitleList.add(new ExcelTitle(5, 2300, "客户分类"));
-        broadbandExcelTitleList.add(new ExcelTitle(6, 3000, "备注"));
+        broadbandExcelTitleList.add(new ExcelTitle(2, 2300, "宽带状态"));
+        broadbandExcelTitleList.add(new ExcelTitle(3, 2300, "机主姓名"));
+        broadbandExcelTitleList.add(new ExcelTitle(4, 3800, "联系电话"));
+        broadbandExcelTitleList.add(new ExcelTitle(5, 2300, "系统状态"));
+        broadbandExcelTitleList.add(new ExcelTitle(6, 2300, "客户分类"));
+        broadbandExcelTitleList.add(new ExcelTitle(7, 3000, "备注"));
         return broadbandExcelTitleList;
     }
 
