@@ -10,9 +10,9 @@
     <link rel="icon" href="../../favicon.ico">
 
 
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="/css/global.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="/lib/css/global.css"/>
 </head>
 <body>
 <!-- <body ms-controller="test"> -->
@@ -57,120 +57,144 @@
     <div class="content">
 
 
-        <div class="row row-offcanvas row-offcanvas-right">
+        <div class="row row-offcanvas row-offcanvas-right" ms-controller="woTask">
             <div class="col-xs-12 col-sm-9">
                 <p class="pull-right visible-xs">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
                 </p>
                 <div class="jumbotron">
-                    <h1>宽带续费率 80%!!!</h1>
+                    <h1>宽带续费率 83%!!!</h1>
                     <p>做为每月沃店考核第一攻坚内容，续费率，做为首要任务！</p>
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-lg-4">
                         <h2>新装率100%！</h2>
                         <p>
-                            总任务数：100  <br />
-                            任务需求：100  <br />
-                            目前完成：105  <br />
-                            还差数量：-5   <br />
+                            总任务数：% <br/>
+                            任务需求：% <br/>
+                            目前完成：% <br/>
+                            还差数量：% <br/>
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
-                        <h2>续费率80%！</h2>
+                        <h2>续费率83%！</h2>
                         <p>
-                            总任务数：300  <br />
-                            任务需求：240  <br />
-                            目前完成：220  <br />
-                            还差数量：20   <br />
+                            总任务数：{{@task.xuFei.allCounts }} <br/>
+                            任务需求：{{Math.ceil(@task.xuFei.allCounts * 0.83)}}<br/>
+                            目前完成：{{@task.xuFei.yiXuFeiCounts }}<br/>
+                            还差数量：{{Math.ceil(@task.xuFei.allCounts * 0.83) - @task.xuFei.yiXuFeiCounts}}<br/>
                         </p>
                         <p><a class="btn btn-default" href="/Task/XuFei/" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
                         <h2>续约率50%！</h2>
                         <p>
-                            总任务数：150  <br />
-                            任务需求：75  <br />
-                            目前完成：70  <br />
-                            还差数量：5   <br />
+                            总任务数：% <br/>
+                            任务需求：% <br/>
+                            目前完成：% <br/>
+                            还差数量：% <br/>
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
                         <h2>登网率30%！</h2>
                         <p>
-                            总任务数：100  <br />
-                            任务需求：30  <br />
-                            目前完成：15  <br />
-                            还差数量：15   <br />
+                            总任务数：% <br/>
+                            任务需求：% <br/>
+                            目前完成：% <br/>
+                            还差数量：% <br/>
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
                         <h2>欠费回收98.5%！</h2>
                         <p>
-                            总任务数：180000  <br />
-                            任务需求：177300  <br />
-                            目前完成：170000  <br />
-                            还差数量：7300   <br />
+                            总任务数：% <br/>
+                            任务需求：% <br/>
+                            目前完成：% <br/>
+                            还差数量：% <br/>
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
                         <h2>移动业务100%！</h2>
                         <p>
-                            总任务数：90  <br />
-                            任务需求：90  <br />
-                            目前完成：80  <br />
-                            还差数量：10   <br />
+                            总任务数：% <br/>
+                            任务需求：% <br/>
+                            目前完成：% <br/>
+                            还差数量：% <br/>
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                </div><!--/row-->
-            </div><!--/.col-xs-12.col-sm-9-->
+                    </div>
+                </div>
+            </div>
 
+
+            <!--  沃店考核指标导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
-                    <a href="#" class="list-group-item">Link</a>
+                    <a href="#" class="list-group-item active">当月沃店考核指标导航</a>
+                    <a href="#" class="list-group-item">当月宽带新装率</a>
+                    <a href="/Task/XuFei/" class="list-group-item">次月宽带续费率</a>
+                    <a href="#" class="list-group-item">当月宽带融合率</a>
+                    <a href="#" class="list-group-item">当月终端发展率</a>
+                    <a href="#" class="list-group-item">次月合约续约率</a>
+                    <a href="#" class="list-group-item">当月移动业务发展率</a>
+                    <a href="#" class="list-group-item">当月移动业务登网率</a>
+                    <a href="#" class="list-group-item">次月固网欠费回收率</a>
                 </div>
-            </div><!--/.sidebar-offcanvas-->
+            </div>
+            <!--  沃店考核指标导航 End  -->
+
+
         </div><!--/row-->
 
     </div>
     <!-- 内容 End -->
 
 
-
-
-
 </div>
-
 
 
 <!-- javascript -->
 
 <script src="/lib/jquery/jquery.min.js"></script>
-<script src="/lib/bootsrtap/js/bootstrap.min.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="/lib/avalon2/avalon.js"></script>
 <script>
-    var vm = avalon.define({
-        $id: "test",
-        name: "司徒正美",
-        array: [11,22,33]
-    })
-    setTimeout(function(){
-        vm.array.set(0, 444)
-    }, 3000)
+
+    function getCountsAjax(vm) {
+        $.ajax({
+            url: "/Task/Counts",
+            type: "post",
+            dataType: "json",
+            success: function (data) {
+                vm.task.xuFei.allCounts = data[0];
+                vm.task.xuFei.yiXuFeiCounts = data[1];
+            }
+        });
+    }
+
+
+    $(function () {
+
+        //        初始化avalon
+        var vm = avalon.define({
+            $id: "woTask",
+            test: "sss",
+            task: {
+                xuFei: {
+                    allCounts: 0,
+                    yiXuFeiCounts: 0
+                }
+            }
+        });
+
+        getCountsAjax(vm);
+
+        avalon.scan(document.body);
+    });
 </script>
 
 </body>
