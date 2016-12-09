@@ -15,13 +15,7 @@
     <link rel="stylesheet" href="/lib/css/global.css"/>
 </head>
 <body>
-<!-- <body ms-controller="test"> -->
-<!--         <input ms-duplex="@name">
-        <p>Hello,{{@name}}!</p>
-        <ul>
-           <li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>
-        </ul>
-    -->
+
 <div class="container">
 
     <!-- 导航栏 Start -->

@@ -115,6 +115,7 @@
                     <a class="list-group-item" xuFeiType="全部">全部</a>
                     <a class="list-group-item active" xuFeiType="未续费">未续费</a>
                     <a class="list-group-item" xuFeiType="已续费">已续费</a>
+                    <a class="list-group-item" xuFeiType="已销号">已销号</a>
                     <a class="list-group-item" xuFeiType="有问题">有问题</a>
                 </div>
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
@@ -167,6 +168,7 @@
                                         <option value="已续费">已续费</option>
                                         <option value="未续费">未续费</option>
                                         <option value="有问题">有问题</option>
+                                        <option value="已销号">已销号</option>
                                     </select>
                                 </div>
                             </div>

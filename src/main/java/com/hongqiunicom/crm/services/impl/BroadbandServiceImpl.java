@@ -44,31 +44,44 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
             List<Broadband> broadbandList = this.getBroadbandByExcel(excelFile);
             Iterator<Broadband> iterator = broadbandList.iterator();
             while (iterator.hasNext()) {
-                Broadband new_broadband = iterator.next();
+                Broadband excelBroadband = iterator.next();
 
-                Broadband broadband = broadbandDao.get("broadbandAccount", new_broadband.getBroadbandAccount());
+                Broadband broadband = broadbandDao.get("broadbandAccount", excelBroadband.getBroadbandAccount());
                 if (broadband != null) {
                     System.out.println("|xuhao|" + broadband.getBroadbandId() + "|accout|" + broadband.getBroadbandAccount() + "|state|" + broadband.getBroadbandXuFeiState());
-                    broadband.setBroadbandPrice(new_broadband.getBroadbandPrice());
-                    broadband.setBroadbandState(new_broadband.getBroadbandState());
-                    broadband.setBroadbandSystemType(new_broadband.getBroadbandSystemType());
-//                    broadband.setBroadbandXuFeiState(new_broadband.getBroadbandXuFeiState());
-                    if ("已续费".equals(new_broadband.getBroadbandXuFeiState())) {
-                        broadband.setBroadbandXuFeiState(new_broadband.getBroadbandXuFeiState());
+                    broadband.setBroadbandPrice(excelBroadband.getBroadbandPrice());
+                    broadband.setBroadbandState(excelBroadband.getBroadbandState());
+                    broadband.setBroadbandSystemType(excelBroadband.getBroadbandSystemType());
+                    System.out.println("当前系统状态为：" + broadband.getBroadbandState() + ", 判断contains（销号）为" + broadband.getBroadbandState().contains("销号"));
+                    if (broadband.getBroadbandState().contains("销号")) {
+                        broadband.setBroadbandXuFeiState("已销号");
                     } else {
-                        if ("已续费".equals(broadband.getBroadbandXuFeiState())) {
-                            broadband.setBroadbandXuFeiState("有问题");
-                        } else {
-                            broadband.setBroadbandXuFeiState(new_broadband.getBroadbandXuFeiState());
+                        switch (excelBroadband.getBroadbandXuFeiState()) {
+                            case "已续费":
+                                broadband.setBroadbandXuFeiState(excelBroadband.getBroadbandXuFeiState());
+                                break;
+                            case "未续费":
+                                switch (broadband.getBroadbandXuFeiState()) {
+                                    case "已续费":
+                                        broadband.setBroadbandXuFeiState("有问题");
+                                        break;
+                                    case "未续费":
+                                        break;
+                                    case "有问题":
+                                        break;
+                                }
+                                break;
                         }
                     }
+
+
                     System.out.println("|xuhao|" + broadband.getBroadbandId() + "|accout|" + broadband.getBroadbandAccount() + "|state|" + broadband.getBroadbandXuFeiState());
                     broadbandDao.update(broadband);
                 } else {
 
-                    if (new_broadband.getCustomer() != null)
-                        customerDao.save(new_broadband.getCustomer());
-                    broadbandDao.save(new_broadband);
+                    if (excelBroadband.getCustomer() != null)
+                        customerDao.save(excelBroadband.getCustomer());
+                    broadbandDao.save(excelBroadband);
                 }
 
 
@@ -203,6 +216,11 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
 
     }
 
+    /**
+     * @参数：Broadband
+     * @返回值：Broadband
+     * @用途：修改手工调整的宽带数据
+     **/
     @Override
     public Broadband manualUpdate(Broadband broadband) {
         Broadband oBroadband = broadbandDao.get(broadband.getBroadbandId());
@@ -271,6 +289,9 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
                 criteria.add(Restrictions.eq("broadbandXuFeiState", xuFeiType));
                 break;
             case "未续费":
+                criteria.add(Restrictions.eq("broadbandXuFeiState", xuFeiType));
+                break;
+            case "已销号":
                 criteria.add(Restrictions.eq("broadbandXuFeiState", xuFeiType));
                 break;
             case "有问题":
