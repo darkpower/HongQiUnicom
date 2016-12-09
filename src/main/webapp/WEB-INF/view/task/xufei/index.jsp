@@ -32,9 +32,8 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">首页</a></li>
-                    <li class="active"><a href="/task/index.html">沃店考核</a></li>
-                    <li><a href="#contact">首页</a></li>
+                    <li><a href="/">首页</a></li>
+                    <li class="active"><a href="/Task/">沃店考核</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="">Default</a></li>
@@ -243,6 +242,8 @@
                 vm.totalCounts = data;
                 vm.totalPages = data / 10;
                 if (vm.totalCounts % 10 != 0) {
+                    vm.totalPages++;
+                }else if(vm.totalCounts == 0){
                     vm.totalPages++;
                 }
                 var options = {
