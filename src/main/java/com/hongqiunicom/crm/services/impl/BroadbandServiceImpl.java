@@ -54,7 +54,11 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
                     broadband.setBroadbandSystemType(excelBroadband.getBroadbandSystemType());
                     System.out.println("当前系统状态为：" + broadband.getBroadbandState() + ", 判断contains（销号）为" + broadband.getBroadbandState().contains("销号"));
                     if (broadband.getBroadbandState().contains("销号")) {
-                        broadband.setBroadbandXuFeiState("已销号");
+                        if ("已续费".equals(excelBroadband.getBroadbandXuFeiState())) {
+                            broadband.setBroadbandXuFeiState("已续费");
+                        } else {
+                            broadband.setBroadbandXuFeiState("已销号");
+                        }
                     } else {
                         switch (excelBroadband.getBroadbandXuFeiState()) {
                             case "已续费":
