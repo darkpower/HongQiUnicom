@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>中国联通红旗镇森清专营店 - CRM</title>
+    <title>中国联通红旗镇森清专营店 - CRM - 业务受理</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
@@ -10,9 +10,9 @@
     <link rel="icon" href="../../favicon.ico">
 
 
-    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/css/global.css" />
 </head>
 <body>
 
@@ -32,10 +32,10 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">首页</a></li>
+                    <li><a href="/">首页</a></li>
                     <li><a href="/Task/">沃店考核</a></li>
                     <li><a href="/ERP/">进销存</a></li>
-                    <li><a href="/Business/">业务受理明细</a></li>
+                    <li class="active"><a href="/Business/">业务受理明细</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="">Default</a></li>
@@ -63,62 +63,44 @@
                 </div>
                 <div class="row">
                     <div class="col-xs-6 col-lg-4">
-                        <h2>新装率100%！</h2>
+                        <h2>%</h2>
                         <p>
-                            总任务数：100  <br />
-                            任务需求：100  <br />
-                            目前完成：105  <br />
-                            还差数量：-5   <br />
+                            %<br />
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div>
                     <div class="col-xs-6 col-lg-4">
-                        <h2>续费率80%！</h2>
+                        <h2>%</h2>
                         <p>
-                            总任务数：300  <br />
-                            任务需求：240  <br />
-                            目前完成：220  <br />
-                            还差数量：20   <br />
+                            %<br />
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div>
                     <div class="col-xs-6 col-lg-4">
-                        <h2>续约率50%！</h2>
+                        <h2>%</h2>
                         <p>
-                            总任务数：150  <br />
-                            任务需求：75  <br />
-                            目前完成：70  <br />
-                            还差数量：5   <br />
+                            %<br />
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div>
                     <div class="col-xs-6 col-lg-4">
-                        <h2>登网率30%！</h2>
+                        <h2>%</h2>
                         <p>
-                            总任务数：100  <br />
-                            任务需求：30  <br />
-                            目前完成：15  <br />
-                            还差数量：15   <br />
+                            %<br />
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
-                        <h2>欠费回收98.5%！</h2>
+                        <h2>%</h2>
                         <p>
-                            总任务数：180000  <br />
-                            任务需求：177300  <br />
-                            目前完成：170000  <br />
-                            还差数量：7300   <br />
+                            %<br />
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div><!--/.col-xs-6.col-lg-4-->
                     <div class="col-xs-6 col-lg-4">
-                        <h2>移动业务100%！</h2>
+                        <h2>%</h2>
                         <p>
-                            总任务数：90  <br />
-                            任务需求：90  <br />
-                            目前完成：80  <br />
-                            还差数量：10   <br />
+                            %<br />
                         </p>
                         <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
                     </div>
@@ -128,15 +110,9 @@
             <!--  沃店考核指标导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">当月沃店考核指标导航</a>
-                    <a href="#" class="list-group-item">当月宽带新装率</a>
-                    <a href="/Task/XuFei/" class="list-group-item">次月宽带续费率</a>
-                    <a href="#" class="list-group-item">当月宽带融合率</a>
-                    <a href="#" class="list-group-item">当月终端发展率</a>
-                    <a href="#" class="list-group-item">次月合约续约率</a>
-                    <a href="#" class="list-group-item">当月移动业务发展率</a>
-                    <a href="#" class="list-group-item">当月移动业务登网率</a>
-                    <a href="#" class="list-group-item">次月固网欠费回收率</a>
+                    <a href="#" class="list-group-item active">业务受理清单</a>
+                    <a href="#" class="list-group-item">月受理明细</a>
+                    <a href="/Business/Day/" class="list-group-item">日受理清单</a>
                 </div>
             </div>
             <!--  沃店考核指标导航 End  -->
@@ -157,9 +133,9 @@
 
 <!-- javascript -->
 
-<script src="./lib/jquery/jquery.min.js"></script>
-<script src="./lib/bootsrtap/js/bootstrap.min.js"></script>
-<script src="./lib/avalon2/avalon.js"></script>
+<script src="/lib/jquery/jquery.min.js"></script>
+<script src="/lib/bootsrtap/js/bootstrap.min.js"></script>
+<script src="/lib/avalon2/avalon.js"></script>
 
 </body>
 </html>
