@@ -99,7 +99,7 @@
             <!-- 右侧导航内容 Start -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                <div class="optionSwitch list-group input-group input-medium date-picker input-daterange" data-date-format="yyyy-mm-dd" style="margin-top: 0px; margin-bottom: 20px;">
                     <input class="list-group-item" style="width: 100%" id="startDay" type="text"/>
                     <input class="list-group-item" style="width: 100%" id="endDay" type="text"/>
                     <a class="list-group-item">确定</a>
@@ -294,8 +294,12 @@
         $("#excelFileUploadInput").on("fileuploaded", function (event, data, previewId, index) {
         });
 
-        $('#startDay').datepicker({language: "zh-CN"});
-        $('#endDay').datepicker({language: "zh-CN"});
+        $(".date-picker").datepicker({
+            language: "zh-CN",
+            autoclose: true,
+            clearBtn: true,
+            todayBtn: 'linked'
+        });
 
 
         //初始化分页
