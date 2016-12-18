@@ -1,10 +1,8 @@
 package com.hongqiunicom.crm.entity;
 
-import org.hibernate.annotations.*;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
-import javax.persistence.Entity;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -12,8 +10,6 @@ import java.util.Set;
 
 /**
  * Created by Darkpower on 2016/11/17.
- *
- *
  */
 @SuppressWarnings("serial")
 @Entity
@@ -137,7 +133,7 @@ public class Broadband implements Serializable {
         this.remasks = remasks;
     }
 
-    public void toPrint(){
+    public void toPrint() {
         System.out.println("宽带序号：" + this.broadbandId);
         System.out.println("宽带账号：" + this.broadbandAccount);
         System.out.println("宽带到期时间：" + this.broadbandExpireDate);

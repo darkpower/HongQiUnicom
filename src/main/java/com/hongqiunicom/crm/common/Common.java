@@ -36,6 +36,21 @@ public class Common {
         return broadbandExcelTitleList;
     }
 
+    public static final List<ExcelTitle> getCardTempletExcelTitleList(){
+        List<ExcelTitle> cardTempletExcelTitleList = new ArrayList<ExcelTitle>();
+        cardTempletExcelTitleList.add(new ExcelTitle(0, 5500, "ICCID"));
+        cardTempletExcelTitleList.add(new ExcelTitle(1, 5500, "类型"));
+        cardTempletExcelTitleList.add(new ExcelTitle(2, 5500, "运营商"));
+        cardTempletExcelTitleList.add(new ExcelTitle(3, 5500, "卡号"));
+        cardTempletExcelTitleList.add(new ExcelTitle(4, 5500, "卡品"));
+        cardTempletExcelTitleList.add(new ExcelTitle(5, 5500, "开卡日期"));
+        cardTempletExcelTitleList.add(new ExcelTitle(6, 5500, "卡费"));
+        return cardTempletExcelTitleList;
+    }
+
+
+
+
     public static Date getLastMonthFirstDay() {
         Calendar lastMonthFirstDayCal = Calendar.getInstance();
         lastMonthFirstDayCal.add(Calendar.MONTH, -1);

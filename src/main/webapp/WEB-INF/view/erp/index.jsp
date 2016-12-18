@@ -125,13 +125,13 @@
             </div>
 
 
-            <!--  沃店考核指标导航 Start  -->
+            <!--  进销存导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <div class="list-group">
                     <a href="#" class="list-group-item active">进销存管理系统导航</a>
-                    <a href="#" class="list-group-item">手机下单</a>
-                    <a href="#" class="list-group-item">手机到货</a>
-                    <a href="#" class="list-group-item">沃易购补单</a>
+                    <a href="/ERP/Card/" class="list-group-item">号卡</a>
+                    <a href="#" class="list-group-item">手机</a>
+                    <a href="#" class="list-group-item">路由器</a>
                     <a href="#" class="list-group-item"></a>
                     <a href="#" class="list-group-item"></a>
                     <a href="#" class="list-group-item"></a>
@@ -139,7 +139,7 @@
                     <a href="/ERP/Settings/" class="list-group-item">系统设置</a>
                 </div>
             </div>
-            <!--  沃店考核指标导航 End  -->
+            <!--  进销存导航 End  -->
 
 
         </div><!--/row-->
