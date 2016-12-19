@@ -127,15 +127,8 @@
             <!--  沃店考核指标导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">当月沃店考核指标导航</a>
-                    <a href="#" class="list-group-item">当月宽带新装率</a>
-                    <a href="/Task/XuFei/" class="list-group-item">次月宽带续费率</a>
-                    <a href="#" class="list-group-item">当月宽带融合率</a>
-                    <a href="#" class="list-group-item">当月终端发展率</a>
-                    <a href="#" class="list-group-item">次月合约续约率</a>
-                    <a href="#" class="list-group-item">当月移动业务发展率</a>
-                    <a href="#" class="list-group-item">当月移动业务登网率</a>
-                    <a href="#" class="list-group-item">次月固网欠费回收率</a>
+                    <a href="#" class="list-group-item active">维系挽留导航</a>
+                    <a href="/Retention/Syncretize/" class="list-group-item">融合用户</a>
                 </div>
             </div>
             <!--  沃店考核指标导航 End  -->

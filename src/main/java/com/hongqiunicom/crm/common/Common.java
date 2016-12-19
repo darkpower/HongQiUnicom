@@ -1,5 +1,7 @@
 package com.hongqiunicom.crm.common;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -87,5 +89,29 @@ public class Common {
             totalPage++;
         System.out.print("!!!!----一共" + totalPage + "页");
         return totalPage;
+    }
+
+    public static Date getMonthFirstDayWithString(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.set(Calendar.DAY_OF_MONTH, 1);
+        return calendar.getTime();
+    }
+
+    public static Date getMonthLastDayWithString(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
+        Calendar calendar = Calendar.getInstance();
+        try {
+            calendar.setTime(sdf.parse(date));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
+        return calendar.getTime();
     }
 }

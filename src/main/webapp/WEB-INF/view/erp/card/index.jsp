@@ -101,6 +101,11 @@
 
             <!--  进销存导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
+
+                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                    <a class="list-group-item" list="未配号">未配号</a>
+                    <a class="list-group-item" list="已配号">已配号</a>
+                </div>
                 <div class="list-group">
                     <a href="#" class="list-group-item">进销存管理系统导航</a>
                     <a href="/ERP/Card/" class="list-group-item active">号卡</a>
@@ -282,7 +287,7 @@
 
         $("#excelFileUploadInput").fileinput({
             language: "zh",
-            uploadUrl: "/Task/XuFei/Upload",
+            uploadUrl: "/ERP/Card/Upload",
             allowedFileExtensions: ['xlsx', 'xls'],
             maxFileSize: 0,
             enctype: 'multipart/form-data'

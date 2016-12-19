@@ -19,10 +19,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> implements BroadbandService {
@@ -256,6 +253,11 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
     }
 
     @Override
+    public Integer getCountsWithOptions(String list, String xuFeiType, String systemType, String date) {
+        return broadbandDao.getCount(this.getCriteriaWithOption(list, xuFeiType, systemType, date));
+    }
+
+    @Override
     public Page<Broadband> getBroadbandPageWithOption(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType) {
 
 
@@ -264,6 +266,15 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
         return broadbandDao.getPage(this.getCriteriaWithOption(list, xuFeiType, systemType), page);
+    }
+
+    @Override
+    public Page<Broadband> getBroadbandPageWithOption(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType, String date) {
+        Page<Broadband> page = new Page<Broadband>();
+        page.setOrderBy("broadbandExpireDate");
+        page.setPageSize(pageSize);
+        page.setNowPage(nowPage);
+        return broadbandDao.getPage(this.getCriteriaWithOption(list, xuFeiType, systemType, date), page);
     }
 
     @Override
@@ -312,6 +323,16 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
             case "CBSS":
                 criteria.add(Restrictions.eq("broadbandSystemType", systemType));
                 break;
+        }
+        return criteria;
+    }
+
+
+    private DetachedCriteria getCriteriaWithOption(String list, String xuFeiType, String systemType, String date) {
+        DetachedCriteria criteria = this.getCriteriaWithOption(list, xuFeiType, systemType);
+        if (!("".equals(date) || date == null)) {
+            criteria.add(Restrictions.ge("broadbandRenewalDate", Common.getMonthFirstDayWithString(date)));
+            criteria.add(Restrictions.le("broadbandRenewalDate", Common.getMonthLastDayWithString(date)));
         }
         return criteria;
     }

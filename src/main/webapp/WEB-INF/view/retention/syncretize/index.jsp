@@ -58,7 +58,7 @@
                            data-show-preview="false">
                 </div>
                 <div class="col-sm-6 pull-left">
-                    {{@option.list}}　中　{{@option.xuFeiType}} 共　{{@totalCounts}}　户
+                    {{@option.date == "" ? "全部" : @option.date}}  已续约融合用户  共计  {{@totalCounts}}  户
                     <input id="exportExcelButton" type="submit" class="btn btn-primary" value="导出Excel"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
@@ -102,39 +102,18 @@
             <!-- 左侧表格内容 End -->
 
 
-            <!-- 右侧导航内容 Start -->
+            <!--  沃店考核指标导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" list="全部宽带续费清单">全部宽带续费清单</a>
-                    <a class="list-group-item" list="当月宽带续费清单">当月宽带续费清单</a>
-                    <a class="list-group-item active" list="次月宽带续费清单">次月宽带续费清单</a>
-                </div>
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" xuFeiType="全部">全部</a>
-                    <a class="list-group-item active" xuFeiType="未续费">未续费</a>
-                    <a class="list-group-item" xuFeiType="已续费">已续费</a>
-                    <a class="list-group-item" xuFeiType="已销号">已销号</a>
-                    <a class="list-group-item" xuFeiType="有问题">有问题</a>
-                </div>
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" systemType="全部">全部</a>
-                    <a class="list-group-item" systemType="BSS">BSS</a>
-                    <a class="list-group-item" systemType="CBSS">CBSS</a>
+                    <a href="#" class="list-group-item active">续约日期</a>
+                    <input class="list-group-item date-picker" data-date-format="yyyy-mm" style="width: 100%" type="text"/>
+                    <a id="dateSubmit" class="list-group-item">确定</a>
                 </div>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">当月沃店考核指标导航</a>
-                    <a href="#" class="list-group-item">当月宽带新装率</a>
-                    <a href="/Task/XuFei/" class="list-group-item active">次月宽带续费率</a>
-                    <a href="#" class="list-group-item">当月宽带融合率</a>
-                    <a href="#" class="list-group-item">当月终端发展率</a>
-                    <a href="#" class="list-group-item">次月合约续约率</a>
-                    <a href="#" class="list-group-item">当月移动业务发展率</a>
-                    <a href="#" class="list-group-item">当月移动业务登网率</a>
-                    <a href="#" class="list-group-item">次月固网欠费回收率</a>
+                    <a href="#" class="list-group-item active">维系挽留导航</a>
+                    <a href="/Retention/Syncretize/" class="list-group-item">融合用户</a>
                 </div>
             </div>
-            <!-- 右侧导航内容 End -->
         </div>
 
 
@@ -225,25 +204,25 @@
 <script src="/lib/bootstrap-fileinput/js/fileinput.js"></script>
 <script src="/lib/bootstrap-fileinput/js/locales/zh.js"></script>
 <script src="/lib/bootstrap-paginator/build/bootstrap-paginator.min.js"></script>
+<script src="/lib/bootstrap-datepicker/dist/js/bootstrap-datepicker.js"></script>
+<script src="/lib/bootstrap-datepicker/dist/locales/bootstrap-datepicker.zh-CN.min.js"></script>
 <script src="/lib/js/global.js"></script>
 <script>
 
     function ajaxBroadbandsTotalPages(vm) {
         $.ajax({
-            url: "/Task/XuFei/Page",
+            url: "/Retention/Syncretize/Page",
             type: "post",
             dataType: "json",
             data: {
-                'list': vm.option.list,
-                'xuFeiType': vm.option.xuFeiType,
-                'systemType': vm.option.systemType
+                'date': vm.option.date
             },
             success: function (data) {
                 vm.totalCounts = data;
                 vm.totalPages = data / 10;
                 if (vm.totalCounts % 10 != 0) {
                     vm.totalPages++;
-                }else if(vm.totalCounts == 0){
+                } else if (vm.totalCounts == 0) {
                     vm.totalPages++;
                 }
                 var options = {
@@ -280,14 +259,12 @@
     function ajaxBroadbands(vm) {
 
         $.ajax({
-            url: "/Task/XuFei/List",
+            url: "/Retention/Syncretize/List",
             type: "post",
             dataType: "json",
             data: {
-                'page': vm.nowPage,
-                'list': vm.option.list,
-                'xuFeiType': vm.option.xuFeiType,
-                'systemType': vm.option.systemType
+                'date': vm.option.date,
+                'page': vm.nowPage
             },
             success: function (data) {
                 vm.broadbands = [];
@@ -349,9 +326,7 @@
         var vm = avalon.define({
             $id: "broadband_list",
             option: {
-                list: "次月宽带续费清单",
-                xuFeiType: "未续费",
-                systemType: "全部"
+                date: ""
             },
             nowPage: 1,
             totalPages: 1,
@@ -403,6 +378,19 @@
                 "action": "Export",
                 "method": "POST"
             }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
+        });
+
+        $(".date-picker").datepicker({
+            language: "zh-CN",
+            autoclose: true,
+            clearBtn: true,
+            todayBtn: 'linked'
+        });
+
+        $("#dateSubmit").click(function(){
+            vm.option.date = $(".date-picker").val();
+            ajaxBroadbandsTotalPages(vm);
+            ajaxBroadbands(vm);
         });
 
 
