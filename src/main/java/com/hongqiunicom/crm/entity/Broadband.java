@@ -1,6 +1,7 @@
 package com.hongqiunicom.crm.entity;
 
 import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.JoinColumnOrFormula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,6 +11,8 @@ import java.util.Set;
 
 /**
  * Created by Darkpower on 2016/11/17.
+ *
+ *
  */
 @SuppressWarnings("serial")
 @Entity
@@ -24,10 +27,6 @@ public class Broadband implements Serializable {
     @Column(name = "broadband_account", length = 255, nullable = false)
     private String broadbandAccount;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
     @Column(name = "broadband_expire_date")
     @Temporal(TemporalType.DATE)
     private Date broadbandExpireDate;
@@ -35,9 +34,6 @@ public class Broadband implements Serializable {
     @Column(name = "broadband_renewal_date")
     @Temporal(TemporalType.DATE)
     private Date broadbandRenewalDate;
-
-    @Column(name = "broadband_price")
-    private String broadbandPrice;
 
     @Column(name = "broadband_system_type")
     private String broadbandSystemType;
@@ -48,10 +44,19 @@ public class Broadband implements Serializable {
     @Column(name = "broadband_xufei_state")
     private String broadbandXuFeiState;
 
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
+
+    @ManyToOne
+    @JoinColumn(name = "broadband_product_id")
+    private BroadbandProduct broadbandProduct;
+
     @OneToMany
     @Cascade(value = {org.hibernate.annotations.CascadeType.ALL})
     @JoinColumn(name = "broadband_id")
     private Set<Remark> remasks = new HashSet<Remark>();
+
 
     public Integer getBroadbandId() {
         return broadbandId;
@@ -93,13 +98,6 @@ public class Broadband implements Serializable {
         this.broadbandRenewalDate = broadbandRenewalDate;
     }
 
-    public String getBroadbandPrice() {
-        return broadbandPrice;
-    }
-
-    public void setBroadbandPrice(String broadbandPrice) {
-        this.broadbandPrice = broadbandPrice;
-    }
 
     public String getBroadbandSystemType() {
         return broadbandSystemType;
@@ -138,10 +136,16 @@ public class Broadband implements Serializable {
         System.out.println("宽带账号：" + this.broadbandAccount);
         System.out.println("宽带到期时间：" + this.broadbandExpireDate);
         System.out.println("宽带续费时间：" + this.broadbandRenewalDate);
-        System.out.println("宽带价格：" + this.broadbandPrice);
         System.out.println("宽带系统标识：" + this.broadbandSystemType);
         System.out.println("宽带状态：" + this.broadbandState);
         System.out.println("宽带续费状态：" + this.broadbandXuFeiState);
     }
 
+    public BroadbandProduct getBroadbandProduct() {
+        return broadbandProduct;
+    }
+
+    public void setBroadbandProduct(BroadbandProduct broadbandProduct) {
+        this.broadbandProduct = broadbandProduct;
+    }
 }

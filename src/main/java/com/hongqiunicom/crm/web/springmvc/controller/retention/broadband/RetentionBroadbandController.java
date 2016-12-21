@@ -1,4 +1,4 @@
-package com.hongqiunicom.crm.web.springmvc.controller.retention.syncretize;
+package com.hongqiunicom.crm.web.springmvc.controller.retention.broadband;
 
 import com.hongqiunicom.crm.entity.Broadband;
 import com.hongqiunicom.crm.services.BroadbandService;
@@ -18,29 +18,29 @@ import java.util.List;
  */
 
 @Controller
-@RequestMapping("/Retention/Syncretize")
-public class SyncretizeController {
+@RequestMapping("/Retention/Broadband")
+public class RetentionBroadbandController {
 
     @Resource
     private BroadbandService broadbandService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        return "retention/syncretize/index";
+        return "retention/broadband/index";
     }
 
 
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
     @ResponseBody
     public Integer page(HttpServletRequest request) {
-        return broadbandService.getCountsWithOptions("全部", "已续费", "CBSS", request.getParameter("date"));
+        return broadbandService.getCountsWithOptions("全部宽带续费清单", "已续费", "全部", request.getParameter("date"));
 
     }
 
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     @ResponseBody
     public List<Broadband> list(HttpServletRequest request) {
-        return broadbandService.getBroadbandPageWithOption(10, Integer.parseInt(request.getParameter("page")), "全部宽带续费清单", "已续费", "CBSS", request.getParameter("date")).getList();
+        return broadbandService.getBroadbandPageWithOption(10, Integer.parseInt(request.getParameter("page")), "全部宽带续费清单", "已续费", "全部", request.getParameter("date")).getList();
     }
 
 

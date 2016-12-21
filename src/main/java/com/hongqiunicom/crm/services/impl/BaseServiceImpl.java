@@ -2,11 +2,13 @@ package com.hongqiunicom.crm.services.impl;
 
 import com.hongqiunicom.crm.dao.BaseDao;
 import com.hongqiunicom.crm.services.BaseService;
+import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 
+@Service
 public class BaseServiceImpl<T, PK extends Serializable> implements BaseService<T, PK> {
 
     private BaseDao<T, PK> baseDao;

@@ -37,6 +37,7 @@
                     <li><a href="/ERP/">进销存</a></li>
                     <li><a href="/Business/">业务受理明细</a></li>
                     <li><a href="/Retention/">维系挽留</a></li>
+                    <li><a href="/System/">系统设置</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="">Default</a></li>

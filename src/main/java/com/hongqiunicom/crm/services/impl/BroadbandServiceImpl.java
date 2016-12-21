@@ -46,7 +46,6 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
                 Broadband broadband = broadbandDao.get("broadbandAccount", excelBroadband.getBroadbandAccount());
                 if (broadband != null) {
                     System.out.println("|xuhao|" + broadband.getBroadbandId() + "|accout|" + broadband.getBroadbandAccount() + "|state|" + broadband.getBroadbandXuFeiState());
-                    broadband.setBroadbandPrice(excelBroadband.getBroadbandPrice());
                     broadband.setBroadbandState(excelBroadband.getBroadbandState());
                     broadband.setBroadbandSystemType(excelBroadband.getBroadbandSystemType());
                     System.out.println("当前系统状态为：" + broadband.getBroadbandState() + ", 判断contains（销号）为" + broadband.getBroadbandState().contains("销号"));
