@@ -21,17 +21,26 @@ public class BroadbandProduct implements Serializable {
     @Column(name = "broadband_product_id")
     private Integer broadbandProductId;
 
+    @Column(name = "broadband_product_type")
+    private String broadbandProductType;
+
     @Column(name = "broadband_product_name")
     private String broadbandProductName;
 
     @Column(name = "broadband_product_length")
-    private String broadbandProductLength;
+    private Integer broadbandProductLength;
 
     @Column(name = "broadband_product_deposit")
     private Integer broadbandProductDeposit;
 
     @Column(name = "broadband_product_monthly")
     private Double broadbandProductMonthly;
+
+    @Column(name = "broadband_product_download_speed")
+    private String broadbandProductDownloadSpeed;
+
+    @Column(name = "broadband_product_state")
+    private String broadbandProductState;
 
     @OneToMany
     @Cascade(value = {org.hibernate.annotations.CascadeType.ALL})
@@ -54,11 +63,11 @@ public class BroadbandProduct implements Serializable {
         this.broadbandProductName = broadbandProductName;
     }
 
-    public String getBroadbandProductLength() {
+    public Integer getBroadbandProductLength() {
         return broadbandProductLength;
     }
 
-    public void setBroadbandProductLength(String broadbandProductLength) {
+    public void setBroadbandProductLength(Integer broadbandProductLength) {
         this.broadbandProductLength = broadbandProductLength;
     }
 
@@ -87,4 +96,40 @@ public class BroadbandProduct implements Serializable {
     }
 
 
+    public String getBroadbandProductType() {
+        return broadbandProductType;
+    }
+
+    public void setBroadbandProductType(String broadbandProductType) {
+        this.broadbandProductType = broadbandProductType;
+    }
+
+    public String getBroadbandProductDownloadSpeed() {
+        return broadbandProductDownloadSpeed;
+    }
+
+    public void setBroadbandProductDownloadSpeed(String broadbandProductDownloadSpeed) {
+        this.broadbandProductDownloadSpeed = broadbandProductDownloadSpeed;
+    }
+
+    public String getBroadbandProductState() {
+        return broadbandProductState;
+    }
+
+    public void setBroadbandProductState(String broadbandProductState) {
+        this.broadbandProductState = broadbandProductState;
+    }
+
+    public void print(){
+        System.out.println("broadbandProductId: " + broadbandProductId);
+        System.out.println("broadbandProductType: " + broadbandProductType);
+        System.out.println("broadbandProductName: " + broadbandProductName);
+        System.out.println("broadbandProductLength: " + broadbandProductLength);
+        System.out.println("broadbandProductDeposit: " + broadbandProductDeposit);
+        System.out.println("broadbandProductMonthly: " + broadbandProductMonthly);
+        System.out.println("broadbandProductDownloadSpeed: " + broadbandProductDownloadSpeed);
+        System.out.println("broadbandProductState: " + broadbandProductState);
+
+
+    }
 }

@@ -4,7 +4,6 @@ import com.hongqiunicom.crm.dao.BaseDao;
 import com.hongqiunicom.crm.services.BaseService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
 import java.io.Serializable;
 import java.util.List;
 

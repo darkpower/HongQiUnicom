@@ -53,13 +53,9 @@
         <div class="row row-offcanvas row-offcanvas-right">
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
-                <div class="col-sm-6 pull-left">
-                    <input id="excelFileUploadInput" name="excelFile" type="file" class="file-loading"
-                           data-show-preview="false">
-                </div>
-                <div class="col-sm-6 pull-left">
-                    {{@option.list}}　中　{{@option.xuFeiType}} 共　{{@totalCounts}}　户
-                    <input id="exportExcelButton" type="submit" class="btn btn-primary" value="导出Excel"/>
+
+                <div class="col-sm-12 pull-left">
+                    <input id="addBroadbandProductButton" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" value="添加宽带产品"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
@@ -101,23 +97,13 @@
             <!-- 右侧导航内容 Start -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
+
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" list="全部宽带续费清单">全部宽带续费清单</a>
-                    <a class="list-group-item" list="当月宽带续费清单">当月宽带续费清单</a>
-                    <a class="list-group-item active" list="次月宽带续费清单">次月宽带续费清单</a>
+                    <a class="list-group-item active" list="全部">全部</a>
+                    <a class="list-group-item" list="有效">有效</a>
+                    <a class="list-group-item" list="失效">失效</a>
                 </div>
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" xuFeiType="全部">全部</a>
-                    <a class="list-group-item active" xuFeiType="未续费">未续费</a>
-                    <a class="list-group-item" xuFeiType="已续费">已续费</a>
-                    <a class="list-group-item" xuFeiType="已销号">已销号</a>
-                    <a class="list-group-item" xuFeiType="有问题">有问题</a>
-                </div>
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" systemType="全部">全部</a>
-                    <a class="list-group-item" systemType="BSS">BSS</a>
-                    <a class="list-group-item" systemType="CBSS">CBSS</a>
-                </div>
+
                 <div class="list-group">
                     <a href="#" class="list-group-item">当月沃店考核指标导航</a>
                     <a href="#" class="list-group-item">当月宽带新装率</a>
@@ -144,61 +130,61 @@
                         <h4 class="modal-title" id="myModalLabel">手工调整</h4>
                     </div>
                     <div class="modal-body">
-
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="broadbandAccount" class="col-sm-2 control-label">宽带账号</label>
+                                <label for="broadbandProductType" class="col-sm-2 control-label">产品分类</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="broadbandAccount" ms-duplex="@broadband.broadbandAccount" disabled>
+                                    <select class="form-control" id="broadbandProductType" ms-duplex="@broadbandProduct.broadbandProductType">
+                                        <option value="宽带单产品">宽带单产品</option>
+                                        <option value="智慧沃家共享版">智慧沃家共享版</option>
+                                        <option value="合约惠机终端版">合约惠机终端版</option>
+                                    </select>
                                 </div>
-                                <label for="broadbandState" class="col-sm-2 control-label">宽带状态</label>
+                                <label for="broadbandProductName" class="col-sm-2 control-label">产品名称</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="broadbandState" ms-duplex="@broadband.broadbandState" disabled>
+                                    <input type="text" class="form-control" id="broadbandProductName" ms-duplex="@broadbandProduct.broadbandProductName">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="broadbandXuFeiState" class="col-sm-2 control-label">续费状态</label>
+                                <label for="broadbandProductState" class="col-sm-2 control-label">产品状态</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="broadbandXuFeiState" ms-duplex="@broadband.broadbandXuFeiState">
-                                        <option value="已续费">已续费</option>
-                                        <option value="未续费">未续费</option>
-                                        <option value="有问题">有问题</option>
-                                        <option value="已销号">已销号</option>
+                                    <select class="form-control" id="broadbandProductState" ms-duplex="@broadbandProduct.broadbandProductState">
+                                        <option value="有效">有效</option>
+                                        <option value="失效">失效</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="customerName" class="col-sm-2 control-label">机主姓名</label>
+                                <label for="broadbandProductLength" class="col-sm-2 control-label">合约期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerName" ms-duplex="@broadband.customer.customerName">
+                                    <input type="text" class="form-control" id="broadbandProductLength" ms-duplex="@broadbandProduct.broadbandProductLength">
                                 </div>
-                                <label for="customerCardId" class="col-sm-2 control-label">机主证件</label>
+                                <label for="broadbandProductDeposit" class="col-sm-2 control-label">首付</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerCardId" ms-duplex="@broadband.customer.customerCardId">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerTelphone" class="col-sm-2 control-label">机主电话</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerTelphone" ms-duplex="@broadband.customer.customerTelphone">
+                                    <input type="text" class="form-control" id="broadbandProductDeposit" ms-duplex="@broadbandProduct.broadbandProductDeposit">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="customerQualityVoice" class="col-sm-2 control-label">次月分钟</label>
+                                <label for="broadbandProductMonthly" class="col-sm-2 control-label">月供</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerQualityVoice" ms-duplex="@broadband.customer.customerQualityVoice">
+                                    <input type="text" class="form-control" id="broadbandProductMonthly" ms-duplex="@broadbandProduct.broadbandProductMonthly">
                                 </div>
-                                <label for="customerQualityData" class="col-sm-2 control-label">次月流量</label>
+                            </div>
+                            <div class="form-group">
+                                <label for="broadbandProductDownloadSpeed" class="col-sm-2 control-label">下载速率</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerQualityData" ms-duplex="@broadband.customer.customerQualityData">
+                                    <select class="form-control" id="broadbandProductDownloadSpeed" ms-duplex="@broadbandProduct.broadbandProductDownloadSpeed">
+                                        <option value="10M">10M</option>
+                                        <option value="20M">20M</option>
+                                        <option value="50M">50M</option>
+                                        <option value="100M">100M</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
-
-
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="saveBroadbandButton" class="btn btn-primary">保存</button>
+                        <button type="button" id="broadbandProductSubmit" class="btn btn-primary">保存</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -224,11 +210,25 @@
 <script src="/lib/js/global.js"></script>
 <script>
 
+
+    function BroadbandProduct(){
+        this.broadbandProductId = 0;
+        this.broadbandProductType = "";
+        this.broadbandProductName = "";
+        this.broadbandProductState = "";
+        this.broadbandProductLength = 0;
+        this.broadbandProductDeposit = 0;
+        this.broadbandProductMonthly = 0;
+        this.broadbandProductDownloadSpeed = "";
+    }
+
+
     /**
      * ajax获取全部宽带产品数据
      *
      * @param vm
      */
+
     function ajaxBroadbandProductList(vm) {
         $.ajax({
             url: "/System/Broadband/List",
@@ -273,7 +273,7 @@
                     currentPage: vm.page.nowPage,//当前页面
                     totalPages: vm.page.totalPages, //总页数
                     numberOfPages: 10//一页显示几个按钮（在ul里面生成5个li）
-                }
+                };
                 $('#page').bootstrapPaginator("setOptions", options);
             },
             error: function () {
@@ -293,7 +293,7 @@
                 vm.broadband = new Broadband(data);
 
             },
-            error: function (data) {
+            error: function () {
                 alert(error);
             }
         });
@@ -302,22 +302,6 @@
 
 
     $(function () {
-
-        $("#excelFileUploadInput").fileinput({
-            language: "zh",
-            uploadUrl: "/Task/XuFei/Upload",
-            allowedFileExtensions: ['xlsx', 'xls'],
-            maxFileSize: 0,
-            enctype: 'multipart/form-data'
-        });
-
-        $('#excelFileUploadInput').on('fileerror', function (event, data, msg) {
-        });
-
-        $("#excelFileUploadInput").on("fileuploaded", function (event, data, previewId, index) {
-        });
-
-        $('')
 
 
         /**
@@ -365,38 +349,25 @@
                 totalCounts: 1
             },
             broadbandProducts: [],
+            broadbandProduct : new BroadbandProduct(),
             openModal: function (broadbandId) {
                 ajaxBroadband(broadbandId, this);
             }
         });
         ajaxBroadbandProductList(vm);
         ajaxBroadbandProductPage(vm);
-
-
         avalon.scan(document.body);
 
-        $('.optionSwitch a').click(function () {
-            $(this).nextAll().removeClass("active");
-            $(this).prevAll().removeClass("active");
-            $(this).addClass("active");
-            vm.option.list = $(this).attr("list") != null ? $(this).attr("list") : vm.option.list;
-            vm.option.xuFeiType = $(this).attr("xuFeiType") != null ? $(this).attr("xuFeiType") : vm.option.xuFeiType;
-            vm.option.systemType = $(this).attr("systemType") != null ? $(this).attr("systemType") : vm.option.systemType;
-            vm.nowPage = 1;
-            ajaxBroadbandsTotalPages(vm);
-            ajaxBroadbands(vm);
-        });
-
-        $('#saveBroadbandButton').click(function () {
 
 
+        $('#broadbandProductSubmit').click(function () {
             $.ajax({
-                url: "/Task/XuFei/Update",
+                url: "/System/Broadband/Update",
                 type: "post",
                 contentType: "application/json",
                 dataType: "json",
-                data: JSON.stringify(vm.broadband),
-                success: function (data) {
+                data: JSON.stringify(vm.broadbandProduct),
+                success: function () {
                     alert("success");
                 },
                 error: function () {
@@ -404,14 +375,6 @@
                 }
             });
         });
-
-        $('#exportExcelButton').click(function () {
-            $("<form>").attr({
-                "action": "Export",
-                "method": "POST"
-            }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
-        });
-
 
     });
 
