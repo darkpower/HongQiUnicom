@@ -349,7 +349,7 @@
         avalon.scan(document.body);
 
 
-        $('#addBroadbandProductButton').on('show.bs.modal', function(){
+        $('#addBroadbandProductButton').on('click', function(){
             vm.broadbandProduct.broadbandProductId = 0;
             vm.broadbandProduct.broadbandProductType = "";
             vm.broadbandProduct.broadbandProductName = "";
