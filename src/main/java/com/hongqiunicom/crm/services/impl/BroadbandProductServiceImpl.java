@@ -20,6 +20,11 @@ public class BroadbandProductServiceImpl extends BaseServiceImpl<BroadbandProduc
     @Resource(type = BroadbandProductDao.class)
     private BroadbandProductDao broadbandProductDao;
 
+    @Resource(type = BroadbandProductDao.class)
+    public void setBaseDao(BroadbandProductDao broadbandProductDao) {
+        super.setBaseDao(broadbandProductDao);
+    }
+
     @Override
     public Page<BroadbandProduct> getBroadbandProductPage(Integer pageSize, Integer nowPage) {
         DetachedCriteria criteria = DetachedCriteria.forClass(BroadbandProduct.class);

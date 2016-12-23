@@ -1,5 +1,7 @@
 package com.hongqiunicom.crm.web.springmvc.controller.system.broadband;
 
+import com.hongqiunicom.crm.dao.BroadbandDao;
+import com.hongqiunicom.crm.dao.BroadbandProductDao;
 import com.hongqiunicom.crm.entity.BroadbandProduct;
 import com.hongqiunicom.crm.services.BroadbandProductService;
 import org.springframework.stereotype.Controller;
@@ -25,6 +27,7 @@ public class SystemBroadbandController {
     @Resource
     private BroadbandProductService broadbandProductService;
 
+
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "system/broadband/index";
@@ -47,13 +50,22 @@ public class SystemBroadbandController {
     @RequestMapping(value = "/Update", method = RequestMethod.POST)
     @ResponseBody
     public BroadbandProduct update(@RequestBody BroadbandProduct broadbandProduct, HttpServletRequest request) {
-        if(broadbandProduct.getBroadbandProductId() == 0){
+        if (broadbandProduct.getBroadbandProductId() == 0) {
             broadbandProduct.setBroadbandProductId(broadbandProductService.addBroadbandProduct(broadbandProduct));
-        }else{
+        } else {
             broadbandProductService.update(broadbandProduct);
         }
         return broadbandProduct;
     }
 
+    @RequestMapping(value = "/Show", method = RequestMethod.POST)
+    @ResponseBody
+    public BroadbandProduct show(HttpServletRequest request) {
 
+        BroadbandProduct broadbandProduct = null;
+try{        broadbandProduct = broadbandProductService.get(Integer.parseInt(request.getParameter("broadbandProductId")));}catch(Exception e){
+    e.printStackTrace();
+}
+        return broadbandProduct;
+    }
 }

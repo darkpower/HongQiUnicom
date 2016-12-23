@@ -73,9 +73,10 @@
                             <td>{{$broadbandProduct.broadbandProductName == null ? "" : $broadbandProduct.broadbandProductName }}</td>
                             <td>{{$broadbandProduct.broadbandProductLength == null ? "" : $broadbandProduct.broadbandProductLength }}</td>
                             <td>{{$broadbandProduct.broadbandProductDeposit == null ? "" : $broadbandProduct.broadbandProductDeposit }}</td>
-                            <td>{{$broadbandProduct.broadbandProductMonthly == null ? "" : broadbandProduct.broadbandProductMonthly }}</td>
+                            <td>{{$broadbandProduct.broadbandProductMonthly == null ? "" : $broadbandProduct.broadbandProductMonthly }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($broadband.broadbandId)">手工调整</button>
+                                <button option="manual" class="btn-block btn-default pull-left" data-toggle="modal" data-target="#myModal" ms-click="@openModal($broadbandProduct.broadbandProductId)">修改</button>
+                                <button option="manual" class="btn-block btn-default pull-left" ms-click="@deleteBroadbandProduct($broadbandProduct.broadbandProductId)">删除</button>
                             </td>
                         </tr>
                         </tbody>
@@ -211,18 +212,6 @@
 <script>
 
 
-    function BroadbandProduct(){
-        this.broadbandProductId = 0;
-        this.broadbandProductType = "";
-        this.broadbandProductName = "";
-        this.broadbandProductState = "";
-        this.broadbandProductLength = 0;
-        this.broadbandProductDeposit = 0;
-        this.broadbandProductMonthly = 0;
-        this.broadbandProductDownloadSpeed = "";
-    }
-
-
     /**
      * ajax获取全部宽带产品数据
      *
@@ -257,15 +246,13 @@
             url: "/System/Broadband/Page",
             type: "post",
             dataType: "json",
-            data: {
-
-            },
+            data: {},
             success: function (data) {
                 vm.page.totalCounts = data;
                 vm.page.totalPages = data / 10;
                 if (vm.page.totalCounts % 10 != 0) {
                     vm.page.totalPages++;
-                }else if(vm.page.totalCounts == 0){
+                } else if (vm.page.totalCounts == 0) {
                     vm.page.totalPages++;
                 }
                 var options = {
@@ -282,23 +269,26 @@
         });
     }
 
-    function ajaxBroadband(broadbandId, vm) {
+
+    /**
+     *  根据Id获取BroadbandProduct实体
+     */
+    function ajaxBroadbandProductEntity(broadbandProductId, vm) {
         $.ajax({
-            url: "/Task/XuFei/Show",
+            url: "/System/Broadband/Show",
             type: "post",
             dataType: "json",
-            data: {'broadbandId': broadbandId},
+            data: {'broadbandProductId': broadbandProductId},
             success: function (data) {
-                vm.broadband = {customer: {}};
-                vm.broadband = new Broadband(data);
+                vm.broadbandProduct = {};
+                vm.broadbandProduct = new BroadbandProduct(data);
 
             },
             error: function () {
-                alert(error);
+                alert("error");
             }
         });
     }
-
 
 
     $(function () {
@@ -328,7 +318,7 @@
             },
             onPageChanged: function (event, oldPage, newPage) {
                 vm.nowPage = newPage;
-                ajaxBroadbands(vm);
+                ajaxBroadbandProductList(vm);
             }
         });
 
@@ -343,15 +333,15 @@
                 xuFeiType: "未续费",
                 systemType: "全部"
             },
-            page:{
+            page: {
                 nowPage: 1,
                 totalPages: 1,
                 totalCounts: 1
             },
             broadbandProducts: [],
-            broadbandProduct : new BroadbandProduct(),
-            openModal: function (broadbandId) {
-                ajaxBroadband(broadbandId, this);
+            broadbandProduct: {},
+            openModal: function (broadbandProductId) {
+                ajaxBroadbandProductEntity(broadbandProductId, this);
             }
         });
         ajaxBroadbandProductList(vm);
@@ -359,6 +349,16 @@
         avalon.scan(document.body);
 
 
+        $('#addBroadbandProductButton').on('show.bs.modal', function(){
+            vm.broadbandProduct.broadbandProductId = 0;
+            vm.broadbandProduct.broadbandProductType = "";
+            vm.broadbandProduct.broadbandProductName = "";
+            vm.broadbandProduct.broadbandProductState = "";
+            vm.broadbandProduct.broadbandProductLength = 0;
+            vm.broadbandProduct.broadbandProductDeposit = 0;
+            vm.broadbandProduct.broadbandProductMonthly = 0;
+            vm.broadbandProduct.broadbandProductDownloadSpeed = "";
+        });
 
         $('#broadbandProductSubmit').click(function () {
             $.ajax({
