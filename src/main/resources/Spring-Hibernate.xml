@@ -44,6 +44,7 @@
             <tx:method name="do*" propagation="REQUIRED" rollback-for="java.lang.Exception"/>
             <tx:method name="batchUpdate*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
             <tx:method name="manualUpdate*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+            <tx:method name="retentionUpdate*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
             <tx:method name="get*" read-only="true"/>
             <tx:method name="load*" read-only="true"/>
             <tx:method name="find*" read-only="true"/>

@@ -31,4 +31,5 @@ public interface BroadbandService extends BaseService<Broadband, Integer> {
 
     List<Broadband> getBroadbandsWithOptions(String list, String xuFeiType, String systemType);
 
+    Broadband retentionUpdate(Broadband broadband);
 }

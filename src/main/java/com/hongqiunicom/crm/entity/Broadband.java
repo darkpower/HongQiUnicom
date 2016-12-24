@@ -1,7 +1,6 @@
 package com.hongqiunicom.crm.entity;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.JoinColumnOrFormula;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -11,8 +10,6 @@ import java.util.Set;
 
 /**
  * Created by Darkpower on 2016/11/17.
- *
- *
  */
 @SuppressWarnings("serial")
 @Entity
@@ -57,6 +54,12 @@ public class Broadband implements Serializable {
     @JoinColumn(name = "broadband_id")
     private Set<Remark> remasks = new HashSet<Remark>();
 
+    @Column(name = "broadband_retention_date")
+    @Temporal(TemporalType.DATE)
+    private Date broadbandRetentionDate;
+
+    @Column(name = "broadband_retention_content")
+    private String broadbandRetentionContent;
 
     public Integer getBroadbandId() {
         return broadbandId;
@@ -131,6 +134,31 @@ public class Broadband implements Serializable {
         this.remasks = remasks;
     }
 
+
+    public BroadbandProduct getBroadbandProduct() {
+        return broadbandProduct;
+    }
+
+    public void setBroadbandProduct(BroadbandProduct broadbandProduct) {
+        this.broadbandProduct = broadbandProduct;
+    }
+
+    public Date getBroadbandRetentionDate() {
+        return broadbandRetentionDate;
+    }
+
+    public void setBroadbandRetentionDate(Date broadbandRetentionDate) {
+        this.broadbandRetentionDate = broadbandRetentionDate;
+    }
+
+    public String getBroadbandRetentionContent() {
+        return broadbandRetentionContent;
+    }
+
+    public void setBroadbandRetentionContent(String broadbandRetentionContent) {
+        this.broadbandRetentionContent = broadbandRetentionContent;
+    }
+
     public void toPrint() {
         System.out.println("宽带序号：" + this.broadbandId);
         System.out.println("宽带账号：" + this.broadbandAccount);
@@ -139,13 +167,5 @@ public class Broadband implements Serializable {
         System.out.println("宽带系统标识：" + this.broadbandSystemType);
         System.out.println("宽带状态：" + this.broadbandState);
         System.out.println("宽带续费状态：" + this.broadbandXuFeiState);
-    }
-
-    public BroadbandProduct getBroadbandProduct() {
-        return broadbandProduct;
-    }
-
-    public void setBroadbandProduct(BroadbandProduct broadbandProduct) {
-        this.broadbandProduct = broadbandProduct;
     }
 }

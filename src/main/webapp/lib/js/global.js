@@ -8,6 +8,8 @@ function Broadband(data) {
     this.broadbandState = data.broadbandState;
     this.broadbandXuFeiState = data.broadbandXuFeiState;
     this.customer = new Customer(data.customer);
+    this.broadbandRetentionDate = data.broadbandRetentionDate == null ? "-" : data.broadbandRetentionDate;
+    this.broadbandRetentionContent = data.broadbandRetentionContent == null ? "" : data.broadbandRetentionContent;
 }
 
 function Customer(data) {

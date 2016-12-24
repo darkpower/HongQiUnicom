@@ -281,6 +281,15 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
         return broadbandDao.list(this.getCriteriaWithOption(list, xuFeiType, systemType));
     }
 
+    @Override
+    public Broadband retentionUpdate(Broadband broadband) {
+        Broadband oBroadband = broadbandDao.get(broadband.getBroadbandId());
+        oBroadband.setBroadbandRetentionDate(new Date());
+        oBroadband.setBroadbandRetentionContent(broadband.getBroadbandRetentionContent());
+        broadbandDao.update(oBroadband);
+        return oBroadband;
+    }
+
     private DetachedCriteria getCriteriaWithOption(String list, String xuFeiType, String systemType) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Broadband.class);
         switch (list) {
