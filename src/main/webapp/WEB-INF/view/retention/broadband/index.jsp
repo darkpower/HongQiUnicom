@@ -12,6 +12,16 @@
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css"/>
     <link rel="stylesheet" href="/lib/bootstrap-fileinput/css/fileinput.css"/>
     <link rel="stylesheet" href="/lib/css/global.css"/>
+
+
+
+
+
+
+
+
+
+
 </head>
 <body>
 
@@ -112,10 +122,10 @@
 
             <!--  沃店考核指标导航 Start  -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                <div class="optionSwitch list-group" style="margin-top: 0; margin-bottom: 20px;">
                     <a href="#" class="list-group-item active">续约日期</a>
                     <input class="list-group-item date-picker" data-date-format="yyyy-mm" style="width: 100%"
-                           type="text"/>
+                           type="text" />
                     <a id="dateSubmit" class="list-group-item">确定</a>
                 </div>
                 <div class="list-group">
@@ -126,7 +136,7 @@
         </div>
 
 
-        <!-- 模态框（Modal） -->
+        <!-- BroadbandUpdate模态框（Modal） -->
         <div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
@@ -205,7 +215,7 @@
             </div><!-- /.modal -->
         </div>
 
-        <!-- 模态框（Modal） -->
+        <!-- BroadbandRetention模态框（Modal） -->
         <div class="modal fade" id="retentionModal" tabindex="-1" role="dialog" aria-labelledby="retentionModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
