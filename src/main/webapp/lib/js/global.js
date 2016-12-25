@@ -25,25 +25,35 @@ function Customer(data) {
  * @param data
  * @constructor
  */
-function defineBroadbandProduct(){
-    vm.broadbandProduct = {};
-    vm.broadbandProduct.broadbandProductId = 0;
-    vm.broadbandProduct.broadbandProductType = "";
-    vm.broadbandProduct.broadbandProductName = "";
-    vm.broadbandProduct.broadbandProductState = "";
-    vm.broadbandProduct.broadbandProductLength = 0;
-    vm.broadbandProduct.broadbandProductDeposit = 0;
-    vm.broadbandProduct.broadbandProductMonthly = 0;
-    vm.broadbandProduct.broadbandProductDownloadSpeed = "";
+function defineBroadbandProduct(vm) {
+
+    this.makeBroadbandProductWithData = function (data) {
+
+        return this;
+    }
 }
-function BroadbandProduct(data) {
-    this.broadbandProductId = data.broadbandProductId;
-    this.broadbandProductType = data.broadbandProductType;
-    this.broadbandProductName = data.broadbandProductName;
-    this.broadbandProductState = data.broadbandProductState;
-    this.broadbandProductLength = data.broadbandProductLength;
-    this.broadbandProductDeposit = data.broadbandProductDeposit;
-    this.broadbandProductMonthly = data.broadbandProductMonthly;
-    this.broadbandProductDownloadSpeed = data.broadbandProductDownloadSpeed;
+
+function createBroadbandProduct(data){
+    var o = new Object();
+    if(data == null){
+        o.broadbandProductId = 0;
+        o.broadbandProductType = "";
+        o.broadbandProductName = "";
+        o.broadbandProductState = "";
+        o.broadbandProductLength = 0;
+        o.broadbandProductDeposit = 0;
+        o.broadbandProductMonthly = 0;
+        o.broadbandProductDownloadSpeed = "";
+    }else{
+        o.broadbandProductId = data.broadbandProductId;
+        o.broadbandProductType = data.broadbandProductType;
+        o.broadbandProductName = data.broadbandProductName;
+        o.broadbandProductState = data.broadbandProductState;
+        o.broadbandProductLength = data.broadbandProductLength;
+        o.broadbandProductDeposit = data.broadbandProductDeposit;
+        o.broadbandProductMonthly = data.broadbandProductMonthly;
+        o.broadbandProductDownloadSpeed = data.broadbandProductDownloadSpeed;
+    }
+    return o;
 }
 

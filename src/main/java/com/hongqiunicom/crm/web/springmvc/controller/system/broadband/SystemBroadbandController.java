@@ -27,7 +27,6 @@ public class SystemBroadbandController {
     @Resource
     private BroadbandProductService broadbandProductService;
 
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
         return "system/broadband/index";
@@ -46,7 +45,6 @@ public class SystemBroadbandController {
 
     }
 
-
     @RequestMapping(value = "/Update", method = RequestMethod.POST)
     @ResponseBody
     public BroadbandProduct update(@RequestBody BroadbandProduct broadbandProduct, HttpServletRequest request) {
@@ -63,9 +61,22 @@ public class SystemBroadbandController {
     public BroadbandProduct show(HttpServletRequest request) {
 
         BroadbandProduct broadbandProduct = null;
-try{        broadbandProduct = broadbandProductService.get(Integer.parseInt(request.getParameter("broadbandProductId")));}catch(Exception e){
-    e.printStackTrace();
-}
+        try {
+            broadbandProduct = broadbandProductService.get(Integer.parseInt(request.getParameter("broadbandProductId")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return broadbandProduct;
+    }
+
+    @RequestMapping(value = "/Delete", method = RequestMethod.POST)
+    @ResponseBody
+    public Boolean delete(HttpServletRequest request) {
+        try {
+            broadbandProductService.delete(Integer.parseInt(request.getParameter("broadbandProductId")));
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

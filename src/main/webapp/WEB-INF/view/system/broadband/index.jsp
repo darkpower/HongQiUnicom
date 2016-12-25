@@ -55,16 +55,17 @@
             <div id="tableData" class="col-xs-12 col-sm-9">
 
                 <div class="col-sm-12 pull-left">
-                    <input id="addBroadbandProductButton" class="btn btn-primary pull-right" data-toggle="modal" data-target="#myModal" value="添加宽带产品"/>
+                    <input id="addBroadbandProductButton" class="btn btn-primary pull-right" value="添加宽带产品"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th style="width: 15%">宽带产品名称</th>
+                            <th>宽带产品名称</th>
                             <th>合约期</th>
                             <th>首付</th>
                             <th>月供</th>
+                            <th>状态</th>
                             <th>相关操作</th>
                         </tr>
                         </thead>
@@ -74,9 +75,12 @@
                             <td>{{$broadbandProduct.broadbandProductLength == null ? "" : $broadbandProduct.broadbandProductLength }}</td>
                             <td>{{$broadbandProduct.broadbandProductDeposit == null ? "" : $broadbandProduct.broadbandProductDeposit }}</td>
                             <td>{{$broadbandProduct.broadbandProductMonthly == null ? "" : $broadbandProduct.broadbandProductMonthly }}</td>
+                            <td>{{$broadbandProduct.broadbandProductState == null ? "" : $broadbandProduct.broadbandProductState }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default pull-left" data-toggle="modal" data-target="#myModal" ms-click="@openModal($broadbandProduct.broadbandProductId)">修改</button>
-                                <button option="manual" class="btn-block btn-default pull-left" ms-click="@deleteBroadbandProduct($broadbandProduct.broadbandProductId)">删除</button>
+                                <div class="btn-group">
+                                    <button class="btn btn-default" data-toggle="modal" data-target="#myModal" ms-click="@updateBroadbandProduct($broadbandProduct.broadbandProductId)">修改</button>
+                                    <button class="btn btn-default" ms-click="@deleteBroadbandProduct($broadbandProduct.broadbandProductId)">删除</button>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -280,9 +284,27 @@
             dataType: "json",
             data: {'broadbandProductId': broadbandProductId},
             success: function (data) {
-                vm.broadbandProduct = {};
-                vm.broadbandProduct = new BroadbandProduct(data);
+                vm.broadbandProduct = createBroadbandProduct(data);
 
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+
+    /**
+     *  根据Id删除BroadbandProduct
+     */
+    function ajaxBroadbandProductDelete(broadbandProductId, vm){
+        $.ajax({
+            url: "/System/Broadband/Delete",
+            type: "post",
+            dataType: "json",
+            data: {'broadbandProductId': broadbandProductId},
+            success: function (data) {
+                ajaxBroadbandProductList(vm);
+                alert("success");
             },
             error: function () {
                 alert("error");
@@ -339,25 +361,21 @@
                 totalCounts: 1
             },
             broadbandProducts: [],
-            broadbandProduct: {},
-            openModal: function (broadbandProductId) {
+            broadbandProduct: createBroadbandProduct(null),
+            updateBroadbandProduct: function (broadbandProductId) {
                 ajaxBroadbandProductEntity(broadbandProductId, this);
+            },
+            deleteBroadbandProduct: function (broadbandProductId){
+                ajaxBroadbandProductDelete(broadbandProductId, this);
             }
         });
         ajaxBroadbandProductList(vm);
         ajaxBroadbandProductPage(vm);
         avalon.scan(document.body);
 
-
-        $('#addBroadbandProductButton').on('show.bs.modal', function(){
-            vm.broadbandProduct.broadbandProductId = 0;
-            vm.broadbandProduct.broadbandProductType = "";
-            vm.broadbandProduct.broadbandProductName = "";
-            vm.broadbandProduct.broadbandProductState = "";
-            vm.broadbandProduct.broadbandProductLength = 0;
-            vm.broadbandProduct.broadbandProductDeposit = 0;
-            vm.broadbandProduct.broadbandProductMonthly = 0;
-            vm.broadbandProduct.broadbandProductDownloadSpeed = "";
+        $('#addBroadbandProductButton').click(function () {
+            vm.broadbandProduct = createBroadbandProduct(null);
+            $('#myModal').modal('show');
         });
 
         $('#broadbandProductSubmit').click(function () {
@@ -368,6 +386,7 @@
                 dataType: "json",
                 data: JSON.stringify(vm.broadbandProduct),
                 success: function () {
+                    ajaxBroadbandProductList(vm);
                     alert("success");
                 },
                 error: function () {
