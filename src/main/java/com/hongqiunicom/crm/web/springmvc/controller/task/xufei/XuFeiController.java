@@ -114,6 +114,12 @@ public class XuFeiController {
         return broadbandService.manualUpdate(broadband);
     }
 
+    @RequestMapping(value = "/Retention", method = RequestMethod.POST)
+    @ResponseBody
+    public Broadband retention(@RequestBody Broadband broadband, HttpServletRequest request) {
+        return broadbandService.retentionUpdate(broadband);
+    }
+
 
     @RequestMapping(value = "/Export", method = RequestMethod.POST)
     public ModelAndView export(ModelMap model, HttpServletRequest request) {
