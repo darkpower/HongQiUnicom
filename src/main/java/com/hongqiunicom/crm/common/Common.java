@@ -91,6 +91,16 @@ public class Common {
         return totalPage;
     }
 
+    public static Date getDateWithString(String format, String date){
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try{
+            return sdf.parse(date);
+        }catch(ParseException e){
+            System.out.println("日期转换Exception");
+            return null;
+        }
+    }
+
     public static Date getMonthFirstDayWithString(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Calendar calendar = Calendar.getInstance();
@@ -102,6 +112,9 @@ public class Common {
         calendar.set(Calendar.DAY_OF_MONTH, 1);
         return calendar.getTime();
     }
+
+
+
 
     public static Date getMonthLastDayWithString(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");

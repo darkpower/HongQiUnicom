@@ -58,7 +58,7 @@
                            data-show-preview="false">
                 </div>
                 <div class="col-sm-6 pull-left">
-                    {{@option.list}}　中　{{@option.xuFeiType}} 共　{{@totalCounts}}　户
+                    {{@option.list}}　中　{{@option.xuFeiType}} 共　{{@page.totalCounts}}　户
                     <input id="exportExcelButton" type="submit" class="btn btn-primary" value="导出Excel"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
@@ -228,79 +228,11 @@
 <script src="/lib/js/global.js"></script>
 <script>
 
-    function ajaxBroadbandsTotalPages(vm) {
-        $.ajax({
-            url: "/Task/XuFei/Page",
-            type: "post",
-            dataType: "json",
-            data: {
-                'list': vm.option.list,
-                'xuFeiType': vm.option.xuFeiType,
-                'systemType': vm.option.systemType
-            },
-            success: function (data) {
-                vm.totalCounts = data;
-                vm.totalPages = data / 10;
-                if (vm.totalCounts % 10 != 0) {
-                    vm.totalPages++;
-                }else if(vm.totalCounts == 0){
-                    vm.totalPages++;
-                }
-                var options = {
-                    bootstrapMajorVersion: 3,
-                    currentPage: vm.nowPage,//当前页面
-                    totalPages: vm.totalPages, //总页数
-                    numberOfPages: 10//一页显示几个按钮（在ul里面生成5个li）
-                }
-                $('#page').bootstrapPaginator("setOptions", options);
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    }
-
-    function ajaxBroadband(broadbandId, vm) {
-        $.ajax({
-            url: "/Task/XuFei/Show",
-            type: "post",
-            dataType: "json",
-            data: {'broadbandId': broadbandId},
-            success: function (data) {
-                vm.broadband = {customer: {}};
-                vm.broadband = new Broadband(data);
-
-            },
-            error: function (data) {
-                alert(error);
-            }
-        });
-    }
-
-    function ajaxBroadbands(vm) {
-
-        $.ajax({
-            url: "/Task/XuFei/List",
-            type: "post",
-            dataType: "json",
-            data: {
-                'page': vm.nowPage,
-                'list': vm.option.list,
-                'xuFeiType': vm.option.xuFeiType,
-                'systemType': vm.option.systemType
-            },
-            success: function (data) {
-                vm.broadbands = [];
-                vm.broadbands = data;
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    }
-
     $(function () {
 
+        /**
+         *  初始化上传控件
+         */
         $("#excelFileUploadInput").fileinput({
             language: "zh",
             uploadUrl: "/Task/XuFei/Upload",
@@ -308,15 +240,6 @@
             maxFileSize: 0,
             enctype: 'multipart/form-data'
         });
-
-        $('#excelFileUploadInput').on('fileerror', function (event, data, msg) {
-        });
-
-        $("#excelFileUploadInput").on("fileuploaded", function (event, data, previewId, index) {
-        });
-
-        $('')
-
 
         //初始化分页
         $("#page").bootstrapPaginator({
@@ -339,13 +262,15 @@
                 }
             },
             onPageChanged: function (event, oldPage, newPage) {
-                vm.nowPage = newPage;
-                ajaxBroadbands(vm);
+                vm.page.nowPage = newPage;
+                Broadband.ajaxGetListByOption(vm);
             }
         });
 
 
-//        初始化avalon
+        /**
+         *  初始化avalon
+         */
         var vm = avalon.define({
             $id: "broadband_list",
             option: {
@@ -353,20 +278,21 @@
                 xuFeiType: "未续费",
                 systemType: "全部"
             },
-            nowPage: 1,
-            totalPages: 1,
-            totalCounts: 1,
-            broadband: {customer: {}},
+            page : {
+                nowPage: 1,
+                totalPages: 1,
+                totalCounts: 1
+            },
+            broadband: new Broadband(),
             broadbands: [],
             openModal: function (broadbandId) {
-                ajaxBroadband(broadbandId, this);
+                Broadband.ajaxGetEntityById(broadbandId, vm);
             }
         });
-        ajaxBroadbands(vm);
-        ajaxBroadbandsTotalPages(vm);
-
-
+        Broadband.ajaxGetListByOption(vm);
+        Broadband.ajaxGetPageByOption(vm);
         avalon.scan(document.body);
+
 
         $('.optionSwitch a').click(function () {
             $(this).nextAll().removeClass("active");
@@ -375,27 +301,13 @@
             vm.option.list = $(this).attr("list") != null ? $(this).attr("list") : vm.option.list;
             vm.option.xuFeiType = $(this).attr("xuFeiType") != null ? $(this).attr("xuFeiType") : vm.option.xuFeiType;
             vm.option.systemType = $(this).attr("systemType") != null ? $(this).attr("systemType") : vm.option.systemType;
-            vm.nowPage = 1;
-            ajaxBroadbandsTotalPages(vm);
-            ajaxBroadbands(vm);
+            vm.page.nowPage = 1;
+            Broadband.ajaxGetListByOption(vm);
+            Broadband.ajaxGetPageByOption(vm);
         });
 
         $('#saveBroadbandButton').click(function () {
-
-
-            $.ajax({
-                url: "/Task/XuFei/Update",
-                type: "post",
-                contentType: "application/json",
-                dataType: "json",
-                data: JSON.stringify(vm.broadband),
-                success: function (data) {
-                    alert("success");
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
+            Broadband.ajaxModifyEntity(vm);
         });
 
         $('#exportExcelButton').click(function () {

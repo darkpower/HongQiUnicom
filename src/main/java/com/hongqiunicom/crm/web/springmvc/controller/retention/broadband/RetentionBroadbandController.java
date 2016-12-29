@@ -40,7 +40,7 @@ public class RetentionBroadbandController {
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     @ResponseBody
     public List<Broadband> list(HttpServletRequest request) {
-        return broadbandService.getBroadbandPageWithOption(10, Integer.parseInt(request.getParameter("page")), "全部宽带续费清单", "已续费", "全部", request.getParameter("date")).getList();
+        return broadbandService.getBroadbandPageWithOptions(10, Integer.parseInt(request.getParameter("page")), "全部宽带续费清单", "已续费", "全部", request.getParameter("date")).getList();
     }
 
 

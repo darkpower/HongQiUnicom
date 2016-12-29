@@ -1,6 +1,7 @@
 package com.hongqiunicom.crm.dao;
 
 import com.hongqiunicom.crm.entity.Business;
+import com.hongqiunicom.crm.entity.BusinessType;
 
 /**
  * Created by Darkpower on 2016/11/19.
@@ -8,7 +9,7 @@ import com.hongqiunicom.crm.entity.Business;
  *
  */
 
-public interface BusinessDao extends BaseDao<Business, Integer>{
+public interface BusinessTypeDao extends BaseDao<BusinessType, Integer>{
 
 
 }

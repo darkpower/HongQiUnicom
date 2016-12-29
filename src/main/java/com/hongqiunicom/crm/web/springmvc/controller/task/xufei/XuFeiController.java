@@ -43,33 +43,8 @@ public class XuFeiController {
         return "task/xufei/index";
     }
 
-    @RequestMapping(value = "/Page", method = RequestMethod.POST)
-    @ResponseBody
-    public Integer page(HttpServletRequest request) {
-        String list = request.getParameter("list");
-        String xuFeiType = request.getParameter("xuFeiType");
-        String systemType = request.getParameter("systemType");
-        return broadbandService.getCountsWithOptions(list, xuFeiType, systemType);
 
-    }
 
-    @RequestMapping(value = "/List", method = RequestMethod.POST)
-    @ResponseBody
-    public List<Broadband> list(HttpServletRequest request) {
-        String list = request.getParameter("list");
-        String xuFeiType = request.getParameter("xuFeiType");
-        String systemType = request.getParameter("systemType");
-        return broadbandService.getBroadbandPageWithOption(10, Integer.parseInt(request.getParameter("page")), list, xuFeiType, systemType).getList();
-    }
-
-    @RequestMapping(value = "/Show", method = RequestMethod.POST)
-    @ResponseBody
-    public Broadband show(HttpServletRequest request) {
-        Broadband broadband = broadbandService.get(Integer.parseInt(request.getParameter("broadbandId")));
-        if (broadband.getCustomer() == null)
-            broadband.setCustomer(new Customer());
-        return broadband;
-    }
 
     @RequestMapping(value = "/Upload", method = RequestMethod.POST)
     @ResponseBody
@@ -108,11 +83,6 @@ public class XuFeiController {
 
     }
 
-    @RequestMapping(value = "/Update", method = RequestMethod.POST)
-    @ResponseBody
-    public Broadband update(@RequestBody Broadband broadband, HttpServletRequest request) {
-        return broadbandService.manualUpdate(broadband);
-    }
 
     @RequestMapping(value = "/Retention", method = RequestMethod.POST)
     @ResponseBody

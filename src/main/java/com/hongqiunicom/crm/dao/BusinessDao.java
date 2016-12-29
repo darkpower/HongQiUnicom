@@ -1,8 +1,6 @@
 package com.hongqiunicom.crm.dao;
 
-import com.hongqiunicom.crm.entity.Broadband;
-
-import java.util.List;
+import com.hongqiunicom.crm.entity.Business;
 
 /**
  * Created by Darkpower on 2016/11/19.
@@ -10,7 +8,7 @@ import java.util.List;
  *
  */
 
-public interface BroadbandDao extends BaseDao<Broadband, Integer>{
+public interface BusinessDao extends BaseDao<Business, Integer>{
 
 
 }

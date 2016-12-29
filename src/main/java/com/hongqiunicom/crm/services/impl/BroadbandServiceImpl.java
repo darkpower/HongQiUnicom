@@ -257,7 +257,7 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
     }
 
     @Override
-    public Page<Broadband> getBroadbandPageWithOption(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType) {
+    public Page<Broadband> getBroadbandPageWithOptions(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType) {
 
 
         Page<Broadband> page = new Page<Broadband>();
@@ -268,7 +268,7 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
     }
 
     @Override
-    public Page<Broadband> getBroadbandPageWithOption(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType, String date) {
+    public Page<Broadband> getBroadbandPageWithOptions(Integer pageSize, Integer nowPage, String list, String xuFeiType, String systemType, String date) {
         Page<Broadband> page = new Page<Broadband>();
         page.setOrderBy("broadbandExpireDate");
         page.setPageSize(pageSize);

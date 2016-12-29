@@ -56,10 +56,11 @@
             <div id="tableData" class="col-xs-12 col-sm-9">
 
                 <div class="col-sm-6 pull-left">
-                </div>
-                <div class="col-sm-6 pull-left">
                     <input id="excelFileUploadInput" name="excelFile" type="file" class="file-loading"
                            data-show-preview="false">
+                </div>
+                <div class="col-sm-6 pull-left">
+
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
@@ -207,82 +208,11 @@
 <script src="/lib/js/global.js"></script>
 <script>
 
-    function ajaxBroadbandsTotalPages(vm) {
-        $.ajax({
-            url: "/Task/XuFei/Page",
-            type: "post",
-            dataType: "json",
-            data: {
-                'list': vm.option.list,
-                'xuFeiType': vm.option.xuFeiType,
-                'systemType': vm.option.systemType
-            },
-            success: function (data) {
-                vm.totalCounts = data;
-                vm.totalPages = data / 10;
-                if (vm.totalCounts % 10 != 0) {
-                    vm.totalPages++;
-                } else if (vm.totalCounts == 0) {
-                    vm.totalPages++;
-                }
-                var options = {
-                    bootstrapMajorVersion: 3,
-                    currentPage: vm.nowPage,//当前页面
-                    totalPages: vm.totalPages, //总页数
-                    numberOfPages: 10//一页显示几个按钮（在ul里面生成5个li）
-                }
-                $('#page').bootstrapPaginator("setOptions", options);
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    }
-
-    function ajaxBroadband(broadbandId, vm) {
-        $.ajax({
-            url: "/Task/XuFei/Show",
-            type: "post",
-            dataType: "json",
-            data: {'broadbandId': broadbandId},
-            success: function (data) {
-                vm.broadband = {customer: {}};
-                vm.broadband = new Broadband(data);
-
-            },
-            error: function (data) {
-                alert(error);
-            }
-        });
-    }
-
-    function ajaxBroadbands(vm) {
-
-        $.ajax({
-            url: "/Task/XuFei/List",
-            type: "post",
-            dataType: "json",
-            data: {
-                'page': vm.nowPage,
-                'list': vm.option.list,
-                'xuFeiType': vm.option.xuFeiType,
-                'systemType': vm.option.systemType
-            },
-            success: function (data) {
-                vm.broadbands = [];
-                vm.broadbands = data;
-            },
-            error: function () {
-                alert("error");
-            }
-        });
-    }
-
     $(function () {
 
         $("#excelFileUploadInput").fileinput({
             language: "zh",
-            uploadUrl: "/Task/XuFei/Upload",
+            uploadUrl: "/Business/Day/Upload",
             allowedFileExtensions: ['xlsx', 'xls'],
             maxFileSize: 0,
             enctype: 'multipart/form-data'
@@ -329,39 +259,41 @@
         });
 
 
-//        初始化avalon
         var vm = avalon.define({
-            $id: "business_list",
+            $id: "broadband_list",
             option: {
-                list: "次月宽带续费清单",
-                xuFeiType: "未续费",
-                systemType: "全部"
+                list: "全部",
+                startDay: "",
+                endDay: ""
             },
-            nowPage: 1,
-            totalPages: 1,
-            totalCounts: 1,
-            broadband: {customer: {}},
-            broadbands: [],
-            openModal: function (broadbandId) {
-                ajaxBroadband(broadbandId, this);
+            page : {
+                nowPage: 1,
+                totalPages: 1,
+                totalCounts: 1
+            },
+            business : new Business(),
+            businesses : [],
+            openModal: function (businessId) {
+                Business.ajaxGetEntityById(businessId, vm);
             }
         });
-        ajaxBroadbands(vm);
-        ajaxBroadbandsTotalPages(vm);
-
-
+        Business.ajaxGetListByOption(vm);
+        Business.ajaxGetPageByOption(vm);
         avalon.scan(document.body);
+
+
+
 
         $('.optionSwitch a').click(function () {
             $(this).nextAll().removeClass("active");
             $(this).prevAll().removeClass("active");
             $(this).addClass("active");
             vm.option.list = $(this).attr("list") != null ? $(this).attr("list") : vm.option.list;
-            vm.option.xuFeiType = $(this).attr("xuFeiType") != null ? $(this).attr("xuFeiType") : vm.option.xuFeiType;
-            vm.option.systemType = $(this).attr("systemType") != null ? $(this).attr("systemType") : vm.option.systemType;
-            vm.nowPage = 1;
-            ajaxBroadbandsTotalPages(vm);
-            ajaxBroadbands(vm);
+            vm.option.startDay = $("#startDay").val() != null ? $("startDay").val() : vm.option.startDay;
+            vm.option.endDay = $("#endDay").val() != null ? $("endDay").val() : vm.option.endDay;
+            vm.page.nowPage = 1;
+            Business.ajaxGetListByOption(vm);
+            Business.ajaxGetPageByOption(vm);
         });
 
         $('#saveBroadbandButton').click(function () {

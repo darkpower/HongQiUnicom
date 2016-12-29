@@ -17,62 +17,49 @@ import java.util.Set;
  */
 @SuppressWarnings("serial")
 @Entity
-@Table(name = "card_company")
-public class CardCompany implements Serializable {
+@Table(name = "business_type")
+public class BusinessType implements Serializable {
 
     /**
-     *   运营商表主键
-     *  cardPackageId      对应      card_package_id
+     *   业务受理类型主键
+     *  businessTypeId      对应      business_type_id
      *  自增长
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "card_company_id")
-    private Integer cardCompanyId;
+    @Column(name = "business_type_id")
+    private Integer businessTypeId;
 
-    @Column(name = "card_company_name")
-    private String cardCompanyName;
 
-    @OneToMany
-    @Cascade(value = {CascadeType.ALL})
-    @JoinColumn(name = "card_company_id")
-    private Set<Card> cards = new HashSet<Card>();
+    @Column(name = "business_type_name")
+    private String businessTypeName;
 
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
-    @JoinColumn(name = "card_company_id")
-    private Set<CardPackage> cardPackages = new HashSet<CardPackage>();
+    @JoinColumn(name = "business_type_id")
+    private Set<Card> Businesses = new HashSet<Card>();
 
-
-    public Integer getCardCompanyId() {
-        return cardCompanyId;
+    public Integer getBusinessTypeId() {
+        return businessTypeId;
     }
 
-    public void setCardCompanyId(Integer cardCompanyId) {
-        this.cardCompanyId = cardCompanyId;
+    public void setBusinessTypeId(Integer businessTypeId) {
+        this.businessTypeId = businessTypeId;
     }
 
-    public String getCardCompanyName() {
-        return cardCompanyName;
+    public String getBusinessTypeName() {
+        return businessTypeName;
     }
 
-    public void setCardCompanyName(String cardCompanyName) {
-        this.cardCompanyName = cardCompanyName;
+    public void setBusinessTypeName(String businessTypeName) {
+        this.businessTypeName = businessTypeName;
     }
 
-    public Set<Card> getCards() {
-        return cards;
+    public Set<Card> getBusinesses() {
+        return Businesses;
     }
 
-    public void setCards(Set<Card> cards) {
-        this.cards = cards;
-    }
-
-    public Set<CardPackage> getCardPackages() {
-        return cardPackages;
-    }
-
-    public void setCardPackages(Set<CardPackage> cardPackages) {
-        this.cardPackages = cardPackages;
+    public void setBusinesses(Set<Card> businesses) {
+        Businesses = businesses;
     }
 }

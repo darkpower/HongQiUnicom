@@ -1,9 +1,7 @@
 package com.hongqiunicom.crm.dao.impl;
 
-import com.hongqiunicom.crm.dao.BroadbandDao;
-import com.hongqiunicom.crm.dao.BusinessDao;
-import com.hongqiunicom.crm.entity.Broadband;
-import com.hongqiunicom.crm.entity.Business;
+import com.hongqiunicom.crm.dao.BusinessTypeDao;
+import com.hongqiunicom.crm.entity.BusinessType;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -11,6 +9,6 @@ import org.springframework.stereotype.Repository;
  */
 
 @Repository
-public class BusinessDaoImpl extends BaseDaoImpl<Business, Integer> implements BusinessDao {
+public class BusinessTypeDaoImpl extends BaseDaoImpl<BusinessType, Integer> implements BusinessTypeDao {
 
 }

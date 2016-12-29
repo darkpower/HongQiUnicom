@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Ajax/Business")
-public class BusinessController {
+public class BusinessItemController {
 
     @Resource
     private BusinessService businessService;
@@ -28,10 +28,13 @@ public class BusinessController {
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     @ResponseBody
     public List<Business> list(HttpServletRequest request) {
-        String list = request.getParameter("list");
+        try{String list = request.getParameter("list");
         String startDay = request.getParameter("startDay");
         String endDay = request.getParameter("endDay");
-        return businessService.getBusinessPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList();
+        return businessService.getBusinessPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList();}catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
