@@ -2,6 +2,7 @@ package com.hongqiunicom.crm.web.springmvc.controller.business.day;
 
 import com.hongqiunicom.crm.common.Util;
 import com.hongqiunicom.crm.services.BroadbandService;
+import com.hongqiunicom.crm.services.BusinessService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +29,7 @@ import java.util.Date;
 public class DayController {
 
     @Resource
-    private BroadbandService broadbandService;
+    private BusinessService businessService;
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -62,7 +63,7 @@ public class DayController {
                 newFile = new File(realPath, newFileName);
                 FileUtils.copyInputStreamToFile(excelFile.getInputStream(), newFile);
             }
-            broadbandService.batchUpdateByExcel(newFile);
+            businessService.batchUpdateByExcel(newFile);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

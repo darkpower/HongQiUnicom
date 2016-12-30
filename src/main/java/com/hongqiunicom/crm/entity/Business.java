@@ -31,7 +31,7 @@ public class Business implements Serializable {
      *  受理时间
      */
     @Column(name = "business_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date businessDate;
 
     /**

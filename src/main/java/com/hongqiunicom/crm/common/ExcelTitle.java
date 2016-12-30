@@ -1,5 +1,7 @@
 package com.hongqiunicom.crm.common;
 
+import java.util.List;
+
 /**
  * Created by Darkpower on 2016/12/7.
  */
@@ -41,4 +43,5 @@ public class ExcelTitle {
     public void setTitleWidth(Integer titleWidth) {
         this.titleWidth = titleWidth;
     }
+
 }

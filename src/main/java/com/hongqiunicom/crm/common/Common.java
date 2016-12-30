@@ -25,7 +25,7 @@ public class Common {
     public static final String PROCESSING = "Processing...";
 
 
-    public static final List<ExcelTitle> getBroadbandExcelTitleList(){
+    public static final List<ExcelTitle> getBroadbandExcelTitleList() {
         List<ExcelTitle> broadbandExcelTitleList = new ArrayList<ExcelTitle>();
         broadbandExcelTitleList.add(new ExcelTitle(0, 3800, "宽带账号"));
         broadbandExcelTitleList.add(new ExcelTitle(1, 2300, "续费状态"));
@@ -38,7 +38,7 @@ public class Common {
         return broadbandExcelTitleList;
     }
 
-    public static final List<ExcelTitle> getCardTempletExcelTitleList(){
+    public static final List<ExcelTitle> getCardTempletExcelTitleList() {
         List<ExcelTitle> cardTempletExcelTitleList = new ArrayList<ExcelTitle>();
         cardTempletExcelTitleList.add(new ExcelTitle(0, 5500, "ICCID"));
         cardTempletExcelTitleList.add(new ExcelTitle(1, 5500, "类型"));
@@ -49,8 +49,6 @@ public class Common {
         cardTempletExcelTitleList.add(new ExcelTitle(6, 5500, "卡费"));
         return cardTempletExcelTitleList;
     }
-
-
 
 
     public static Date getLastMonthFirstDay() {
@@ -82,8 +80,8 @@ public class Common {
     public static Integer getTotalPageFromCount(Integer count) {
         System.out.print("!!!!----一共" + count + "条");
         int totalPage = count / 10;
-        System.out. print("count / 10 = " + totalPage);
-        System.out. print("count % 10 = " + totalPage % 10);
+        System.out.print("count / 10 = " + totalPage);
+        System.out.print("count % 10 = " + totalPage % 10);
 
         if ((count % 10) != 0)
             totalPage++;
@@ -91,11 +89,11 @@ public class Common {
         return totalPage;
     }
 
-    public static Date getDateWithString(String format, String date){
+    public static Date getDateWithString(String format, String date) {
         SimpleDateFormat sdf = new SimpleDateFormat(format);
-        try{
+        try {
             return sdf.parse(date);
-        }catch(ParseException e){
+        } catch (ParseException e) {
             System.out.println("日期转换Exception");
             return null;
         }
@@ -114,8 +112,6 @@ public class Common {
     }
 
 
-
-
     public static Date getMonthLastDayWithString(String date) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
         Calendar calendar = Calendar.getInstance();
@@ -127,4 +123,6 @@ public class Common {
         calendar.set(Calendar.DAY_OF_MONTH, calendar.getActualMaximum(Calendar.DAY_OF_MONTH));
         return calendar.getTime();
     }
+
+
 }

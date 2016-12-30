@@ -2,6 +2,7 @@ package com.hongqiunicom.crm.services.impl;
 
 import com.hongqiunicom.crm.bean.Page;
 import com.hongqiunicom.crm.common.Common;
+import com.hongqiunicom.crm.common.Excel;
 import com.hongqiunicom.crm.dao.BroadbandDao;
 import com.hongqiunicom.crm.dao.CustomerDao;
 import com.hongqiunicom.crm.entity.Broadband;
@@ -38,7 +39,7 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
     public boolean batchUpdateByExcel(File excelFile) {
 
         try {
-            List<Broadband> broadbandList = this.getBroadbandByExcel(excelFile);
+            List<Broadband> broadbandList = Excel.getListByExcel("宽带到期续费清单", excelFile);
             Iterator<Broadband> iterator = broadbandList.iterator();
             while (iterator.hasNext()) {
                 Broadband excelBroadband = iterator.next();
@@ -95,102 +96,6 @@ public class BroadbandServiceImpl extends BaseServiceImpl<Broadband, Integer> im
 
     }
 
-    private List<Broadband> getBroadbandByExcel(File excelFile) {
-        List<Broadband> broadbandList = new ArrayList<Broadband>();
-
-        HashMap<Integer, String> excelTitle = new HashMap<Integer, String>();
-        HSSFWorkbook wb = null;
-        POIFSFileSystem fs = null;
-        try {
-            //设置要读取的文件路径
-            fs = new POIFSFileSystem(excelFile);
-            //HSSFWorkbook相当于一个excel文件，HSSFWorkbook是解析excel2007之前的版本（xls）
-            //之后版本使用XSSFWorkbook（xlsx）
-            wb = new HSSFWorkbook(fs);
-            //获得sheet工作簿
-            HSSFSheet sheet = wb.getSheetAt(0);
-
-            Iterator<Row> rowIterator = sheet.iterator();
-
-            boolean isContent = false;
-
-            while (rowIterator.hasNext()) {
-                Row row = rowIterator.next();
-                //获得行中的列，即单元格
-                if (isContent) {
-                    Broadband broadband = new Broadband();
-                    Customer customer = new Customer();
-                    Iterator<Cell> iterator = row.cellIterator();
-                    while (iterator.hasNext()) {
-                        Cell cell = iterator.next();
-                        SimpleDateFormat simpleDateFormat8 = new SimpleDateFormat("yyyyMMdd");
-                        SimpleDateFormat simpleDateFormat14 = new SimpleDateFormat("yyyyMMddHHmmss");
-
-                        if ("服务号码".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            broadband.setBroadbandAccount(cell.getStringCellValue());
-                        }
-                        if ("宽带到期时间".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            if (cell.getStringCellValue().length() == 8)
-                                broadband.setBroadbandExpireDate(simpleDateFormat8.parse(cell.getStringCellValue()));
-                            else if (cell.getStringCellValue().length() == 14)
-                                broadband.setBroadbandExpireDate(simpleDateFormat14.parse(cell.getStringCellValue()));
-                        }
-                        if ("宽带续费时间".equals(excelTitle.get(cell.getColumnIndex())) && !"".equals(cell.getStringCellValue())) {
-                            if (cell.getStringCellValue().length() == 8)
-                                broadband.setBroadbandRenewalDate(simpleDateFormat8.parse(cell.getStringCellValue()));
-                            else if (cell.getStringCellValue().length() == 14)
-                                broadband.setBroadbandRenewalDate(simpleDateFormat14.parse(cell.getStringCellValue()));
-                        }
-                        if ("用户状态".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            broadband.setBroadbandState(cell.getStringCellValue());
-                        }
-                        if ("系统标识".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            broadband.setBroadbandSystemType(cell.getStringCellValue());
-                        }
-
-                        if ("续费类型名称".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            broadband.setBroadbandXuFeiState(cell.getStringCellValue());
-                        }
-
-                        if ("客户名称".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            customer.setCustomerName(cell.getStringCellValue());
-                        }
-                        if ("身份证号".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            customer.setCustomerCardId(cell.getStringCellValue());
-                        }
-                        if ("联系电话".equals(excelTitle.get(cell.getColumnIndex()))) {
-                            customer.setCustomerTelphone(cell.getStringCellValue());
-                        }
-
-                    }
-                    if (!"".equals(customer.getCustomerName()))
-                        broadband.setCustomer(customer);
-                    if (broadband.getBroadbandAccount() != null && !"".equals(broadband.getBroadbandAccount()))
-                        broadbandList.add(broadband);
-
-                }
-                if (row.getCell(0) != null && "归属地市".equals(row.getCell(0).getStringCellValue())) {
-                    Iterator<Cell> iterator = row.cellIterator();
-                    while (iterator.hasNext()) {
-                        Cell cell = iterator.next();
-                        excelTitle.put(cell.getColumnIndex(), cell.getStringCellValue());
-                    }
-                    isContent = true;
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        Iterator<Broadband> ii = broadbandList.iterator();
-        int iii = 0;
-        while (ii.hasNext()) {
-            Broadband b = ii.next();
-            iii++;
-            System.out.println("|序号|" + iii + "----" + "|宽带账号|" + b.getBroadbandAccount() + "|续费状态|" + b.getBroadbandXuFeiState());
-        }
-        return broadbandList;
-    }
 
     @Override
     public Page<Broadband> getBroadbandPage(Integer pageSize, Integer nowPage) {
