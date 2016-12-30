@@ -35,7 +35,7 @@
                     <li class="active"><a href="/">首页</a></li>
                     <li><a href="/Task/">沃店考核</a></li>
                     <li><a href="/ERP/">进销存</a></li>
-                    <li><a href="/Business/">业务受理明细</a></li>
+                    <li><a href="/Accept/">业务受理明细</a></li>
                     <li><a href="/Retention/">维系挽留</a></li>
                     <li><a href="/System/">系统设置</a></li>
                 </ul>

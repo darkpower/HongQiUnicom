@@ -1009,7 +1009,7 @@
 							th = new Date(Number(ws) + (7 + 4 - ws.getUTCDay()) % 7 * 864e5),
 							// First Thursday of year, year from thursday
 							yth = new Date(Number(yth = UTCDate(th.getUTCFullYear(), 0, 1)) + (7 + 4 - yth.getUTCDay()) % 7 * 864e5),
-							// Calendar week: ms between thursdays, div ms per day, div 7 days
+							// Calendar week: ms between thursdays, div ms per businesses, div 7 days
 							calWeek = (th - yth) / 864e5 / 7 + 1;
 						html.push('<td class="cw">'+ calWeek +'</td>');
 					}
@@ -1196,7 +1196,7 @@
 			}
 
 			if (!target.hasClass('disabled')){
-				// Clicked on a day
+				// Clicked on a businesses
 				if (target.hasClass('day')){
 					day = Number(target.text());
 					year = this.viewDate.getUTCFullYear();
@@ -1347,9 +1347,9 @@
 			else {
 				// For magnitudes >1, move one month at a time...
 				for (var i=0; i < mag; i++)
-					// ...which might decrease the day (eg, Jan 31 to Feb 28, etc)...
+					// ...which might decrease the businesses (eg, Jan 31 to Feb 28, etc)...
 					new_date = this.moveMonth(new_date, dir);
-				// ...then reset the day, keeping it in the new month
+				// ...then reset the businesses, keeping it in the new month
 				new_month = new_date.getUTCMonth();
 				new_date.setUTCDate(day);
 				test = function(){

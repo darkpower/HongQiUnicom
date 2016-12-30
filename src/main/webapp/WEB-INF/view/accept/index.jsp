@@ -111,8 +111,8 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
                 <div class="list-group">
                     <a href="#" class="list-group-item active">业务受理清单</a>
-                    <a href="#" class="list-group-item">月受理明细</a>
-                    <a href="/Business/Day/" class="list-group-item">日受理清单</a>
+                    <a href="#" class="list-group-item">受理明细</a>
+                    <a href="/Accept/Businesses/" class="list-group-item">流水工单</a>
                 </div>
             </div>
             <!--  沃店考核指标导航 End  -->

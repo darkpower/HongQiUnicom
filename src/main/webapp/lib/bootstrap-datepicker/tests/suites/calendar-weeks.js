@@ -21,7 +21,7 @@ test('adds cw header column', function(){
     ok(target.hasClass('cw'), 'First column heading is from cw column');
 });
 
-test('adds calendar week cells to each day row', function(){
+test('adds calendar week cells to each businesses row', function(){
     var target = this.picker.find('.datepicker-days tbody tr');
 
     expect(target.length);

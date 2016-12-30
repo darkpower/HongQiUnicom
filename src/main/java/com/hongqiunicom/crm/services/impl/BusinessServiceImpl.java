@@ -6,6 +6,7 @@ import com.hongqiunicom.crm.common.Excel;
 import com.hongqiunicom.crm.dao.BusinessDao;
 import com.hongqiunicom.crm.dao.BusinessTypeDao;
 import com.hongqiunicom.crm.entity.Business;
+import com.hongqiunicom.crm.entity.BusinessType;
 import com.hongqiunicom.crm.services.BusinessService;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -54,12 +55,18 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
     @Override
     public Boolean batchUpdateByExcel(File excelFile) {
         try {
-            List<Business> businessList = Excel.getListByExcel("帐务动作日志", excelFile);
+            List<Business> businessList = Excel.getListByExcel("序号", excelFile);
             Iterator<Business> iterator = businessList.iterator();
             while (iterator.hasNext()) {
                 Business excelBusiness = iterator.next();
-                Business business = businessDao.get("businessDate", excelBusiness.getBusinessDate());
+                Business business = businessDao.get("businessSerialNumber", excelBusiness.getBusinessSerialNumber());
                 if (business == null) {
+                    BusinessType pBusinessType = businessTypeDao.get("businessTypeName", excelBusiness.getBusinessType().getBusinessTypeName());
+                    if(pBusinessType == null){
+                        businessTypeDao.save(excelBusiness.getBusinessType());
+                    }else{
+                        excelBusiness.setBusinessType(pBusinessType);
+                    }
                     businessDao.save(excelBusiness);
                 }
             }
@@ -78,11 +85,14 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
         switch (list) {
             case "全部":
                 break;
+            case "未分拣":
+                criteria.add(Restrictions.eq("businessState", 1));
+                break;
         }
-        if (!"".equals(startDay) && !"".equals(endDay)) {
-            criteria.add(Restrictions.ge("broadbandRenewalDate", Common.getDateWithString("yyyy-MM-dd", startDay)));
-            criteria.add(Restrictions.le("broadbandRenewalDate", Common.getDateWithString("yyyy-MM-dd", endDay)));
-        }
+//        if (!"".equals(startDay) && !"".equals(endDay)) {
+//            criteria.add(Restrictions.ge("broadbandRenewalDate", Common.getDateWithString("yyyy-MM-dd", startDay)));
+//            criteria.add(Restrictions.le("broadbandRenewalDate", Common.getDateWithString("yyyy-MM-dd", endDay)));
+//        }
         return criteria;
     }
 

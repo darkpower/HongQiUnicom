@@ -372,7 +372,7 @@ test('Selecting date from previous month triggers changeMonth', function() {
         triggered++;
     });
 
-    // find first day of previous month
+    // find first businesses of previous month
     target = this.picker.find('.datepicker-days tbody td:first');
     target.click();
 
@@ -396,7 +396,7 @@ test('Selecting date from previous month in january triggers changeMonth/changeY
         triggeredY++;
     });
 
-    // find first day of previous month
+    // find first businesses of previous month
     target = this.picker.find('.datepicker-days tbody td:first');
     target.click();
 
@@ -413,7 +413,7 @@ test('Selecting date from next month triggers changeMonth', function() {
         triggered++;
     });
 
-    // find first day of previous month
+    // find first businesses of previous month
     target = this.picker.find('.datepicker-days tbody td:last');
     target.click();
 
@@ -437,7 +437,7 @@ test('Selecting date from next month in december triggers changeMonth/changeYear
         triggeredY++;
     });
 
-    // find first day of previous month
+    // find first businesses of previous month
     target = this.picker.find('.datepicker-days tbody td:last');
     target.click();
 

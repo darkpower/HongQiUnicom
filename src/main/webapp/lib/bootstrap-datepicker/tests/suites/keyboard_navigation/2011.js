@@ -42,7 +42,7 @@ test('Regression: by week (up/down arrows); up from Mar 6, 2011 should go to Feb
     equal(target.text(), 'February 2011', 'Title is "February 2011"');
 });
 
-test('Regression: by day (left/right arrows); left from Mar 1, 2011 should go to Feb 28, 2011', function(){
+test('Regression: by businesses (left/right arrows); left from Mar 1, 2011 should go to Feb 28, 2011', function(){
     var target;
 
     this.input.val('01-03-2011').datepicker('update');
@@ -54,7 +54,7 @@ test('Regression: by day (left/right arrows); left from Mar 1, 2011 should go to
     datesEqual(this.dp.dates.get(-1), UTCDate(2011, 2, 1));
     equal(this.dp.focusDate, null);
 
-    // Navigation: -1 day left arrow key
+    // Navigation: -1 businesses left arrow key
     this.input.trigger({
         type: 'keydown',
         keyCode: 37

@@ -1,4 +1,4 @@
-package com.hongqiunicom.crm.web.springmvc.controller.business;
+package com.hongqiunicom.crm.web.springmvc.controller.accept;
 
 import com.hongqiunicom.crm.services.BroadbandService;
 import org.springframework.stereotype.Controller;
@@ -14,8 +14,8 @@ import javax.annotation.Resource;
  */
 
 @Controller
-@RequestMapping("/Business")
-public class BusinessController {
+@RequestMapping("/Accept")
+public class AcceptController {
 
     @Resource
     private BroadbandService broadbandService;
@@ -23,7 +23,7 @@ public class BusinessController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        return "business/index";
+        return "accept/index";
     }
 
 }

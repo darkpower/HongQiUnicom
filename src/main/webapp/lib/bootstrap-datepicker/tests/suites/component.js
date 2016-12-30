@@ -51,7 +51,7 @@ test('simple keyboard nav test', function(){
     // Focus/open
     this.addon.click();
 
-    // Navigation: -1 day, left arrow key
+    // Navigation: -1 businesses, left arrow key
     this.input.trigger({
         type: 'keydown',
         keyCode: 37

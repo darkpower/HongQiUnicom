@@ -140,7 +140,7 @@ test('setDaysOfWeekDisabled - Array', function(){
 test('setDatesDisabled', function(){
     var monthShown = this.picker.find('.datepicker-days thead th.datepicker-switch');
     var returnedObject = this.dp.setDatesDisabled(['01-03-2011']);
-    ok(this.picker.find('.datepicker-days tbody td.day:not(.old):first').hasClass('disabled'), 'day is disabled');
+    ok(this.picker.find('.datepicker-days tbody td.businesses:not(.old):first').hasClass('disabled'), 'businesses is disabled');
     this.dp.setDatesDisabled(['01-01-2011']);
     equal(monthShown.text(), 'March 2011', 'should not change viewDate');
     strictEqual(returnedObject, this.dp, "is chainable");

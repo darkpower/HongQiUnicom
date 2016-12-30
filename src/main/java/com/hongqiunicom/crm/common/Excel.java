@@ -2,6 +2,7 @@ package com.hongqiunicom.crm.common;
 
 import com.hongqiunicom.crm.entity.Broadband;
 import com.hongqiunicom.crm.entity.Business;
+import com.hongqiunicom.crm.entity.BusinessType;
 import com.hongqiunicom.crm.entity.Customer;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -35,7 +36,7 @@ public class Excel {
         Iterator<Row> rowIterator = sheet.iterator();
 
         switch (activeString) {
-            case "帐务动作日志":
+            case "序号":
                 while (rowIterator.hasNext()) {
                     Row row = rowIterator.next();
                     //获得行中的列，即单元格
@@ -45,20 +46,47 @@ public class Excel {
                         while (iterator.hasNext()) {
                             Cell cell = iterator.next();
                             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                            if ("操作时间".equals(excelTitle.get(cell.getColumnIndex()))) {
-                                business.setBusinessDate(simpleDateFormat.parse(cell.getStringCellValue()));
-                            }
-                            if ("服务号码".equals(excelTitle.get(cell.getColumnIndex()))) {
-                                business.setBusinessAccount(cell.getStringCellValue());
-                            }
-                            if ("用户状态".equals(excelTitle.get(cell.getColumnIndex()))) {
-                                business.setBusinessCost(Double.valueOf(Math.abs(Integer.parseInt(cell.getStringCellValue()))));
-                            }
-                        }
-                        oList.add(business);
 
+                            switch (excelTitle.get(cell.getColumnIndex())) {
+                                case "流水号":
+                                    business.setBusinessSerialNumber(cell.getStringCellValue());
+                                    break;
+                                case "设备号码":
+                                    business.setBusinessAccount(cell.getStringCellValue());
+                                    break;
+                                case "服务类型":
+                                    BusinessType businessType = new BusinessType();
+                                    businessType.setBusinessTypeName(cell.getStringCellValue());
+                                    business.setBusinessType(businessType);
+                                    break;
+                                case "备注":
+                                    business.setBusinessDescription(cell.getStringCellValue());
+                                    break;
+                                case "业务受理时间":
+                                    business.setBusinessDate(cell.getDateCellValue());
+                                    break;
+                                case "客户姓名":
+                                    business.setBusinessUserName(cell.getStringCellValue());
+                                    break;
+
+                                default:
+                                    break;
+                            }
+
+                        }
+                        Boolean hasBusiness = false;
+                        Iterator oIterator = oList.iterator();
+                        while (oIterator.hasNext()) {
+                            Business oBusiness = (Business) oIterator.next();
+                            if (business.getBusinessSerialNumber().equals(oBusiness.getBusinessSerialNumber()))
+                                hasBusiness = true;
+                        }
+                        if (!hasBusiness) {
+                            business.setBusinessState(1);
+                            oList.add(business);
+                        }
                     }
-                    if (row.getCell(0) != null && "渠道帐务动作流水号".equals(row.getCell(0).getStringCellValue())) {
+                    if (row.getCell(0) != null && "序号".equals(row.getCell(0).getStringCellValue())) {
                         Iterator<Cell> iterator = row.cellIterator();
                         while (iterator.hasNext()) {
                             Cell cell = iterator.next();

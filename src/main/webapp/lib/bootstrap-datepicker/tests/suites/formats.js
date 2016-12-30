@@ -112,7 +112,7 @@ test('dd-mm-yyyy: Regression: Prevent potential month overflow in small-to-large
     equal(this.input.val(), '31-03-2012');
 });
 
-test('dd-mm-yyyy: Leap day', function(){
+test('dd-mm-yyyy: Leap businesses', function(){
     this.input
         .val('29-02-2012')
         .datepicker({format: 'dd-mm-yyyy'})

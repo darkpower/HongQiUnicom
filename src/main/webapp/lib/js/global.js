@@ -130,7 +130,7 @@ function Customer() {
     return o;
 }
 
-function Business(){
+function Business() {
     var o = new Object();
     o.businessId = 0;
     o.businessDate = "";
@@ -138,7 +138,7 @@ function Business(){
     o.businessAccount = "";
     o.businessCost = 0;
     o.businessState = 0;
-    Business.createEntity = function (data){
+    Business.createEntity = function (data) {
         o.businessId = data.businessId;
         o.businessDate = data.businessDate;
         o.businessType = BusinessType.createEntity(data);
@@ -214,11 +214,11 @@ function Business(){
     return o;
 }
 
-function BusinessType(){
+function BusinessType() {
     var o = new Object();
     o.businessTypeId = 0;
     o.businessTypeName = "";
-    BusinessType.createEntity = function (data){
+    BusinessType.createEntity = function (data) {
         o.businessTypeId = data.businessTypeId;
         o.businessTypeName = data.businessTypeName;
         return o;
@@ -226,7 +226,19 @@ function BusinessType(){
     return o;
 }
 
-
+function UnicomOrder() {
+    var o = new Object();
+    o.unicomOrderId = 0;
+    o.unicomOrderDate = "";
+    o.businesses = [];
+    UnicomOrder.createEntity = function (data) {
+        o.unicomOrderId = data.unicomOrderId;
+        o.unicomOrderDate = data.unicomOrderDate;
+        o.businesses = data.businesses;
+        return o;
+    }
+    return o;
+}
 
 
 /**

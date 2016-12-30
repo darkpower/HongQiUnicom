@@ -92,7 +92,7 @@
                             <td>{{$broadband.broadbandXuFeiState }}</td>
                             <td>{{$broadband.broadbandState }}</td>
                             <td>{{$broadband.broadbandSystemType }}</td>
-                            <td>{{$broadband.broadbandExpireDate  | date('yyyy-MM-hh') }}</td>
+                            <td>{{$broadband.broadbandExpireDate  | date('yyyy-MM-dd') }}</td>
                             <td>{{$broadband.customer == null ? "" : $broadband.customer.customerName }}</td>
                             <td>{{$broadband.customer == null ? "" : $broadband.customer.customerTelphone }}</td>
                             <td>

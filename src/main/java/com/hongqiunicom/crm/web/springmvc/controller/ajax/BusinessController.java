@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/Ajax/Business")
-public class BusinessItemController {
+public class BusinessController {
 
     @Resource
     private BusinessService businessService;

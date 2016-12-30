@@ -66,19 +66,26 @@
                     <table id="vmTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th style="width: 15%">受理时间</th>
-                            <th>受理账号</th>
-                            <th>预存款</th>
-                            <th>相关操作</th>
+                            <th width="15%">工单时间</th>
+                            <th width="10%">对应账号</th>
+                            <th width="10%">对应姓名</th>
+                            <th>备注</th>
+                            <th width="18%">相关操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ms-for="($index, $broadband) in @broadbands">
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        <tr ms-for="($index, $business) in @businesses">
+                            <td>{{$business.businessDate | date('yyyy-MM-dd') }}</td>
+                            <td>{{$business.businessAccount }}</td>
+                            <td>{{$business.businessUserName }}</td>
+                            <td>{{$business.businessDescription | truncate(25, '...') }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($broadband.broadbandId)">手工调整</button>
+                                <div class="btn-group">
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#newUnicomOrder"
+                                       ms-click="@updateBroadband($broadband.broadbandId)">生成</a>
+                                    <a class="btn btn-default" data-toggle="modal" data-target="#oldUnicomOrder"
+                                       ms-click="@retentionBroadband($broadband.broadbandId)">并入</a>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -100,16 +107,15 @@
             <!-- 右侧导航内容 Start -->
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
-                <div class="optionSwitch list-group input-group input-medium date-picker input-daterange" data-date-format="yyyy-mm-dd" style="margin-top: 0px; margin-bottom: 20px;">
-                    <input class="list-group-item" style="width: 100%" id="startDay" type="text"/>
-                    <input class="list-group-item" style="width: 100%" id="endDay" type="text"/>
-                    <a class="list-group-item">确定</a>
+                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
+                    <a class="list-group-item" list="全部">全部</a>
+                    <a class="list-group-item active" list="未分拣">未分拣</a>
                 </div>
 
                 <div class="list-group">
                     <a href="#" class="list-group-item">业务受理清单</a>
-                    <a href="#" class="list-group-item">月受理明细</a>
-                    <a href="/Business/Day/" class="list-group-item active">日受理清单</a>
+                    <a href="#" class="list-group-item">受理明细</a>
+                    <a href="/Accept/Businesses/" class="list-group-item active">流水工单</a>
                 </div>
             </div>
             <!-- 右侧导航内容 End -->
@@ -117,70 +123,34 @@
 
 
         <!-- 模态框（Modal） -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade" id="newUnicomOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">手工调整</h4>
+                        <h4 class="modal-title" id="myModalLabel">生成业务受理</h4>
                     </div>
                     <div class="modal-body">
 
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="broadbandAccount" class="col-sm-2 control-label">宽带账号</label>
+                                <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="broadbandAccount" ms-duplex="@broadband.broadbandAccount" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
                                 </div>
-                                <label for="broadbandState" class="col-sm-2 control-label">宽带状态</label>
+                                <label for="unicomOrderDate" class="col-sm-2 control-label">受理时间</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="broadbandState" ms-duplex="@broadband.broadbandState" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="broadbandXuFeiState" class="col-sm-2 control-label">续费状态</label>
-                                <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="broadbandXuFeiState" ms-duplex="@broadband.broadbandXuFeiState">
-                                        <option value="已续费">已续费</option>
-                                        <option value="未续费">未续费</option>
-                                        <option value="有问题">有问题</option>
-                                        <option value="已销号">已销号</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate" disabled>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label for="customerName" class="col-sm-2 control-label">机主姓名</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerName" ms-duplex="@broadband.customer.customerName">
-                                </div>
-                                <label for="customerCardId" class="col-sm-2 control-label">机主证件</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerCardId" ms-duplex="@broadband.customer.customerCardId">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerTelphone" class="col-sm-2 control-label">机主电话</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerTelphone" ms-duplex="@broadband.customer.customerTelphone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerQualityVoice" class="col-sm-2 control-label">次月分钟</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerQualityVoice" ms-duplex="@broadband.customer.customerQualityVoice">
-                                </div>
-                                <label for="customerQualityData" class="col-sm-2 control-label">次月流量</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerQualityData" ms-duplex="@broadband.customer.customerQualityData">
-                                </div>
-                            </div>
+
                         </form>
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="saveBroadbandButton" class="btn btn-primary">保存</button>
+                        <button type="button" id="saveUnicomOrder" class="btn btn-primary">生成</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -212,7 +182,7 @@
 
         $("#excelFileUploadInput").fileinput({
             language: "zh",
-            uploadUrl: "/Business/Day/Upload",
+            uploadUrl: "/Accept/Businesses/Upload",
             allowedFileExtensions: ['xlsx', 'xls'],
             maxFileSize: 0,
             enctype: 'multipart/form-data'
@@ -222,6 +192,8 @@
         });
 
         $("#excelFileUploadInput").on("fileuploaded", function (event, data, previewId, index) {
+            Business.ajaxGetListByOption(vm);
+            Business.ajaxGetPageByOption(vm);
         });
 
         $(".date-picker").datepicker({
@@ -253,26 +225,27 @@
                 }
             },
             onPageChanged: function (event, oldPage, newPage) {
-                vm.nowPage = newPage;
-                ajaxBroadbands(vm);
+                vm.page.nowPage = newPage;
+                Business.ajaxGetListByOption(vm);
             }
         });
 
 
         var vm = avalon.define({
-            $id: "broadband_list",
+            $id: "business_list",
             option: {
-                list: "全部",
+                list: "未分拣",
                 startDay: "",
                 endDay: ""
             },
-            page : {
+            page: {
                 nowPage: 1,
                 totalPages: 1,
                 totalCounts: 1
             },
-            business : new Business(),
-            businesses : [],
+            unicomOrder: new UnicomOrder(),
+            business: new Business(),
+            businesses: [],
             openModal: function (businessId) {
                 Business.ajaxGetEntityById(businessId, vm);
             }
@@ -280,8 +253,6 @@
         Business.ajaxGetListByOption(vm);
         Business.ajaxGetPageByOption(vm);
         avalon.scan(document.body);
-
-
 
 
         $('.optionSwitch a').click(function () {
@@ -296,15 +267,14 @@
             Business.ajaxGetPageByOption(vm);
         });
 
-        $('#saveBroadbandButton').click(function () {
-
-
+        $('#saveUnicomOrder').click(function () {
+            vm.unicomOrder.add(vm.business);
             $.ajax({
-                url: "/Task/XuFei/Update",
+                url: "/Ajax/UnicomOrder/Create",
                 type: "post",
                 contentType: "application/json",
                 dataType: "json",
-                data: JSON.stringify(vm.broadband),
+                data: JSON.stringify(vm.unicomOrder),
                 success: function (data) {
                     alert("success");
                 },

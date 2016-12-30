@@ -1,7 +1,6 @@
-package com.hongqiunicom.crm.web.springmvc.controller.business.day;
+package com.hongqiunicom.crm.web.springmvc.controller.accept.businesses;
 
 import com.hongqiunicom.crm.common.Util;
-import com.hongqiunicom.crm.services.BroadbandService;
 import com.hongqiunicom.crm.services.BusinessService;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,8 @@ import java.util.Date;
  */
 
 @Controller
-@RequestMapping("/Business/Day")
-public class DayController {
+@RequestMapping("/Accept/Businesses")
+public class BusinessesController {
 
     @Resource
     private BusinessService businessService;
@@ -34,7 +33,7 @@ public class DayController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        return "business/day/index";
+        return "accept/businesses/index";
     }
 
     @RequestMapping(value = "/Upload", method = RequestMethod.POST)
@@ -58,7 +57,7 @@ public class DayController {
                 String newFileName = new SimpleDateFormat("yyMMddHHmmss").format(new Date()) + "." + Util.getPostfix(excelFile.getOriginalFilename());
                 System.out.println("新生成文件名为: " + newFileName);
                 //如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
-                String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/business");
+                String realPath = request.getSession().getServletContext().getRealPath("/WEB-INF/upload/accept");
                 //这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
                 newFile = new File(realPath, newFileName);
                 FileUtils.copyInputStreamToFile(excelFile.getInputStream(), newFile);

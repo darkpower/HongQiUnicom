@@ -1058,11 +1058,11 @@ test('startDate', function(){
 
     input.focus();
     target = picker.find('.datepicker-days tbody td:nth(25)');
-    ok(target.hasClass('disabled'), 'Previous day is disabled');
+    ok(target.hasClass('disabled'), 'Previous businesses is disabled');
     target = picker.find('.datepicker-days tbody td:nth(26)');
     ok(!target.hasClass('disabled'), 'Specified date is enabled');
     target = picker.find('.datepicker-days tbody td:nth(27)');
-    ok(!target.hasClass('disabled'), 'Next day is enabled');
+    ok(!target.hasClass('disabled'), 'Next businesses is enabled');
 });
 
 test('endDate', function(){
@@ -1079,11 +1079,11 @@ test('endDate', function(){
 
     input.focus();
     target = picker.find('.datepicker-days tbody td:nth(25)');
-    ok(!target.hasClass('disabled'), 'Previous day is enabled');
+    ok(!target.hasClass('disabled'), 'Previous businesses is enabled');
     target = picker.find('.datepicker-days tbody td:nth(26)');
     ok(!target.hasClass('disabled'), 'Specified date is enabled');
     target = picker.find('.datepicker-days tbody td:nth(27)');
-    ok(target.hasClass('disabled'), 'Next day is disabled');
+    ok(target.hasClass('disabled'), 'Next businesses is disabled');
 });
 
 test('Multidate', function(){
@@ -1645,7 +1645,7 @@ test('updateViewDate', function() {
     equal(monthShown.text(), "May 1945", 'does not change viewDate on `setDate` method');
     input.focus();
     picker.find('.datepicker-days tbody tr td.day.new:first').click();
-    equal(monthShown.text(), "May 1945", 'does not change viewDate if a day in next month is selected');
+    equal(monthShown.text(), "May 1945", 'does not change viewDate if a businesses in next month is selected');
     shouldTriggerChangeMonth = true;
     picker.find('.datepicker-days thead th.next').click();
     equal(monthShown.text(), 'June 1945', 'changing month must still be possible'); // and must trigger `changeMonth` event

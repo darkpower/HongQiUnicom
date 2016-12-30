@@ -21,14 +21,14 @@ module('Keyboard Navigation 2012', {
 });
 
 
-test('by day (right/left arrows)', function(){
+test('by businesses (right/left arrows)', function(){
     var target;
 
     equal(this.dp.viewMode, 0);
     target = this.picker.find('.datepicker-days thead th.datepicker-switch');
     equal(target.text(), 'March 2012', 'Title is "March 2012"');
 
-    // Navigation: -1 day, left arrow key
+    // Navigation: -1 businesses, left arrow key
     this.input.trigger({
         type: 'keydown',
         keyCode: 37
@@ -41,7 +41,7 @@ test('by day (right/left arrows)', function(){
     target = this.picker.find('.datepicker-days thead th.datepicker-switch');
     equal(target.text(), 'March 2012', 'Title is "March 2012"');
 
-    // Navigation: +1 day, right arrow key
+    // Navigation: +1 businesses, right arrow key
     for (var i=0; i<2; i++)
         this.input.trigger({
             type: 'keydown',
@@ -302,7 +302,7 @@ test('by year, v4 (ctrl + shift + up/down arrows)', function(){
     equal(target.text(), 'March 2013', 'Title is "March 2013"');
 });
 
-test('by year, from leap day', function(){
+test('by year, from leap businesses', function(){
     var target;
 
     equal(this.dp.viewMode, 0);
@@ -362,7 +362,7 @@ test('Selection (enter)', function(){
     target = this.picker.find('.datepicker-days thead th.datepicker-switch');
     equal(target.text(), 'March 2012', 'Title is "March 2012"');
 
-    // Navigation: -1 day, left arrow key
+    // Navigation: -1 businesses, left arrow key
     this.input.trigger({
         type: 'keydown',
         keyCode: 37
@@ -399,7 +399,7 @@ test('Selection + hide (enter)', function(){
     target = this.picker.find('.datepicker-days thead th.datepicker-switch');
     equal(target.text(), 'March 2012', 'Title is "March 2012"');
 
-    // Navigation: -1 day, left arrow key
+    // Navigation: -1 businesses, left arrow key
     this.input.trigger({
         type: 'keydown',
         keyCode: 37
