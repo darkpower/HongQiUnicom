@@ -59,32 +59,32 @@
                     <input id="excelFileUploadInput" name="excelFile" type="file" class="file-loading"
                            data-show-preview="false">
                 </div>
-                <div class="col-sm-6 pull-left">
-
+                <div class="col-sm-6 pull-right">
+                    <input id="createAccept" type="button" class="btn btn-default" value="合并生成业务受理"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th width="15%">工单时间</th>
+                            <th></th>
+                            <th width="12%">工单时间</th>
                             <th width="10%">对应账号</th>
-                            <th width="10%">对应姓名</th>
+                            <th width="13%">对应姓名</th>
                             <th>备注</th>
-                            <th width="18%">相关操作</th>
+                            <th width="7%">操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ms-for="($index, $business) in @businesses">
+                            <td><input type="checkbox" name="businessIds" ms-attr="{'value': $business.businessId}"></td>
                             <td>{{$business.businessDate | date('yyyy-MM-dd') }}</td>
                             <td>{{$business.businessAccount }}</td>
-                            <td>{{$business.businessUserName }}</td>
-                            <td>{{$business.businessDescription | truncate(25, '...') }}</td>
+                            <td>{{$business.businessUserName | truncate(5, '…') }}</td>
+                            <td>{{$business.businessDescription | truncate(25, '…') }}</td>
                             <td>
                                 <div class="btn-group">
-                                    <a class="btn btn-default" data-toggle="modal" data-target="#newUnicomOrder"
-                                       ms-click="@updateBroadband($broadband.broadbandId)">生成</a>
                                     <a class="btn btn-default" data-toggle="modal" data-target="#oldUnicomOrder"
-                                       ms-click="@retentionBroadband($broadband.broadbandId)">并入</a>
+                                       ms-click="@openModal($business.businessId)">并入</a>
                                 </div>
                             </td>
                         </tr>
@@ -123,7 +123,7 @@
 
 
         <!-- 模态框（Modal） -->
-        <div class="modal fade" id="newUnicomOrder" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade" id="newUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -144,14 +144,73 @@
                                     <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate" disabled>
                                 </div>
                             </div>
+                            <div>
+                                <div class="table-responsive">
+                                    <table id="selectBusinessTable" class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th width="15%">工单时间</th>
+                                            <th width="10%">对应账号</th>
+                                            <th width="15%">对应姓名</th>
+                                            <th>备注</th>
+                                            <th width="7%">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ms-for="($index, $business) in @selectBusinesses">
+                                            <td>{{$business.businessDate | date('yyyy-MM-dd') }}</td>
+                                            <td>{{$business.businessAccount }}</td>
+                                            <td>{{$business.businessUserName | truncate(5, '…') }}</td>
+                                            <td>{{$business.businessDescription | truncate(25, '…') }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-default" data-toggle="modal" data-target="#oldUnicomOrder"
+                                                       ms-click="@openModal($business.businessId)">删除</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
 
                         </form>
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="saveUnicomOrder" class="btn btn-primary">生成</button>
+                        <button type="button" id="saveUnicomOrderButton" class="btn btn-primary">生成</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="updateUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="updateUnicomOrderLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="updateUnicomOrderLabel">导入现存业务受理</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="updateUnicomOrderId"/>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="updateUnicomOrderSubmitButton" class="btn btn-primary">导入</button>
+                        <button type="button" id="updateUnicomOrderCloseButton" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
@@ -246,14 +305,19 @@
             unicomOrder: new UnicomOrder(),
             business: new Business(),
             businesses: [],
+            selectBusinesses: [],
             openModal: function (businessId) {
                 Business.ajaxGetEntityById(businessId, vm);
+                $('#updateUnicomOrderModal').modal("show");
             }
         });
         Business.ajaxGetListByOption(vm);
         Business.ajaxGetPageByOption(vm);
         avalon.scan(document.body);
 
+        $('#updateUnicomOrderModal').on('hidden.bs.modal', function () {
+            $('updateUnicomOrderId').val("");
+        });
 
         $('.optionSwitch a').click(function () {
             $(this).nextAll().removeClass("active");
@@ -267,8 +331,11 @@
             Business.ajaxGetPageByOption(vm);
         });
 
-        $('#saveUnicomOrder').click(function () {
-            vm.unicomOrder.add(vm.business);
+        $('#saveUnicomOrderButton').click(function () {
+            $.each(vm.selectBusinesses, function (index, item) {
+                vm.unicomOrder.businesses.push(Business.createEntity(item));
+            });
+
             $.ajax({
                 url: "/Ajax/UnicomOrder/Create",
                 type: "post",
@@ -276,12 +343,55 @@
                 dataType: "json",
                 data: JSON.stringify(vm.unicomOrder),
                 success: function (data) {
-                    alert("success");
+                    alert("success,请记录好业务编码");
+                    vm.unicomOrder = data;
+                    Business.ajaxGetListByOption(vm);
+                    Business.ajaxGetPageByOption(vm);
                 },
                 error: function () {
                     alert("error");
                 }
             });
+        });
+
+        $('#updateUnicomOrderSubmitButton').click(function () {
+            $.ajax({
+                url: "/Ajax/UnicomOrder/Update",
+                type: "post",
+                dataType: "json",
+                data: {
+                    "businessId": vm.business.businessId,
+                    "unicomOrderId": $('#updateUnicomOrderId').val()
+                },
+                success: function (data) {
+                    alert("success");
+                    Business.ajaxGetListByOption(vm);
+                    Business.ajaxGetPageByOption(vm);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        });
+
+        $('#updateUnicomOrderCloseButton').click(function () {
+            $('#updateUnicomOrderId').val("");
+        });
+
+        $('#createAccept').click(function () {
+            vm.unicomOrder = new UnicomOrder();
+            vm.selectBusinesses = [];
+            $("input[name='businessIds']:checked").each(function () {
+                var selectId = $(this).val();
+                $.each(vm.businesses, function (index, item) {
+                    if (item.businessId == selectId) {
+                        vm.selectBusinesses.push(item);
+                    }
+                });
+            });
+
+            $("#newUnicomOrderModal").modal("show");
+
         });
 
         $('#exportExcelButton').click(function () {

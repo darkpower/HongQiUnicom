@@ -39,7 +39,7 @@ public class UnicomOrder implements Serializable {
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "unicom_order_id")
-    private Set<Card> Businesses = new HashSet<Card>();
+    private Set<Business> Businesses = new HashSet<Business>();
 
 
     public Integer getUnicomOrderId() {
@@ -58,11 +58,11 @@ public class UnicomOrder implements Serializable {
         this.unicomOrderDate = unicomOrderDate;
     }
 
-    public Set<Card> getBusinesses() {
+    public Set<Business> getBusinesses() {
         return Businesses;
     }
 
-    public void setBusinesses(Set<Card> businesses) {
+    public void setBusinesses(Set<Business> businesses) {
         Businesses = businesses;
     }
 }

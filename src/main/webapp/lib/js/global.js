@@ -52,6 +52,7 @@ function Broadband() {
                 'systemType': vm.option.systemType
             },
             success: function (data) {
+                vm.broadbands = [];
                 vm.broadbands = data;
             },
             error: function () {
@@ -173,6 +174,7 @@ function Business() {
                 'endDay': vm.option.endDay
             },
             success: function (data) {
+                vm.businesses = [];
                 vm.businesses = data;
             },
             error: function () {
@@ -237,15 +239,60 @@ function UnicomOrder() {
         o.businesses = data.businesses;
         return o;
     }
+    UnicomOrder.ajaxGetListByOption = function (vm) {
+        $.ajax({
+            url: "/Ajax/UnicomOrder/List",
+            type: "post",
+            dataType: "json",
+            data: {
+                'page': vm.page.nowPage,
+                'list': vm.option.list,
+                'startDay': vm.option.startDay,
+                'endDay': vm.option.endDay
+            },
+            success: function (data) {
+                vm.unicomOrders = [];
+                vm.unicomOrders = data;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    UnicomOrder.ajaxGetPageByOption = function (vm) {
+        $.ajax({
+            url: "/Ajax/UnicomOrder/Page",
+            type: "post",
+            dataType: "json",
+            data: {
+                'list': vm.option.list,
+                'startDay': vm.option.startDay,
+                'endDay': vm.option.endDay
+            },
+            success: function (data) {
+                vm.page.totalCounts = data;
+                vm.page.totalPages = data / 10;
+                if (vm.page.totalCounts % 10 != 0) {
+                    vm.page.totalPages++;
+                } else if (vm.totalCounts == 0) {
+                    vm.page.totalPages++;
+                }
+                var options = {
+                    bootstrapMajorVersion: 3,
+                    currentPage: vm.page.nowPage,//当前页面
+                    totalPages: vm.page.totalPages, //总页数
+                    numberOfPages: 10//一页显示几个按钮（在ul里面生成5个li）
+                }
+                $('#page').bootstrapPaginator("setOptions", options);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
     return o;
 }
 
-
-/**
- * Json -> BroadbandProduct
- * @param data
- * @constructor
- */
 function defineBroadbandProduct(vm) {
 
     this.makeBroadbandProductWithData = function (data) {
