@@ -1,5 +1,7 @@
 package com.hongqiunicom.crm.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -51,8 +53,10 @@ public class Business implements Serializable {
      *
      *
      */
+
     @ManyToOne
     @JoinColumn(name = "unicom_order_id")
+    @JSONField(serialize=false)
     private UnicomOrder unicomOrder;
 
 
@@ -142,6 +146,7 @@ public class Business implements Serializable {
     public void setBusinessUserName(String businessUserName) {
         this.businessUserName = businessUserName;
     }
+
 
 
     public UnicomOrder getUnicomOrder() {

@@ -33,7 +33,11 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/">首页</a></li>
-                    <li class="active"><a href="/Task/">沃店考核</a></li>
+                    <li><a href="/Task/">沃店考核</a></li>
+                    <li><a href="/ERP/">进销存</a></li>
+                    <li class="active"><a href="/Accept/">业务受理明细</a></li>
+                    <li><a href="/Retention/">维系挽留</a></li>
+                    <li><a href="/System/">系统设置</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="">Default</a></li>
@@ -68,7 +72,7 @@
                         <tr ms-for="($index, $unicomOrder) in @unicomOrders">
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
                             <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
-                            <td>{{$unicomOrder.unicomOrderId }}</td>
+                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td>
                                 <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
@@ -94,32 +98,14 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" list="全部宽带续费清单">全部宽带续费清单</a>
-                    <a class="list-group-item" list="当月宽带续费清单">当月宽带续费清单</a>
-                    <a class="list-group-item active" list="次月宽带续费清单">次月宽带续费清单</a>
+                    <a class="list-group-item" list="全部">全部</a>
+                    <a class="list-group-item active" list="未分拣">未分拣</a>
                 </div>
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" xuFeiType="全部">全部</a>
-                    <a class="list-group-item active" xuFeiType="未续费">未续费</a>
-                    <a class="list-group-item" xuFeiType="已续费">已续费</a>
-                    <a class="list-group-item" xuFeiType="已销号">已销号</a>
-                    <a class="list-group-item" xuFeiType="有问题">有问题</a>
-                </div>
-                <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item active" systemType="全部">全部</a>
-                    <a class="list-group-item" systemType="BSS">BSS</a>
-                    <a class="list-group-item" systemType="CBSS">CBSS</a>
-                </div>
+
                 <div class="list-group">
-                    <a href="#" class="list-group-item">当月沃店考核指标导航</a>
-                    <a href="#" class="list-group-item">当月宽带新装率</a>
-                    <a href="/Task/XuFei/" class="list-group-item active">次月宽带续费率</a>
-                    <a href="#" class="list-group-item">当月宽带融合率</a>
-                    <a href="#" class="list-group-item">当月终端发展率</a>
-                    <a href="#" class="list-group-item">次月合约续约率</a>
-                    <a href="#" class="list-group-item">当月移动业务发展率</a>
-                    <a href="#" class="list-group-item">当月移动业务登网率</a>
-                    <a href="#" class="list-group-item">次月固网欠费回收率</a>
+                    <a href="#" class="list-group-item">业务受理清单</a>
+                    <a href="/Accept/UnicomOrder/" class="list-group-item active">受理明细</a>
+                    <a href="/Accept/Businesses/" class="list-group-item">流水工单</a>
                 </div>
             </div>
             <!-- 右侧导航内容 End -->
@@ -145,23 +131,56 @@
                                 </div>
                                 <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeName" disabled>
+                                    <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName }}</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffName">
+                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
                                         <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
                                     </select>
                                 </div>
                             </div>
+
+                            <div>
+                                <div class="table-responsive">
+                                    <table id="selectBusinessTable" class="table table-striped">
+                                        <thead>
+                                        <tr>
+                                            <th width="15%">工单时间</th>
+                                            <th width="10%">对应账号</th>
+                                            <th width="15%">对应姓名</th>
+                                            <th>备注</th>
+                                            <th width="7%">操作</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr ms-for="($index, $business) in @unicomOrder.businesses">
+                                            <td>{{$business.businessDate | date('yyyy-MM-dd') }}</td>
+                                            <td>{{$business.businessAccount }}</td>
+                                            <td>{{$business.businessUserName | truncate(5, '…') }}</td>
+                                            <td>{{$business.businessDescription | truncate(25, '…') }}</td>
+                                            <td>
+                                                <div class="btn-group">
+                                                    <a class="btn btn-default" data-toggle="modal" data-target="#oldUnicomOrder"
+                                                       ms-click="@openModal($business.businessId)">删除</a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
                         </form>
 
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="saveBroadbandButton" class="btn btn-primary">保存</button>
+                        <button type="button" id="updateUnicomOrderButton" class="btn btn-primary">保存</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -235,6 +254,8 @@
             unicomOrder: new UnicomOrder(),
             unicomOrders: [],
             staffs: [],
+            unicomOrderTypes: [],
+            businesses: [],
             openModal: function (unicomOrderId) {
                 UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
             }
@@ -242,6 +263,7 @@
         UnicomOrder.ajaxGetListByOption(vm);
         UnicomOrder.ajaxGetPageByOption(vm);
         Staff.ajaxGetSelectList(vm);
+        UnicomOrderType.ajaxGetSelectList(vm);
         avalon.scan(document.body);
 
 
@@ -257,8 +279,10 @@
             Broadband.ajaxGetPageByOption(vm);
         });
 
-        $('#saveBroadbandButton').click(function () {
-            Broadband.ajaxModifyEntity(vm);
+        $('#updateUnicomOrderButton').click(function () {
+            UnicomOrder.ajaxModifyEntity(vm);
+            UnicomOrder.ajaxGetListByOption(vm);
+            UnicomOrder.ajaxGetListByOption(vm);
         });
 
         $('#exportExcelButton').click(function () {

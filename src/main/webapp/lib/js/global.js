@@ -243,6 +243,7 @@ function UnicomOrder() {
         o.staff = Staff.createEntity(data.staff);
         return o;
     }
+
     UnicomOrder.ajaxGetEntityById = function (unicomOrderId, vm) {
         $.ajax({
             url: "/Ajax/UnicomOrder/Show",
@@ -253,7 +254,7 @@ function UnicomOrder() {
                 vm.unicomOrder = UnicomOrder.createEntity(data);
             },
             error: function (data) {
-                alert(error);
+                alert("error");
             }
         });
     };
@@ -269,6 +270,7 @@ function UnicomOrder() {
                 'endDay': vm.option.endDay
             },
             success: function (data) {
+                alert(JSON.stringify(data));
                 vm.unicomOrders = [];
                 vm.unicomOrders = data;
             },
@@ -308,6 +310,25 @@ function UnicomOrder() {
             }
         });
     }
+    UnicomOrder.ajaxModifyEntity = function (vm) {
+        $.each(vm.unicomOrder.businesses, function(index, business){
+            business.unicomOrder = null;
+        });
+        $.ajax({
+            url: "/Ajax/UnicomOrder/Update",
+            type: "post",
+            contentType: "application/json",
+            dataType: "json",
+            data: JSON.stringify(vm.unicomOrder),
+            success: function (data) {
+                alert("success");
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    };
+
     return o;
 }
 
@@ -315,13 +336,31 @@ function UnicomOrderType() {
     var o = new Object();
     o.unicomOrderTypeId = 0;
     o.unicomOrderTypeName = "";
+    o.unicomOrderTypeState = 0;
     UnicomOrderType.createEntity = function (data) {
         if (data == null) return new UnicomOrderType();
         else {
             o.unicomOrderTypeId = data.unicomOrderTypeId;
             o.unicomOrderTypeName = data.unicomOrderTypeName;
+            o.unicomOrderTypeState = data.unicomOrderTypeState;
         }
         return o;
+    }
+    UnicomOrderType.ajaxGetSelectList = function (vm) {
+        $.ajax({
+            url: "/Ajax/UnicomOrderType/SelectList",
+            type: "post",
+            dataType: "json",
+            data: {
+            },
+            success: function (data) {
+                vm.unicomOrderTypes = [];
+                vm.unicomOrderTypes = data;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
     }
     return o;
 }
@@ -330,11 +369,13 @@ function Staff() {
     var o = new Object();
     o.staffId = 0;
     o.staffName = "";
+    o.staffState = 0;
     Staff.createEntity = function (data) {
         if (data == null) return new Staff();
         else {
             o.staffId = data.staffId;
             o.staffName = data.staffName;
+            o.staffState = data.staffState;
         }
         return o;
     }

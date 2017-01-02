@@ -15,9 +15,11 @@ public interface UnicomOrderService extends BaseService<UnicomOrder, Integer> {
 
     UnicomOrder createUnicomOrder(UnicomOrder unicomOrder);
 
-    UnicomOrder updateUnicomOrder(Integer unicomOrderId, Integer businessId);
+    UnicomOrder updateUnicomOrderJoinBusiness(Integer unicomOrderId, Integer businessId);
 
     Integer getCountsWithOptions(String list, String startDay, String endDay);
 
     Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String list, String startDay, String endDay);
+
+    UnicomOrder updateUnicomOrder(UnicomOrder unicomOrder);
 }

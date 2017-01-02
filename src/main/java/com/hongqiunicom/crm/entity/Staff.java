@@ -1,5 +1,6 @@
 package com.hongqiunicom.crm.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -24,9 +25,16 @@ public class Staff implements Serializable {
     @Column(name = "staff_name")
     private String staffName;
 
+    /**
+     * 1 = 正常,  2 = 离职
+     */
+    @Column(name = "staff_state")
+    private Integer staffState;
+
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "staff_id")
+    @JSONField(serialize=false)
     private Set<UnicomOrder> unicomOrders = new HashSet<UnicomOrder>();
 
 
@@ -45,5 +53,22 @@ public class Staff implements Serializable {
 
     public void setStaffName(String staffName) {
         this.staffName = staffName;
+    }
+
+
+    public Integer getStaffState() {
+        return staffState;
+    }
+
+    public void setStaffState(Integer staffState) {
+        this.staffState = staffState;
+    }
+
+    public Set<UnicomOrder> getUnicomOrders() {
+        return unicomOrders;
+    }
+
+    public void setUnicomOrders(Set<UnicomOrder> unicomOrders) {
+        this.unicomOrders = unicomOrders;
     }
 }

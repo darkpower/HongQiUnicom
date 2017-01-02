@@ -1,7 +1,7 @@
 package com.hongqiunicom.crm.entity;
 
 
-
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -18,12 +18,12 @@ import java.util.Set;
 @SuppressWarnings("serial")
 @Entity
 @Table(name = "unicom_order_type")
-public class UnicomOrderType implements Serializable {
+public class UnicomOrderType  implements Serializable  {
 
     /**
-     *   业务受理类型主键
-     *  businessTypeId      对应      business_type_id
-     *  自增长
+     * 业务受理类型主键
+     * businessTypeId      对应      business_type_id
+     * 自增长
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,9 +34,13 @@ public class UnicomOrderType implements Serializable {
     @Column(name = "unicom_order_type_name")
     private String unicomOrderTypeName;
 
+    @Column(name = "unicom_order_type_state")
+    private Integer unicomOrderTypeState;
+
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "unicom_order_type_id")
+    @JSONField(serialize=false)
     private Set<UnicomOrder> unicomOrders = new HashSet<UnicomOrder>();
 
 
@@ -47,7 +51,6 @@ public class UnicomOrderType implements Serializable {
     public void setUnicomOrderTypeId(Integer unicomOrderTypeId) {
         this.unicomOrderTypeId = unicomOrderTypeId;
     }
-
 
 
     public Set<UnicomOrder> getUnicomOrders() {
@@ -64,5 +67,13 @@ public class UnicomOrderType implements Serializable {
 
     public void setUnicomOrderTypeName(String unicomOrderTypeName) {
         this.unicomOrderTypeName = unicomOrderTypeName;
+    }
+
+    public Integer getUnicomOrderTypeState() {
+        return unicomOrderTypeState;
+    }
+
+    public void setUnicomOrderTypeState(Integer unicomOrderTypeState) {
+        this.unicomOrderTypeState = unicomOrderTypeState;
     }
 }

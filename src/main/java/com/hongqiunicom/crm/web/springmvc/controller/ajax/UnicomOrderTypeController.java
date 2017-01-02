@@ -1,7 +1,7 @@
 package com.hongqiunicom.crm.web.springmvc.controller.ajax;
 
-import com.hongqiunicom.crm.entity.Staff;
-import com.hongqiunicom.crm.services.StaffService;
+import com.hongqiunicom.crm.entity.UnicomOrderType;
+import com.hongqiunicom.crm.services.UnicomOrderTypeService;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,16 +16,16 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping("/Ajax/Staff")
-public class StaffController {
+@RequestMapping("/Ajax/UnicomOrderType")
+public class UnicomOrderTypeController {
 
     @Resource
-    private StaffService staffService;
+    private UnicomOrderTypeService unicomOrderTypeService;
 
     @RequestMapping(value = "/SelectList", method = RequestMethod.POST)
     @ResponseBody
-    public List<Staff> list(HttpServletRequest request) {
-        List<Staff> list =  staffService.getSelectList();
+    public List<UnicomOrderType> list(HttpServletRequest request) {
+        List<UnicomOrderType> list =  unicomOrderTypeService.getSelectList();
         return list;
     }
 

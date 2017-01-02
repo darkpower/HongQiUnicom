@@ -2,9 +2,13 @@ package com.hongqiunicom.crm.services.impl;
 
 import com.hongqiunicom.crm.bean.Page;
 import com.hongqiunicom.crm.dao.BusinessDao;
+import com.hongqiunicom.crm.dao.StaffDao;
 import com.hongqiunicom.crm.dao.UnicomOrderDao;
+import com.hongqiunicom.crm.dao.UnicomOrderTypeDao;
 import com.hongqiunicom.crm.entity.Business;
+import com.hongqiunicom.crm.entity.Staff;
 import com.hongqiunicom.crm.entity.UnicomOrder;
+import com.hongqiunicom.crm.entity.UnicomOrderType;
 import com.hongqiunicom.crm.services.UnicomOrderService;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -28,13 +32,18 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     @Resource(type = BusinessDao.class)
     private BusinessDao businessDao;
 
+    @Resource(type = UnicomOrderTypeDao.class)
+    private UnicomOrderTypeDao unicomOrderTypeDao;
+
+    @Resource(type = StaffDao.class)
+    private StaffDao staffDao;
+
 
     @Override
     public UnicomOrder createUnicomOrder(UnicomOrder unicomOrder) {
         UnicomOrder newUnicomOrder = new UnicomOrder();
         newUnicomOrder.setUnicomOrderDate(new Date());
         unicomOrderDao.save(newUnicomOrder);
-
         try {
             Iterator<Business> businessIterator = unicomOrder.getBusinesses().iterator();
             while (businessIterator.hasNext()) {
@@ -53,7 +62,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public UnicomOrder updateUnicomOrder(Integer unicomOrderId, Integer businessId) {
+    public UnicomOrder updateUnicomOrderJoinBusiness(Integer unicomOrderId, Integer businessId) {
         Business business = businessDao.get(businessId);
         UnicomOrder unicomOrder = unicomOrderDao.get(unicomOrderId);
         if (business.getBusinessDate().before(unicomOrder.getUnicomOrderDate()))
@@ -90,5 +99,15 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
         return unicomOrderDao.getPage(criteria, page);
+    }
+
+    @Override
+    public UnicomOrder updateUnicomOrder(UnicomOrder unicomOrder) {
+        Staff staff = staffDao.get(unicomOrder.getStaff().getStaffId());
+        UnicomOrderType unicomOrderType = unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId());
+        UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
+        pUnicomOrder.setStaff(staff);
+        pUnicomOrder.setUnicomOrderType(unicomOrderType);
+        return pUnicomOrder;
     }
 }

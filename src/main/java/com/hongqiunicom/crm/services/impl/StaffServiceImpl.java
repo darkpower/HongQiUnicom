@@ -4,6 +4,7 @@ import com.hongqiunicom.crm.dao.StaffDao;
 import com.hongqiunicom.crm.entity.Staff;
 import com.hongqiunicom.crm.services.StaffService;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,6 +28,7 @@ public class StaffServiceImpl extends BaseServiceImpl<Staff, Integer> implements
     @Override
     public List<Staff> getSelectList() {
         DetachedCriteria criteria = DetachedCriteria.forClass(Staff.class);
+        criteria.add(Restrictions.eq("staffState", 1));
         return staffDao.list(criteria
         );
     }

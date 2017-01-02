@@ -50,14 +50,6 @@ public class UnicomOrder implements Serializable {
     private Set<Business> businesses = new HashSet<Business>();
 
 
-    public Integer getUnicomOrderId() {
-        return unicomOrderId;
-    }
-
-    public void setUnicomOrderId(Integer unicomOrderId) {
-        this.unicomOrderId = unicomOrderId;
-    }
-
     public Date getUnicomOrderDate() {
         return unicomOrderDate;
     }
@@ -66,13 +58,6 @@ public class UnicomOrder implements Serializable {
         this.unicomOrderDate = unicomOrderDate;
     }
 
-    public Set<Business> getBusinesses() {
-        return businesses;
-    }
-
-    public void setBusinesses(Set<Business> businesses) {
-        businesses = businesses;
-    }
 
     public UnicomOrderType getUnicomOrderType() {
         return unicomOrderType;
@@ -88,5 +73,21 @@ public class UnicomOrder implements Serializable {
 
     public void setStaff(Staff staff) {
         this.staff = staff;
+    }
+
+    public Set<Business> getBusinesses() {
+        return businesses;
+    }
+
+    public void setBusinesses(Set<Business> businesses) {
+        this.businesses = businesses;
+    }
+
+    public Integer getUnicomOrderId() {
+        return unicomOrderId;
+    }
+
+    public void setUnicomOrderId(Integer unicomOrderId) {
+        this.unicomOrderId = unicomOrderId;
     }
 }

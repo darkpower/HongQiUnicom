@@ -34,7 +34,11 @@
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
                     <li><a href="/">首页</a></li>
-                    <li class="active"><a href="/Task/">沃店考核</a></li>
+                    <li><a href="/Task/">沃店考核</a></li>
+                    <li><a href="/ERP/">进销存</a></li>
+                    <li class="active"><a href="/Accept/">业务受理明细</a></li>
+                    <li><a href="/Retention/">维系挽留</a></li>
+                    <li><a href="/System/">系统设置</a></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     <li class="active"><a href="">Default</a></li>
@@ -114,7 +118,7 @@
 
                 <div class="list-group">
                     <a href="#" class="list-group-item">业务受理清单</a>
-                    <a href="#" class="list-group-item">受理明细</a>
+                    <a href="/Accept/UnicomOrder/" class="list-group-item">受理明细</a>
                     <a href="/Accept/Businesses/" class="list-group-item active">流水工单</a>
                 </div>
             </div>
@@ -356,7 +360,7 @@
 
         $('#updateUnicomOrderSubmitButton').click(function () {
             $.ajax({
-                url: "/Ajax/UnicomOrder/Update",
+                url: "/Ajax/UnicomOrder/Join",
                 type: "post",
                 dataType: "json",
                 data: {
