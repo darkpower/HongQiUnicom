@@ -56,9 +56,7 @@ public class UnicomOrderController extends BaseController {
     }
 
     @RequestMapping(value = "/List", method = RequestMethod.POST)
-    @ResponseBody
     public void list(HttpServletRequest request, HttpServletResponse response) {
-
         String list = request.getParameter("list");
         String startDay = request.getParameter("startDay");
         String endDay = request.getParameter("endDay");

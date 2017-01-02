@@ -270,7 +270,6 @@ function UnicomOrder() {
                 'endDay': vm.option.endDay
             },
             success: function (data) {
-                alert(JSON.stringify(data));
                 vm.unicomOrders = [];
                 vm.unicomOrders = data;
             },
