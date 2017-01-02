@@ -36,10 +36,18 @@ public class UnicomOrder implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date unicomOrderDate;
 
+    @ManyToOne
+    @JoinColumn(name = "unicom_order_type_id")
+    private UnicomOrderType unicomOrderType;
+
+    @ManyToOne
+    @JoinColumn(name = "staff_id")
+    private Staff staff;
+
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "unicom_order_id")
-    private Set<Business> Businesses = new HashSet<Business>();
+    private Set<Business> businesses = new HashSet<Business>();
 
 
     public Integer getUnicomOrderId() {
@@ -59,10 +67,26 @@ public class UnicomOrder implements Serializable {
     }
 
     public Set<Business> getBusinesses() {
-        return Businesses;
+        return businesses;
     }
 
     public void setBusinesses(Set<Business> businesses) {
-        Businesses = businesses;
+        businesses = businesses;
+    }
+
+    public UnicomOrderType getUnicomOrderType() {
+        return unicomOrderType;
+    }
+
+    public void setUnicomOrderType(UnicomOrderType unicomOrderType) {
+        this.unicomOrderType = unicomOrderType;
+    }
+
+    public Staff getStaff() {
+        return staff;
+    }
+
+    public void setStaff(Staff staff) {
+        this.staff = staff;
     }
 }

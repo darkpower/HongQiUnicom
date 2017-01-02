@@ -58,14 +58,20 @@
                         <thead>
                         <tr>
                             <th style="width: 15%">受理日期</th>
+                            <th>受理业务</th>
+                            <th>联系人</th>
+                            <th>受理人</th>
                             <th>相关操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr ms-for="($index, $unicomOrder) in @unicomOrders">
-                            <td>{{$unicomOrder.unicomOrderDate }}</td>
+                            <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
+                            <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
+                            <td>{{$unicomOrder.unicomOrderId }}</td>
+                            <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($broadband.broadbandId)">手工调整</button>
+                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
                             </td>
                         </tr>
                         </tbody>
@@ -133,50 +139,21 @@
 
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="broadbandAccount" class="col-sm-2 control-label">宽带账号</label>
+                                <label for="unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="broadbandAccount" ms-duplex="@broadband.broadbandAccount" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate" disabled>
                                 </div>
-                                <label for="broadbandState" class="col-sm-2 control-label">宽带状态</label>
+                                <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="broadbandState" ms-duplex="@broadband.broadbandState" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeName" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="broadbandXuFeiState" class="col-sm-2 control-label">续费状态</label>
+                                <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="broadbandXuFeiState" ms-duplex="@broadband.broadbandXuFeiState">
-                                        <option value="已续费">已续费</option>
-                                        <option value="未续费">未续费</option>
-                                        <option value="有问题">有问题</option>
-                                        <option value="已销号">已销号</option>
+                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffName">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
                                     </select>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerName" class="col-sm-2 control-label">机主姓名</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerName" ms-duplex="@broadband.customer.customerName">
-                                </div>
-                                <label for="customerCardId" class="col-sm-2 control-label">机主证件</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerCardId" ms-duplex="@broadband.customer.customerCardId">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerTelphone" class="col-sm-2 control-label">机主电话</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerTelphone" ms-duplex="@broadband.customer.customerTelphone">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="customerQualityVoice" class="col-sm-2 control-label">次月分钟</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerQualityVoice" ms-duplex="@broadband.customer.customerQualityVoice">
-                                </div>
-                                <label for="customerQualityData" class="col-sm-2 control-label">次月流量</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerQualityData" ms-duplex="@broadband.customer.customerQualityData">
                                 </div>
                             </div>
                         </form>
@@ -257,12 +234,14 @@
             },
             unicomOrder: new UnicomOrder(),
             unicomOrders: [],
-            openModal: function (broadbandId) {
-                Broadband.ajaxGetEntityById(broadbandId, vm);
+            staffs: [],
+            openModal: function (unicomOrderId) {
+                UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
             }
         });
         UnicomOrder.ajaxGetListByOption(vm);
         UnicomOrder.ajaxGetPageByOption(vm);
+        Staff.ajaxGetSelectList(vm);
         avalon.scan(document.body);
 
 

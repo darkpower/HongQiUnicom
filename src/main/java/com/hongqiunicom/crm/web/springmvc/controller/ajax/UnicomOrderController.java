@@ -20,6 +20,12 @@ public class UnicomOrderController {
     @Resource
     private UnicomOrderService unicomOrderService;
 
+    @RequestMapping(value = "/Show", method = RequestMethod.POST)
+    @ResponseBody
+    public UnicomOrder show(HttpServletRequest request) {
+        return unicomOrderService.get(Integer.parseInt(request.getParameter("unicomOrderId")));
+    }
+
     @RequestMapping(value = "/Create", method = RequestMethod.POST)
     @ResponseBody
     public UnicomOrder create(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {

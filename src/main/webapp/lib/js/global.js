@@ -232,13 +232,31 @@ function UnicomOrder() {
     var o = new Object();
     o.unicomOrderId = 0;
     o.unicomOrderDate = "";
+    o.unicomOrderType = new UnicomOrderType();
+    o.staff = new Staff();
     o.businesses = [];
     UnicomOrder.createEntity = function (data) {
         o.unicomOrderId = data.unicomOrderId;
         o.unicomOrderDate = data.unicomOrderDate;
         o.businesses = data.businesses;
+        o.unicomOrderType = UnicomOrderType.createEntity(data.unicomOrderType);
+        o.staff = Staff.createEntity(data.staff);
         return o;
     }
+    UnicomOrder.ajaxGetEntityById = function (unicomOrderId, vm) {
+        $.ajax({
+            url: "/Ajax/UnicomOrder/Show",
+            type: "post",
+            dataType: "json",
+            data: {'unicomOrderId': unicomOrderId},
+            success: function (data) {
+                vm.unicomOrder = UnicomOrder.createEntity(data);
+            },
+            error: function (data) {
+                alert(error);
+            }
+        });
+    };
     UnicomOrder.ajaxGetListByOption = function (vm) {
         $.ajax({
             url: "/Ajax/UnicomOrder/List",
@@ -292,6 +310,53 @@ function UnicomOrder() {
     }
     return o;
 }
+
+function UnicomOrderType() {
+    var o = new Object();
+    o.unicomOrderTypeId = 0;
+    o.unicomOrderTypeName = "";
+    UnicomOrderType.createEntity = function (data) {
+        if (data == null) return new UnicomOrderType();
+        else {
+            o.unicomOrderTypeId = data.unicomOrderTypeId;
+            o.unicomOrderTypeName = data.unicomOrderTypeName;
+        }
+        return o;
+    }
+    return o;
+}
+
+function Staff() {
+    var o = new Object();
+    o.staffId = 0;
+    o.staffName = "";
+    Staff.createEntity = function (data) {
+        if (data == null) return new Staff();
+        else {
+            o.staffId = data.staffId;
+            o.staffName = data.staffName;
+        }
+        return o;
+    }
+    Staff.ajaxGetSelectList = function (vm) {
+        $.ajax({
+            url: "/Ajax/Staff/SelectList",
+            type: "post",
+            dataType: "json",
+            data: {
+            },
+            success: function (data) {
+                vm.staffs = [];
+                vm.staffs = data;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    return o;
+}
+
 
 function defineBroadbandProduct(vm) {
 
