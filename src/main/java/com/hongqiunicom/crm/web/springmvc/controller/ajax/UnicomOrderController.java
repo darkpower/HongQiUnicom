@@ -2,9 +2,7 @@ package com.hongqiunicom.crm.web.springmvc.controller.ajax;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.hongqiunicom.crm.entity.Staff;
 import com.hongqiunicom.crm.entity.UnicomOrder;
-import com.hongqiunicom.crm.entity.UnicomOrderType;
 import com.hongqiunicom.crm.services.UnicomOrderService;
 import com.hongqiunicom.crm.web.springmvc.controller.BaseController;
 import org.springframework.web.bind.annotation.*;
@@ -12,10 +10,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
- * Created by XieJiaXin on 16-12-24.
+ * Modify by XieJiaXin on 2017-1-3
+ * <p>
+ * UnicomOrderController
  */
 
 @RestController
@@ -34,7 +33,7 @@ public class UnicomOrderController extends BaseController {
 
     @RequestMapping(value = "/Create", method = RequestMethod.POST)
     @ResponseBody
-    public UnicomOrder create(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
+    public UnicomOrder create(@RequestBody UnicomOrder unicomOrder) {
         return unicomOrderService.createUnicomOrder(unicomOrder);
     }
 
@@ -65,7 +64,7 @@ public class UnicomOrderController extends BaseController {
 
     @RequestMapping(value = "/Update", method = RequestMethod.POST)
     @ResponseBody
-    public UnicomOrder update(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
+    public UnicomOrder update(@RequestBody UnicomOrder unicomOrder) {
         return unicomOrderService.updateUnicomOrder(unicomOrder);
 
     }
