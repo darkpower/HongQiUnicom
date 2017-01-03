@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Created by XieJiaXin on 16-12-24.
@@ -27,20 +28,8 @@ public class UnicomOrderController extends BaseController {
     @RequestMapping(value = "/Show", method = RequestMethod.POST)
     @ResponseBody
     public UnicomOrder show(HttpServletRequest request) {
-        UnicomOrder unicomOrder = new UnicomOrder();
-        UnicomOrder pUnicomOrder = unicomOrderService.get(Integer.parseInt(request.getParameter("unicomOrderId")));
-        UnicomOrderType unicomOrderType = new UnicomOrderType();
-        Staff staff = new Staff();
-        unicomOrder.setUnicomOrderId(pUnicomOrder.getUnicomOrderId());
-        unicomOrder.setUnicomOrderDate(pUnicomOrder.getUnicomOrderDate());
-        unicomOrderType.setUnicomOrderTypeId(pUnicomOrder.getUnicomOrderType().getUnicomOrderTypeId());
-        unicomOrderType.setUnicomOrderTypeName(pUnicomOrder.getUnicomOrderType().getUnicomOrderTypeName());
-        staff.setStaffId(pUnicomOrder.getStaff().getStaffId());
-        staff.setStaffName(pUnicomOrder.getStaff().getStaffName());
-        unicomOrder.setUnicomOrderType(unicomOrderType);
-        unicomOrder.setStaff(staff);
-        unicomOrder.setBusinesses(pUnicomOrder.getBusinesses());
-        return unicomOrder;
+
+        return unicomOrderService.get(Integer.parseInt(request.getParameter("unicomOrderId")));
     }
 
     @RequestMapping(value = "/Create", method = RequestMethod.POST)
@@ -61,6 +50,7 @@ public class UnicomOrderController extends BaseController {
         String startDay = request.getParameter("startDay");
         String endDay = request.getParameter("endDay");
         ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
+//        return unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList();
     }
 
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
@@ -76,7 +66,6 @@ public class UnicomOrderController extends BaseController {
     @RequestMapping(value = "/Update", method = RequestMethod.POST)
     @ResponseBody
     public UnicomOrder update(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
-        System.out.println("test" + unicomOrder.getUnicomOrderId());
         return unicomOrderService.updateUnicomOrder(unicomOrder);
 
     }
