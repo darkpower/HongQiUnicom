@@ -1,11 +1,13 @@
 package com.hongqiunicom.crm.web.springmvc.controller.ajax;
 
 import com.hongqiunicom.crm.entity.Business;
+import com.hongqiunicom.crm.entity.UnicomOrder;
 import com.hongqiunicom.crm.services.BusinessService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -51,6 +53,13 @@ public class BusinessController {
     @ResponseBody
     public Business update(@RequestBody Business business, HttpServletRequest request) {
         return businessService.manualUpdate(business);
+    }
+
+    @RequestMapping(value = "/Invalid", method = RequestMethod.POST)
+    @ResponseBody
+    public UnicomOrder invalid(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request){
+        businessService.invalidUpdate(unicomOrder.getBusinesses());
+        return unicomOrder;
     }
 
 

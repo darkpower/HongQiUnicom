@@ -63,14 +63,17 @@
                     <input id="excelFileUploadInput" name="excelFile" type="file" class="file-loading"
                            data-show-preview="false">
                 </div>
-                <div class="col-sm-6 pull-right">
+                <div class="col-sm-3 pull-right">
                     <input id="createAccept" type="button" class="btn btn-default" value="合并生成业务受理"/>
+                </div>
+                <div class="col-sm-3 pull-right">
+                    <input id="invalidBusinesses" type="button" class="btn btn-default" value="非业务工单"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th></th>
+                            <th width="5%"></th>
                             <th width="12%">工单时间</th>
                             <th width="10%">对应账号</th>
                             <th width="13%">对应姓名</th>
@@ -396,6 +399,34 @@
 
             $("#newUnicomOrderModal").modal("show");
 
+        });
+
+        $('#invalidBusinesses').click(function(){
+            var unicomOrder = new UnicomOrder();
+            $("input[name='businessIds']:checked").each(function () {
+                var business = new Business();
+                business.businessId = $(this).val();
+                unicomOrder.businesses.push(business);
+            });
+
+            if(confirm("确认批量注册为非营业工单？")){
+
+                $.ajax({
+                    url: "/Ajax/Business/Invalid",
+                    type: "post",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(unicomOrder),
+                    success: function (data) {
+                        alert("success");
+                        Business.ajaxGetListByOption(vm);
+                        Business.ajaxGetPageByOption(vm);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
         });
 
         $('#exportExcelButton').click(function () {

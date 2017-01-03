@@ -74,7 +74,7 @@ public class Business implements Serializable {
     /**
      * 业务受理状态
      * businessState   对应      business_state
-     * 1 = 系统抽取，   2 = 初次分拣
+     * 1 = 系统抽取，   2 = 初次分拣,    3 = 非营业工单
      */
     @Column(name = "business_state")
     private Integer businessState;

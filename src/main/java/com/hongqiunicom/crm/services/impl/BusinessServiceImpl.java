@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> implements BusinessService {
@@ -77,6 +78,16 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
             return false;
         }
 
+    }
+
+    @Override
+    public Boolean invalidUpdate(Set<Business> businesses) {
+        Iterator<Business> iterator = businesses.iterator();
+        while(iterator.hasNext()){
+            Business pBusiness = businessDao.get(iterator.next().getBusinessId());
+            pBusiness.setBusinessState(3);
+        }
+        return true;
     }
 
 
