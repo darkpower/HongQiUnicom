@@ -125,18 +125,22 @@
 
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
+                                <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
+                                </div>
                                 <label for="unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
                                 </div>
+                            </div>
+                            <div class="form-group">
                                 <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
                                         <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName }}</option>
                                     </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
@@ -231,7 +235,7 @@
             },
             onPageChanged: function (event, oldPage, newPage) {
                 vm.page.nowPage = newPage;
-                Broadband.ajaxGetListByOption(vm);
+                UnicomOrder.ajaxGetListByOption(vm);
             }
         });
 

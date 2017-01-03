@@ -26,9 +26,9 @@ public class UnicomOrderController extends BaseController {
 
     @RequestMapping(value = "/Show", method = RequestMethod.POST)
     @ResponseBody
-    public UnicomOrder show(HttpServletRequest request) {
-
-        return unicomOrderService.get(Integer.parseInt(request.getParameter("unicomOrderId")));
+    public void show(HttpServletRequest request, HttpServletResponse response) {
+//        return unicomOrderService.get(Integer.parseInt(request.getParameter("unicomOrderId")));
+        ajaxJson(JSON.toJSONString(unicomOrderService.get(Integer.parseInt(request.getParameter("unicomOrderId"))), SerializerFeature.DisableCircularReferenceDetect), response);
     }
 
     @RequestMapping(value = "/Create", method = RequestMethod.POST)

@@ -294,7 +294,13 @@ function UnicomOrder() {
             dataType: "json",
             data: {'unicomOrderId': unicomOrderId},
             success: function (data) {
+                vm.unicomOrder = new UnicomOrder();
                 vm.unicomOrder = UnicomOrder.createEntity(data);
+                vm.unicomOrder.businesses.sort(function (a, b) {
+                    var compA = a.businessDate;
+                    var compB = b.businessDate;
+                    return (compA < compB) ? -1 : (compA > compB) ? 1 : 0;
+                });
             },
             error: function (data) {
                 alert("error");
@@ -353,9 +359,6 @@ function UnicomOrder() {
         });
     }
     UnicomOrder.ajaxModifyEntity = function (vm) {
-        $.each(vm.unicomOrder.businesses, function (index, business) {
-            business.unicomOrder = null;
-        });
         $.ajax({
             url: "/Ajax/UnicomOrder/Update",
             type: "post",
