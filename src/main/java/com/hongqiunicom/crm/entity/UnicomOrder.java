@@ -1,7 +1,6 @@
 package com.hongqiunicom.crm.entity;
 
 
-
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -22,9 +21,9 @@ import java.util.Set;
 public class UnicomOrder implements Serializable {
 
     /**
-     *   业务受理类型主键
-     *  businessTypeId      对应      business_type_id
-     *  自增长
+     * 业务受理类型主键
+     * businessTypeId      对应      business_type_id
+     * 自增长
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +34,7 @@ public class UnicomOrder implements Serializable {
     @Column(name = "unicom_order_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date unicomOrderDate;
+
 
     @ManyToOne
     @JoinColumn(name = "unicom_order_type_id")
@@ -47,7 +47,7 @@ public class UnicomOrder implements Serializable {
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "unicom_order_id")
-    private Set<Business> businesses = new HashSet<Business>();
+    private Set<Business> businesses = new HashSet<>();
 
 
     public Date getUnicomOrderDate() {
@@ -90,4 +90,5 @@ public class UnicomOrder implements Serializable {
     public void setUnicomOrderId(Integer unicomOrderId) {
         this.unicomOrderId = unicomOrderId;
     }
+
 }
