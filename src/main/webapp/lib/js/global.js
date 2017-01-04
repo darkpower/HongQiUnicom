@@ -276,6 +276,7 @@ function UnicomOrder() {
     o.unicomOrderId = 0;
     o.unicomOrderDate = "";
     o.unicomOrderState = 0;
+    o.unicomOrderRenewalTag = 0;
     o.unicomOrderType = new UnicomOrderType();
     o.staff = new Staff();
     o.businesses = [];
@@ -283,6 +284,7 @@ function UnicomOrder() {
         o.unicomOrderId = data.unicomOrderId;
         o.unicomOrderDate = data.unicomOrderDate;
         o.unicomOrderState = data.unicomOrderState;
+        o.unicomOrderRenewalTag = data.unicomOrderRenewalTag;
         o.businesses = data.businesses;
         o.unicomOrderType = UnicomOrderType.createEntity(data.unicomOrderType);
         o.staff = Staff.createEntity(data.staff);

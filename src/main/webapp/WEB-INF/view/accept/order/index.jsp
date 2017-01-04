@@ -145,10 +145,11 @@
                                         </option>
                                     </select>
                                 </div>
-                                <label for="staff" class="col-sm-2 control-label">受理人</label>
+                                <label for="unicomOrderRenewalTag" class="col-sm-2 control-label">是否新装</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
-                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    <select type="text" class="form-control" id="unicomOrderRenewalTag" ms-duplex="@unicomOrder.unicomOrderRenewalTag">
+                                        <option value="1">新装</option>
+                                        <option value="2">续费/续约</option>
                                     </select>
                                 </div>
                             </div>
@@ -159,6 +160,12 @@
                                         <option value="1">未完工</option>
                                         <option value="2">已完工</option>
                                         <option value="3">留单</option>
+                                    </select>
+                                </div>
+                                <label for="staff" class="col-sm-2 control-label">受理人</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
                                     </select>
                                 </div>
                             </div>

@@ -44,6 +44,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         UnicomOrder newUnicomOrder = new UnicomOrder();
         newUnicomOrder.setUnicomOrderDate(new Date());
         newUnicomOrder.setUnicomOrderState(1);
+        newUnicomOrder.setUnicomOrderRenewalTag(unicomOrder.getUnicomOrderRenewalTag());
         if (unicomOrder.getUnicomOrderType() != null) newUnicomOrder.setUnicomOrderType(unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId()));
         if (unicomOrder.getStaff() != null) newUnicomOrder.setStaff(staffDao.get(unicomOrder.getStaff().getStaffId()));
         unicomOrderDao.save(newUnicomOrder);
@@ -97,6 +98,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         UnicomOrderType unicomOrderType = unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId());
         UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
         pUnicomOrder.setUnicomOrderState(unicomOrder.getUnicomOrderState());
+        pUnicomOrder.setUnicomOrderRenewalTag(unicomOrder.getUnicomOrderRenewalTag());
         pUnicomOrder.setStaff(staff);
         pUnicomOrder.setUnicomOrderType(unicomOrderType);
         return pUnicomOrder;
