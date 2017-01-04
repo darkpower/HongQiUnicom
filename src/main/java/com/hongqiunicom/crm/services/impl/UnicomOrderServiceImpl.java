@@ -58,7 +58,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
                 newUnicomOrder.getBusinesses().add(business);
             }
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
 
         return newUnicomOrder;
@@ -84,7 +84,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     @Override
     public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state) {
 
-        Page<UnicomOrder> page = new Page<UnicomOrder>();
+        Page<UnicomOrder> page = new Page<>();
         page.setOrderBy("unicomOrderDate");
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
@@ -96,6 +96,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         Staff staff = staffDao.get(unicomOrder.getStaff().getStaffId());
         UnicomOrderType unicomOrderType = unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId());
         UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
+        pUnicomOrder.setUnicomOrderState(unicomOrder.getUnicomOrderState());
         pUnicomOrder.setStaff(staff);
         pUnicomOrder.setUnicomOrderType(unicomOrderType);
         return pUnicomOrder;
