@@ -43,6 +43,9 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     public UnicomOrder createUnicomOrder(UnicomOrder unicomOrder) {
         UnicomOrder newUnicomOrder = new UnicomOrder();
         newUnicomOrder.setUnicomOrderDate(new Date());
+        newUnicomOrder.setUnicomOrderState(1);
+        if (unicomOrder.getUnicomOrderType() != null) newUnicomOrder.setUnicomOrderType(unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId()));
+        if (unicomOrder.getStaff() != null) newUnicomOrder.setStaff(staffDao.get(unicomOrder.getStaff().getStaffId()));
         unicomOrderDao.save(newUnicomOrder);
         try {
             Iterator<Business> businessIterator = unicomOrder.getBusinesses().iterator();
@@ -73,32 +76,19 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public Integer getCountsWithOptions(String list, String startDay, String endDay) {
-        return businessDao.getCount(this.getCriteriaWithOptions(list, startDay, endDay));
+    public Integer getCountsWithOptions(String state) {
+        return businessDao.getCount(this.getCriteriaWithOptions(state));
     }
 
-    private DetachedCriteria getCriteriaWithOptions(String list, String startDay, String endDay) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(UnicomOrder.class);
-        switch (list) {
-            case "全部":
-                break;
-
-        }
-//        if (!"".equals(startDay) && !"".equals(endDay)) {
-//            criteria.add(Restrictions.ge("broadbandRenewalDate", Common.getDateWithString("yyyy-MM-dd", startDay)));
-//            criteria.add(Restrictions.le("broadbandRenewalDate", Common.getDateWithString("yyyy-MM-dd", endDay)));
-//        }
-        return criteria;
-    }
 
     @Override
-    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String list, String startDay, String endDay) {
-        DetachedCriteria criteria = DetachedCriteria.forClass(UnicomOrder.class);
+    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state) {
+
         Page<UnicomOrder> page = new Page<UnicomOrder>();
         page.setOrderBy("unicomOrderDate");
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
-        return unicomOrderDao.getPage(criteria, page);
+        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state), page);
     }
 
     @Override
@@ -109,5 +99,23 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         pUnicomOrder.setStaff(staff);
         pUnicomOrder.setUnicomOrderType(unicomOrderType);
         return pUnicomOrder;
+    }
+
+    private DetachedCriteria getCriteriaWithOptions(String state) {
+        DetachedCriteria criteria = DetachedCriteria.forClass(UnicomOrder.class);
+        switch (state) {
+            case "全部":
+                break;
+            case "未完工":
+                criteria.add(Restrictions.eq("unicomOrderState", 1));
+                break;
+            case "已完工":
+                criteria.add(Restrictions.eq("unicomOrderState", 2));
+                break;
+            case "留单":
+                criteria.add(Restrictions.eq("unicomOrderState", 3));
+                break;
+        }
+        return criteria;
     }
 }

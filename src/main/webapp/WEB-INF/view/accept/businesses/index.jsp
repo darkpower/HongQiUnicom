@@ -146,11 +146,29 @@
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" id="unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
                                 </div>
-                                <label for="unicomOrderDate" class="col-sm-2 control-label">受理时间</label>
+                                <label for="unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
+                                            }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <label for="staff" class="col-sm-2 control-label">受理人</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+
                             <div>
                                 <div class="table-responsive">
                                     <table id="selectBusinessTable" class="table table-striped">
@@ -313,6 +331,8 @@
             business: new Business(),
             businesses: [],
             selectBusinesses: [],
+            staffs: [],
+            unicomOrderTypes: [],
             openModal: function (businessId) {
                 Business.ajaxGetEntityById(businessId, vm);
                 $('#updateUnicomOrderModal').modal("show");
@@ -320,6 +340,8 @@
         });
         Business.ajaxGetListByOption(vm);
         Business.ajaxGetPageByOption(vm);
+        Staff.ajaxGetSelectList(vm);
+        UnicomOrderType.ajaxGetSelectList(vm);
         avalon.scan(document.body);
 
         $('#updateUnicomOrderModal').on('hidden.bs.modal', function () {

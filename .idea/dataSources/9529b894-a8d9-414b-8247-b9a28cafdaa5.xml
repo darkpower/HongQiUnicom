@@ -441,57 +441,60 @@
     <column id="131" parent="21" name="unicom_order_type_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="132" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
+    <column id="132" parent="21" name="unicom_order_state">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <index id="133" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
       <columns>staff_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="133" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
+    <index id="134" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
       <columns>unicom_order_type_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="134" parent="21" name="PRIMARY">
+    <key id="135" parent="21" name="PRIMARY">
       <columns>unicom_order_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="135" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
+    <foreign-key id="136" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
       <columns>staff_id</columns>
       <ref-key>~.staff.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="136" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
+    <foreign-key id="137" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
       <columns>unicom_order_type_id</columns>
       <ref-key>~.unicom_order_type.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="137" parent="22" name="staff_id">
+    <column id="138" parent="22" name="staff_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="138" parent="22" name="staff_name">
+    <column id="139" parent="22" name="staff_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="139" parent="22" name="staff_state">
+    <column id="140" parent="22" name="staff_state">
       <data-type>int(11)|0</data-type>
     </column>
-    <key id="140" parent="22" name="PRIMARY">
+    <key id="141" parent="22" name="PRIMARY">
       <columns>staff_id</columns>
       <primary>1</primary>
     </key>
-    <column id="141" parent="23" name="unicom_order_type_id">
+    <column id="142" parent="23" name="unicom_order_type_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="142" parent="23" name="unicom_order_type_name">
+    <column id="143" parent="23" name="unicom_order_type_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="143" parent="23" name="unicom_order_type_state">
+    <column id="144" parent="23" name="unicom_order_type_state">
       <data-type>int(11)|0</data-type>
     </column>
-    <key id="144" parent="23" name="PRIMARY">
+    <key id="145" parent="23" name="PRIMARY">
       <columns>unicom_order_type_id</columns>
       <primary>1</primary>
     </key>

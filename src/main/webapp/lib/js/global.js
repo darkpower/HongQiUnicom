@@ -275,12 +275,14 @@ function UnicomOrder() {
     var o = new Object();
     o.unicomOrderId = 0;
     o.unicomOrderDate = "";
+    o.unicomOrderState = 0;
     o.unicomOrderType = new UnicomOrderType();
     o.staff = new Staff();
     o.businesses = [];
     UnicomOrder.createEntity = function (data) {
         o.unicomOrderId = data.unicomOrderId;
         o.unicomOrderDate = data.unicomOrderDate;
+        o.unicomOrderState = data.unicomOrderState;
         o.businesses = data.businesses;
         o.unicomOrderType = UnicomOrderType.createEntity(data.unicomOrderType);
         o.staff = Staff.createEntity(data.staff);
@@ -314,9 +316,7 @@ function UnicomOrder() {
             dataType: "json",
             data: {
                 'page': vm.page.nowPage,
-                'list': vm.option.list,
-                'startDay': vm.option.startDay,
-                'endDay': vm.option.endDay
+                'state': vm.option.state
             },
             success: function (data) {
                 vm.unicomOrders = [];
@@ -333,9 +333,7 @@ function UnicomOrder() {
             type: "post",
             dataType: "json",
             data: {
-                'list': vm.option.list,
-                'startDay': vm.option.startDay,
-                'endDay': vm.option.endDay
+                'state': vm.option.state
             },
             success: function (data) {
                 vm.page.totalCounts = data;

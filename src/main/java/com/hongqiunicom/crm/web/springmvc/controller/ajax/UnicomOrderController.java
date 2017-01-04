@@ -45,20 +45,16 @@ public class UnicomOrderController extends BaseController {
 
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     public void list(HttpServletRequest request, HttpServletResponse response) {
-        String list = request.getParameter("list");
-        String startDay = request.getParameter("startDay");
-        String endDay = request.getParameter("endDay");
-        ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
+        String state = request.getParameter("state");
+        ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), state).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
 //        return unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList();
     }
 
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
     @ResponseBody
     public Integer page(HttpServletRequest request) {
-        String list = request.getParameter("list");
-        String startDay = request.getParameter("startDay");
-        String endDay = request.getParameter("endDay");
-        return unicomOrderService.getCountsWithOptions(list, startDay, endDay);
+        String state = request.getParameter("state");
+        return unicomOrderService.getCountsWithOptions(state);
 
     }
 

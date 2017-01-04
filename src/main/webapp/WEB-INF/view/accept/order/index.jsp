@@ -98,8 +98,10 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" list="全部">全部</a>
-                    <a class="list-group-item active" list="未分拣">未分拣</a>
+                    <a class="list-group-item" state="全部">全部</a>
+                    <a class="list-group-item active" state="未完工">未完工</a>
+                    <a class="list-group-item" state="已完工">已完工</a>
+                    <a class="list-group-item" state="留单">留单</a>
                 </div>
 
                 <div class="list-group">
@@ -138,13 +140,25 @@
                                 <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
-                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName }}</option>
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
+                                            }}
+                                        </option>
                                     </select>
                                 </div>
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
                                         <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="unicomOrderState" class="col-sm-2 control-label">业务状态</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderState" ms-duplex="@unicomOrder.unicomOrderState">
+                                        <option value="1">未完工</option>
+                                        <option value="2">已完工</option>
+                                        <option value="3">留单</option>
                                     </select>
                                 </div>
                             </div>
@@ -246,9 +260,7 @@
         var vm = avalon.define({
             $id: "broadband_list",
             option: {
-                list: "次月宽带续费清单",
-                xuFeiType: "未续费",
-                systemType: "全部"
+                state: "未完工"
             },
             page: {
                 nowPage: 1,
@@ -275,12 +287,10 @@
             $(this).nextAll().removeClass("active");
             $(this).prevAll().removeClass("active");
             $(this).addClass("active");
-            vm.option.list = $(this).attr("list") != null ? $(this).attr("list") : vm.option.list;
-            vm.option.xuFeiType = $(this).attr("xuFeiType") != null ? $(this).attr("xuFeiType") : vm.option.xuFeiType;
-            vm.option.systemType = $(this).attr("systemType") != null ? $(this).attr("systemType") : vm.option.systemType;
+            vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
             vm.page.nowPage = 1;
-            Broadband.ajaxGetListByOption(vm);
-            Broadband.ajaxGetPageByOption(vm);
+            UnicomOrder.ajaxGetListByOption(vm);
+            UnicomOrder.ajaxGetPageByOption(vm);
         });
 
         $('#updateUnicomOrderButton').click(function () {

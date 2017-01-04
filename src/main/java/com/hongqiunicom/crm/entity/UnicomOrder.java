@@ -35,6 +35,14 @@ public class UnicomOrder implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date unicomOrderDate;
 
+    /**
+     * 业务受理状态
+     *
+     * 1 = 未完工  2 = 已完工 3 = 有问题
+     */
+    @Column(name = "unicom_order_state")
+    private Integer unicomOrderState;
+
 
     @ManyToOne
     @JoinColumn(name = "unicom_order_type_id")
@@ -91,4 +99,11 @@ public class UnicomOrder implements Serializable {
         this.unicomOrderId = unicomOrderId;
     }
 
+    public Integer getUnicomOrderState() {
+        return unicomOrderState;
+    }
+
+    public void setUnicomOrderState(Integer unicomOrderState) {
+        this.unicomOrderState = unicomOrderState;
+    }
 }
