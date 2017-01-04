@@ -46,10 +46,11 @@ public class UnicomOrder implements Serializable {
     /**
      * 业务受理续费标识
      *
-     * 1 = 新装，2=续费
+     *
      */
-    @Column(name = "unicom_order_renewal_tag")
-    private Integer unicomOrderRenewalTag;
+    @ManyToOne
+    @JoinColumn(name = "unicom_order_tag_id")
+    private UnicomOrderTag unicomOrderTag;
 
     @ManyToOne
     @JoinColumn(name = "unicom_order_type_id")
@@ -115,11 +116,11 @@ public class UnicomOrder implements Serializable {
     }
 
 
-    public Integer getUnicomOrderRenewalTag() {
-        return unicomOrderRenewalTag;
+    public UnicomOrderTag getUnicomOrderTag() {
+        return unicomOrderTag;
     }
 
-    public void setUnicomOrderRenewalTag(Integer unicomOrderRenewalTag) {
-        this.unicomOrderRenewalTag = unicomOrderRenewalTag;
+    public void setUnicomOrderTag(UnicomOrderTag unicomOrderTag) {
+        this.unicomOrderTag = unicomOrderTag;
     }
 }

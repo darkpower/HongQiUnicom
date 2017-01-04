@@ -1,14 +1,8 @@
 package com.hongqiunicom.crm.services.impl;
 
 import com.hongqiunicom.crm.bean.Page;
-import com.hongqiunicom.crm.dao.BusinessDao;
-import com.hongqiunicom.crm.dao.StaffDao;
-import com.hongqiunicom.crm.dao.UnicomOrderDao;
-import com.hongqiunicom.crm.dao.UnicomOrderTypeDao;
-import com.hongqiunicom.crm.entity.Business;
-import com.hongqiunicom.crm.entity.Staff;
-import com.hongqiunicom.crm.entity.UnicomOrder;
-import com.hongqiunicom.crm.entity.UnicomOrderType;
+import com.hongqiunicom.crm.dao.*;
+import com.hongqiunicom.crm.entity.*;
 import com.hongqiunicom.crm.services.UnicomOrderService;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
@@ -35,6 +29,9 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     @Resource(type = UnicomOrderTypeDao.class)
     private UnicomOrderTypeDao unicomOrderTypeDao;
 
+    @Resource(type = UnicomOrderTagDao.class)
+    private UnicomOrderTagDao unicomOrderTagDao;
+
     @Resource(type = StaffDao.class)
     private StaffDao staffDao;
 
@@ -44,7 +41,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         UnicomOrder newUnicomOrder = new UnicomOrder();
         newUnicomOrder.setUnicomOrderDate(new Date());
         newUnicomOrder.setUnicomOrderState(1);
-        newUnicomOrder.setUnicomOrderRenewalTag(unicomOrder.getUnicomOrderRenewalTag());
+        if (unicomOrder.getUnicomOrderTag() != null) newUnicomOrder.setUnicomOrderTag(unicomOrderTagDao.get(unicomOrder.getUnicomOrderTag().getUnicomOrderTagId()));
         if (unicomOrder.getUnicomOrderType() != null) newUnicomOrder.setUnicomOrderType(unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId()));
         if (unicomOrder.getStaff() != null) newUnicomOrder.setStaff(staffDao.get(unicomOrder.getStaff().getStaffId()));
         unicomOrderDao.save(newUnicomOrder);
@@ -96,9 +93,10 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     public UnicomOrder updateUnicomOrder(UnicomOrder unicomOrder) {
         Staff staff = staffDao.get(unicomOrder.getStaff().getStaffId());
         UnicomOrderType unicomOrderType = unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId());
+        UnicomOrderTag unicomOrderTag = unicomOrderTagDao.get(unicomOrder.getUnicomOrderTag().getUnicomOrderTagId());
         UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
         pUnicomOrder.setUnicomOrderState(unicomOrder.getUnicomOrderState());
-        pUnicomOrder.setUnicomOrderRenewalTag(unicomOrder.getUnicomOrderRenewalTag());
+        pUnicomOrder.setUnicomOrderTag(unicomOrderTag);
         pUnicomOrder.setStaff(staff);
         pUnicomOrder.setUnicomOrderType(unicomOrderType);
         return pUnicomOrder;

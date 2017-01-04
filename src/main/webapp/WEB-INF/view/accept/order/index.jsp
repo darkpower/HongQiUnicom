@@ -145,11 +145,12 @@
                                         </option>
                                     </select>
                                 </div>
-                                <label for="unicomOrderRenewalTag" class="col-sm-2 control-label">是否新装</label>
+                                <label for="unicomOrderTag" class="col-sm-2 control-label">业务标签</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderRenewalTag" ms-duplex="@unicomOrder.unicomOrderRenewalTag">
-                                        <option value="1">新装</option>
-                                        <option value="2">续费/续约</option>
+                                    <select type="text" class="form-control" id="unicomOrderTag" ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
+                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags" ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">{{$unicomOrderTag.unicomOrderTagName
+                                            }}
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -278,6 +279,7 @@
             unicomOrders: [],
             staffs: [],
             unicomOrderTypes: [],
+            unicomOrderTags: [],
             businesses: [],
             openModal: function (unicomOrderId) {
                 UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
@@ -287,6 +289,7 @@
         UnicomOrder.ajaxGetPageByOption(vm);
         Staff.ajaxGetSelectList(vm);
         UnicomOrderType.ajaxGetSelectList(vm);
+        UnicomOrderTag.ajaxGetSelectList(vm);
         avalon.scan(document.body);
 
 

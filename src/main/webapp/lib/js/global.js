@@ -276,7 +276,7 @@ function UnicomOrder() {
     o.unicomOrderId = 0;
     o.unicomOrderDate = "";
     o.unicomOrderState = 0;
-    o.unicomOrderRenewalTag = 0;
+    o.unicomOrderTag = new UnicomOrderTag();
     o.unicomOrderType = new UnicomOrderType();
     o.staff = new Staff();
     o.businesses = [];
@@ -284,8 +284,8 @@ function UnicomOrder() {
         o.unicomOrderId = data.unicomOrderId;
         o.unicomOrderDate = data.unicomOrderDate;
         o.unicomOrderState = data.unicomOrderState;
-        o.unicomOrderRenewalTag = data.unicomOrderRenewalTag;
         o.businesses = data.businesses;
+        o.unicomOrderTag = UnicomOrderTag.createEntity(data.unicomOrderTag);
         o.unicomOrderType = UnicomOrderType.createEntity(data.unicomOrderType);
         o.staff = Staff.createEntity(data.staff);
         return o;
@@ -400,6 +400,38 @@ function UnicomOrderType() {
             success: function (data) {
                 vm.unicomOrderTypes = [];
                 vm.unicomOrderTypes = data;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    }
+    return o;
+}
+
+function UnicomOrderTag() {
+    var o = new Object();
+    o.unicomOrderTagId = 0;
+    o.unicomOrderTagName = "";
+    o.unicomOrderTagState = 0;
+    UnicomOrderTag.createEntity = function (data) {
+        if (data == null) return new UnicomOrderTag();
+        else {
+            o.unicomOrderTagId = data.unicomOrderTagId;
+            o.unicomOrderTagName = data.unicomOrderTagName;
+            o.unicomOrderTagState = data.unicomOrderTagState;
+        }
+        return o;
+    }
+    UnicomOrderTag.ajaxGetSelectList = function (vm) {
+        $.ajax({
+            url: "/Ajax/UnicomOrderTag/SelectList",
+            type: "post",
+            dataType: "json",
+            data: {},
+            success: function (data) {
+                vm.unicomOrderTags = [];
+                vm.unicomOrderTags = data;
             },
             error: function () {
                 alert("error");
