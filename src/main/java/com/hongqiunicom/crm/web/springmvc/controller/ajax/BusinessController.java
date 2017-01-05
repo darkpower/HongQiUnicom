@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -55,10 +54,24 @@ public class BusinessController {
         return businessService.manualUpdate(business);
     }
 
-    @RequestMapping(value = "/Invalid", method = RequestMethod.POST)
+    @RequestMapping(value = "/Halt", method = RequestMethod.POST)
     @ResponseBody
     public UnicomOrder invalid(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
-        businessService.invalidUpdate(unicomOrder.getBusinesses());
+        businessService.updateBusinessToHalt(unicomOrder.getBusinesses());
+        return unicomOrder;
+    }
+
+    @RequestMapping(value = "/Other", method = RequestMethod.POST)
+    @ResponseBody
+    public UnicomOrder other(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
+        businessService.updateBusinessToOther(unicomOrder.getBusinesses());
+        return unicomOrder;
+    }
+
+    @RequestMapping(value = "/Card", method = RequestMethod.POST)
+    @ResponseBody
+    public UnicomOrder card(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
+        businessService.updateBusinessToCard(unicomOrder.getBusinesses());
         return unicomOrder;
     }
 

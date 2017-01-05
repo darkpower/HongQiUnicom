@@ -19,5 +19,10 @@ public interface BusinessService extends BaseService<Business, Integer> {
 
     Boolean batchUpdateByExcel(File excelFile);
 
-    Boolean invalidUpdate(Set<Business> businesses);
+    Boolean updateBusinessToHalt(Set<Business> businesses);
+
+    Boolean updateBusinessToOther(Set<Business> businesses);
+
+    Boolean updateBusinessToCard(Set<Business> businesses);
+
 }

@@ -81,7 +81,27 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
     }
 
     @Override
-    public Boolean invalidUpdate(Set<Business> businesses) {
+    public Boolean updateBusinessToHalt(Set<Business> businesses) {
+        Iterator<Business> iterator = businesses.iterator();
+        while(iterator.hasNext()){
+            Business pBusiness = businessDao.get(iterator.next().getBusinessId());
+            pBusiness.setBusinessState(3);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean updateBusinessToOther(Set<Business> businesses) {
+        Iterator<Business> iterator = businesses.iterator();
+        while(iterator.hasNext()){
+            Business pBusiness = businessDao.get(iterator.next().getBusinessId());
+            pBusiness.setBusinessState(0);
+        }
+        return true;
+    }
+
+    @Override
+    public Boolean updateBusinessToCard(Set<Business> businesses) {
         Iterator<Business> iterator = businesses.iterator();
         while(iterator.hasNext()){
             Business pBusiness = businessDao.get(iterator.next().getBusinessId());
@@ -96,7 +116,7 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
         switch (state) {
             case "全部":
                 break;
-            case "未分拣工单":
+            case "初检工单":
                 criteria.add(Restrictions.eq("businessState", 1));
                 break;
             case "营业工单":
@@ -105,8 +125,8 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
             case "停机工单":
                 criteria.add(Restrictions.eq("businessState", 3));
                 break;
-            case "非营业工单":
-                criteria.add(Restrictions.eq("businessState", 4));
+            case "其他工单":
+                criteria.add(Restrictions.eq("businessState", 0));
                 break;
         }
 //        if (!"".equals(startDay) && !"".equals(endDay)) {

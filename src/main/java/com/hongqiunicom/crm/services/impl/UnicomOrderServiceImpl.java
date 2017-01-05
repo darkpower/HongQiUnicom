@@ -63,14 +63,18 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public UnicomOrder updateUnicomOrderJoinBusiness(Integer unicomOrderId, Integer businessId) {
-        Business business = businessDao.get(businessId);
-        UnicomOrder unicomOrder = unicomOrderDao.get(unicomOrderId);
-        if (business.getBusinessDate().before(unicomOrder.getUnicomOrderDate()))
-            unicomOrder.setUnicomOrderDate(business.getBusinessDate());
-        business.setBusinessState(2);
-        unicomOrder.getBusinesses().add(business);
-        return unicomOrder;
+    public UnicomOrder updateUnicomOrderJoinBusiness(UnicomOrder unicomOrder) {
+
+        UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
+        Iterator<Business> iteratorBusinesses = unicomOrder.getBusinesses().iterator();
+        while (iteratorBusinesses.hasNext()) {
+            Business business = businessDao.get(iteratorBusinesses.next().getBusinessId());
+            if (business.getBusinessDate().before(pUnicomOrder.getUnicomOrderDate()))
+                pUnicomOrder.setUnicomOrderDate(business.getBusinessDate());
+            business.setBusinessState(2);
+            pUnicomOrder.getBusinesses().add(business);
+        }
+        return pUnicomOrder;
     }
 
     @Override

@@ -39,8 +39,10 @@ public class UnicomOrderController extends BaseController {
 
     @RequestMapping(value = "/Join", method = RequestMethod.POST)
     @ResponseBody
-    public UnicomOrder update(HttpServletRequest request) {
-        return unicomOrderService.updateUnicomOrderJoinBusiness(Integer.parseInt(request.getParameter("unicomOrderId")), Integer.parseInt(request.getParameter("businessId")));
+    public UnicomOrder join(@RequestBody UnicomOrder unicomOrder) {
+
+            return unicomOrderService.updateUnicomOrderJoinBusiness(unicomOrder);
+
     }
 
     @RequestMapping(value = "/List", method = RequestMethod.POST)

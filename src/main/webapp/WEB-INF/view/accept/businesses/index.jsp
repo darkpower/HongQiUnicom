@@ -63,11 +63,12 @@
                     <input id="excelFileUploadInput" name="excelFile" type="file" class="file-loading"
                            data-show-preview="false">
                 </div>
-                <div class="col-sm-3 pull-right">
-                    <input id="createAccept" type="button" class="btn btn-default" value="合并生成业务受理"/>
-                </div>
-                <div class="col-sm-3 pull-right">
-                    <input id="invalidBusinesses" type="button" class="btn btn-default" value="非业务工单"/>
+                <div class="col-sm-6 pull-right btn-group text-right" style=" padding-left: 0px; padding-right: 0px;">
+                    <input id="createUnicomOrderButton" type="button" class="btn btn-default" value="生成营业"/>
+                    <input id="joinUnicomOrderButton" type="button" class="btn btn-default" value="并入营业"/>
+                    <input id="updateBusinessToHaltButton" type="button" class="btn btn-default" value="停机工单"/>
+                    <input id="updateBusinessToCardButton" type="button" class="btn btn-default" value="开卡工单"/>
+                    <input id="updateBusinessToOtherButton" type="button" class="btn btn-default" value="其他工单"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
@@ -91,7 +92,7 @@
                             <td>
                                 <div class="btn-group">
                                     <a class="btn btn-default" data-toggle="modal" data-target="#oldUnicomOrder"
-                                       ms-click="@openModal($business.businessId)">并入</a>
+                                       ms-click="@openModal($business.businessId)">详细</a>
                                 </div>
                             </td>
                         </tr>
@@ -116,10 +117,10 @@
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
                     <a class="list-group-item" state="全部">全部</a>
-                    <a class="list-group-item active" state="未分拣工单">未分拣工单</a>
+                    <a class="list-group-item active" state="初检工单">初检工单</a>
                     <a class="list-group-item" state="营业工单">营业工单</a>
                     <a class="list-group-item" state="停机工单">停机工单</a>
-                    <a class="list-group-item" state="非营业工单">非营业工单</a>
+                    <a class="list-group-item" state="其他工单">其他工单</a>
                 </div>
 
                 <div class="list-group">
@@ -132,14 +133,14 @@
         </div>
 
 
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" id="newUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <!-- createUnicomOrder模态框（Modal） -->
+        <div class="modal fade" id="createUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="createUnicomOrderModalLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">生成业务受理</h4>
+                        <h4 class="modal-title" id="createUnicomOrderModalLabel">生成业务受理</h4>
                     </div>
                     <div class="modal-body">
 
@@ -207,21 +208,21 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="saveUnicomOrderButton" class="btn btn-primary">生成</button>
+                        <button type="button" id="createUnicomOrderSubmitButton" class="btn btn-primary">生成</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
 
-        <!-- 模态框（Modal） -->
-        <div class="modal fade" id="updateUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="updateUnicomOrderLabel"
+        <!-- joinUnicomOrder模态框（Modal） -->
+        <div class="modal fade" id="joinUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="joinUnicomOrderLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="updateUnicomOrderLabel">导入现存业务受理</h4>
+                        <h4 class="modal-title" id="joinUnicomOrderLabel">导入现存业务受理</h4>
                     </div>
                     <div class="modal-body">
 
@@ -229,7 +230,7 @@
                             <div class="form-group">
                                 <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="updateUnicomOrderId"/>
+                                    <input type="text" class="form-control" id="joinUnicomOrderId"/>
                                 </div>
                             </div>
                         </form>
@@ -237,8 +238,64 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="updateUnicomOrderSubmitButton" class="btn btn-primary">导入</button>
-                        <button type="button" id="updateUnicomOrderCloseButton" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" id="joinUnicomOrderSubmitButton" class="btn btn-primary">导入</button>
+                        <button type="button" id="joinUnicomOrderCloseButton" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
+        <!-- joinUnicomOrder模态框（Modal） -->
+        <div class="modal fade" id="showBusinessModal" tabindex="-1" role="dialog" aria-labelledby="showBusinessModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="showBusinessModalLabel">工单详细信息</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="businessDate" class="col-sm-2 control-label">工单时间</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="businessDate" ms-duplex="@business.businessDate" disabled/>
+                                </div>
+                                <label for="businessSerialNumber" class="col-sm-2 control-label">工单流水</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="businessSerialNumber" ms-duplex="@business.businessSerialNumber"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessAccount" class="col-sm-2 control-label">对应账号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="businessAccount" ms-duplex="@business.businessAccount"/>
+                                </div>
+                                <label for="businessUserName" class="col-sm-2 control-label">用户姓名</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="businessUserName" ms-duplex="@business.businessUserName" disabled/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessTypeName" class="col-sm-2 control-label">工单类型</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="businessTypeName" ms-duplex="@business.businessType.businessTypeName" disabled/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="businessDescription" class="col-sm-2 control-label">工单备注</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="businessDescription" ms-duplex="@business.businessDescription"></textarea>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="showBusinessCloseButton" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
@@ -336,7 +393,7 @@
             unicomOrderTypes: [],
             openModal: function (businessId) {
                 Business.ajaxGetEntityById(businessId, vm);
-                $('#updateUnicomOrderModal').modal("show");
+                $('#showBusinessModal').modal("show");
             }
         });
         Business.ajaxGetListByOption(vm);
@@ -360,7 +417,23 @@
             Business.ajaxGetPageByOption(vm);
         });
 
-        $('#saveUnicomOrderButton').click(function () {
+        $('#createUnicomOrderButton').click(function () {
+            vm.unicomOrder = new UnicomOrder();
+            vm.selectBusinesses = [];
+            $("input[name='businessIds']:checked").each(function () {
+                var selectId = $(this).val();
+                $.each(vm.businesses, function (index, item) {
+                    if (item.businessId == selectId) {
+                        vm.selectBusinesses.push(item);
+                    }
+                });
+            });
+
+            $("#createUnicomOrderModal").modal("show");
+
+        });
+
+        $('#createUnicomOrderSubmitButton').click(function () {
             $.each(vm.selectBusinesses, function (index, item) {
                 vm.unicomOrder.businesses.push(Business.createEntity(item));
             });
@@ -383,31 +456,7 @@
             });
         });
 
-        $('#updateUnicomOrderSubmitButton').click(function () {
-            $.ajax({
-                url: "/Ajax/UnicomOrder/Join",
-                type: "post",
-                dataType: "json",
-                data: {
-                    "businessId": vm.business.businessId,
-                    "unicomOrderId": $('#updateUnicomOrderId').val()
-                },
-                success: function (data) {
-                    alert("success");
-                    Business.ajaxGetListByOption(vm);
-                    Business.ajaxGetPageByOption(vm);
-                },
-                error: function () {
-                    alert("error");
-                }
-            });
-        });
-
-        $('#updateUnicomOrderCloseButton').click(function () {
-            $('#updateUnicomOrderId').val("");
-        });
-
-        $('#createAccept').click(function () {
+        $('#joinUnicomOrderButton').click(function () {
             vm.unicomOrder = new UnicomOrder();
             vm.selectBusinesses = [];
             $("input[name='businessIds']:checked").each(function () {
@@ -419,11 +468,39 @@
                 });
             });
 
-            $("#newUnicomOrderModal").modal("show");
+            $("#joinUnicomOrderModal").modal("show");
 
         });
 
-        $('#invalidBusinesses').click(function(){
+        $('#joinUnicomOrderSubmitButton').click(function () {
+            vm.unicomOrder = new UnicomOrder();
+            vm.unicomOrder.unicomOrderId = $("#joinUnicomOrderId").val();
+            $.each(vm.selectBusinesses, function (index, item) {
+                vm.unicomOrder.businesses.push(Business.createEntity(item));
+            });
+
+            $.ajax({
+                url: "/Ajax/UnicomOrder/Join",
+                type: "post",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(vm.unicomOrder),
+                success: function (data) {
+                    alert("success");
+                    Business.ajaxGetListByOption(vm);
+                    Business.ajaxGetPageByOption(vm);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        });
+
+        $('#joinUnicomOrderCloseButton').click(function () {
+            $('#updateUnicomOrderId').val("");
+        });
+
+        $('#updateBusinessToHaltButton').click(function () {
             var unicomOrder = new UnicomOrder();
             $("input[name='businessIds']:checked").each(function () {
                 var business = new Business();
@@ -431,10 +508,66 @@
                 unicomOrder.businesses.push(business);
             });
 
-            if(confirm("确认批量注册为非营业工单？")){
+            if (confirm("确认批量注册为停机工单？")) {
 
                 $.ajax({
-                    url: "/Ajax/Business/Invalid",
+                    url: "/Ajax/Business/Halt",
+                    type: "post",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(unicomOrder),
+                    success: function (data) {
+                        alert("success");
+                        Business.ajaxGetListByOption(vm);
+                        Business.ajaxGetPageByOption(vm);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+        });
+
+        $('#updateBusinessToOtherButton').click(function () {
+            var unicomOrder = new UnicomOrder();
+            $("input[name='businessIds']:checked").each(function () {
+                var business = new Business();
+                business.businessId = $(this).val();
+                unicomOrder.businesses.push(business);
+            });
+
+            if (confirm("确认批量注册为其他工单？")) {
+
+                $.ajax({
+                    url: "/Ajax/Business/Other",
+                    type: "post",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(unicomOrder),
+                    success: function (data) {
+                        alert("success");
+                        Business.ajaxGetListByOption(vm);
+                        Business.ajaxGetPageByOption(vm);
+                    },
+                    error: function () {
+                        alert("error");
+                    }
+                });
+            }
+        });
+
+        $('#updateBusinessToCardButton').click(function () {
+            var unicomOrder = new UnicomOrder();
+            $("input[name='businessIds']:checked").each(function () {
+                var business = new Business();
+                business.businessId = $(this).val();
+                unicomOrder.businesses.push(business);
+            });
+
+            if (confirm("确认批量注册为其他工单？")) {
+
+                $.ajax({
+                    url: "/Ajax/Business/Card",
                     type: "post",
                     contentType: "application/json",
                     dataType: "json",

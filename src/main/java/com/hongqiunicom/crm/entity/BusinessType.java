@@ -2,6 +2,7 @@ package com.hongqiunicom.crm.entity;
 
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -37,6 +38,7 @@ public class BusinessType implements Serializable {
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "business_type_id")
+    @JSONField(serialize=false)
     private Set<Card> Businesses = new HashSet<Card>();
 
     public Integer getBusinessTypeId() {

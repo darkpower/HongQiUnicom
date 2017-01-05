@@ -177,18 +177,24 @@ function Customer() {
 function Business() {
     var o = new Object();
     o.businessId = 0;
+    o.businessSerialNumber = "";
     o.businessDate = "";
-    o.businessType = new BusinessType();
     o.businessAccount = "";
     o.businessCost = 0;
     o.businessState = 0;
+    o.businessUserName = "";
+    o.businessDescription = "";
+    o.businessType = new BusinessType();
     Business.createEntity = function (data) {
         o.businessId = data.businessId;
+        o.businessSerialNumber = data.businessSerialNumber;
         o.businessDate = data.businessDate;
-        o.businessType = BusinessType.createEntity(data);
         o.businessAccount = data.businessAccount;
         o.businessCost = data.businessCost;
         o.businessState = data.businessState;
+        o.businessUserName = data.businessUserName;
+        o.businessDescription = data.businessDescription;
+        o.businessType = BusinessType.createEntity(data.businessType);
         return o;
     }
     Business.ajaxGetEntityById = function (businessId, vm) {
