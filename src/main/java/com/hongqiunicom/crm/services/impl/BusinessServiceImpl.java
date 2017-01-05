@@ -34,18 +34,18 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
 
 
     @Override
-    public Page<Business> getBusinessPageWithOptions(Integer pageSize, Integer nowPage, String list, String startDay, String endDay) {
+    public Page<Business> getBusinessPageWithOptions(Integer pageSize, Integer nowPage, String state) {
         Page<Business> page = new Page<Business>();
         page.setOrderBy("businessDate");
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
-        return businessDao.getPage(this.getCriteriaWithOptions(list, startDay, endDay), page);
+        return businessDao.getPage(this.getCriteriaWithOptions(state), page);
     }
 
 
     @Override
-    public Integer getCountsWithOptions(String list, String startDay, String endDay) {
-        return businessDao.getCount(this.getCriteriaWithOptions(list, startDay, endDay));
+    public Integer getCountsWithOptions(String state) {
+        return businessDao.getCount(this.getCriteriaWithOptions(state));
     }
 
     @Override
@@ -85,19 +85,28 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
         Iterator<Business> iterator = businesses.iterator();
         while(iterator.hasNext()){
             Business pBusiness = businessDao.get(iterator.next().getBusinessId());
-            pBusiness.setBusinessState(3);
+            pBusiness.setBusinessState(4);
         }
         return true;
     }
 
 
-    private DetachedCriteria getCriteriaWithOptions(String list, String startDay, String endDay) {
+    private DetachedCriteria getCriteriaWithOptions(String state) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Business.class);
-        switch (list) {
+        switch (state) {
             case "全部":
                 break;
-            case "未分拣":
+            case "未分拣工单":
                 criteria.add(Restrictions.eq("businessState", 1));
+                break;
+            case "营业工单":
+                criteria.add(Restrictions.eq("businessState", 2));
+                break;
+            case "停机工单":
+                criteria.add(Restrictions.eq("businessState", 3));
+                break;
+            case "非营业工单":
+                criteria.add(Restrictions.eq("businessState", 4));
                 break;
         }
 //        if (!"".equals(startDay) && !"".equals(endDay)) {

@@ -115,8 +115,11 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" list="全部">全部</a>
-                    <a class="list-group-item active" list="未分拣">未分拣</a>
+                    <a class="list-group-item" state="全部">全部</a>
+                    <a class="list-group-item active" state="未分拣工单">未分拣工单</a>
+                    <a class="list-group-item" state="营业工单">营业工单</a>
+                    <a class="list-group-item" state="停机工单">停机工单</a>
+                    <a class="list-group-item" state="非营业工单">非营业工单</a>
                 </div>
 
                 <div class="list-group">
@@ -318,9 +321,7 @@
         var vm = avalon.define({
             $id: "business_list",
             option: {
-                list: "未分拣",
-                startDay: "",
-                endDay: ""
+                state: "未分拣工单"
             },
             page: {
                 nowPage: 1,
@@ -352,9 +353,8 @@
             $(this).nextAll().removeClass("active");
             $(this).prevAll().removeClass("active");
             $(this).addClass("active");
-            vm.option.list = $(this).attr("list") != null ? $(this).attr("list") : vm.option.list;
-            vm.option.startDay = $("#startDay").val() != null ? $("startDay").val() : vm.option.startDay;
-            vm.option.endDay = $("#endDay").val() != null ? $("endDay").val() : vm.option.endDay;
+            vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
+
             vm.page.nowPage = 1;
             Business.ajaxGetListByOption(vm);
             Business.ajaxGetPageByOption(vm);

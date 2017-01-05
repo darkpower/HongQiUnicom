@@ -11,9 +11,9 @@ import java.util.Set;
  */
 public interface BusinessService extends BaseService<Business, Integer> {
 
-    Page<Business> getBusinessPageWithOptions(Integer pageSize, Integer nowPage, String list, String startDay, String endDay);
+    Page<Business> getBusinessPageWithOptions(Integer pageSize, Integer nowPage, String state);
 
-    Integer getCountsWithOptions(String list, String startDay, String endDay);
+    Integer getCountsWithOptions(String state);
 
     Business manualUpdate(Business business);
 

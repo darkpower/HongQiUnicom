@@ -30,22 +30,22 @@ public class BusinessController {
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     @ResponseBody
     public List<Business> list(HttpServletRequest request) {
-        try{String list = request.getParameter("list");
-        String startDay = request.getParameter("startDay");
-        String endDay = request.getParameter("endDay");
-        return businessService.getBusinessPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList();}catch(Exception e){
+        try {
+            return businessService.getBusinessPageWithOptions(10, Integer.parseInt(request.getParameter("page")), request.getParameter("state")).getList();
+        } catch (
+                Exception e)
+
+        {
             e.printStackTrace();
             return null;
         }
+
     }
 
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
     @ResponseBody
     public Integer page(HttpServletRequest request) {
-        String list = request.getParameter("list");
-        String startDay = request.getParameter("startDay");
-        String endDay = request.getParameter("endDay");
-        return businessService.getCountsWithOptions(list, startDay, endDay);
+        return businessService.getCountsWithOptions(request.getParameter("state"));
 
     }
 
@@ -57,13 +57,10 @@ public class BusinessController {
 
     @RequestMapping(value = "/Invalid", method = RequestMethod.POST)
     @ResponseBody
-    public UnicomOrder invalid(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request){
+    public UnicomOrder invalid(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
         businessService.invalidUpdate(unicomOrder.getBusinesses());
         return unicomOrder;
     }
-
-
-
 
 
 }

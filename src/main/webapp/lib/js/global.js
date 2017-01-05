@@ -212,9 +212,7 @@ function Business() {
             dataType: "json",
             data: {
                 'page': vm.page.nowPage,
-                'list': vm.option.list,
-                'startDay': vm.option.startDay,
-                'endDay': vm.option.endDay
+                'state': vm.option.state
             },
             success: function (data) {
                 vm.businesses = [];
@@ -231,7 +229,7 @@ function Business() {
             type: "post",
             dataType: "json",
             data: {
-                'list': vm.option.list,
+                'state': vm.option.state,
                 'startDay': vm.option.startDay,
                 'endDay': vm.option.endDay
             },
