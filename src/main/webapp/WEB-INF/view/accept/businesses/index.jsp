@@ -380,7 +380,7 @@
         var vm = avalon.define({
             $id: "business_list",
             option: {
-                state: "未分拣工单"
+                state: "初检工单"
             },
             page: {
                 nowPage: 1,
