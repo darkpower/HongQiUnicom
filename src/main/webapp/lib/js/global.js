@@ -41,6 +41,10 @@ var FastJson = {
     }
 };
 
+avalon.filters.trim = function(str){//str为管道符之前计算得到的结果，默认框架会帮你传入，此方法必须返回一个值
+    return $.trim(str);
+}
+
 function Broadband() {
     var o = new Object();
     o.broadbandId = 0;
