@@ -41,6 +41,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         UnicomOrder newUnicomOrder = new UnicomOrder();
         newUnicomOrder.setUnicomOrderDate(new Date());
         newUnicomOrder.setUnicomOrderState(1);
+        newUnicomOrder.setUnicomOrderVerify(1);
         if (unicomOrder.getUnicomOrderTag() != null) newUnicomOrder.setUnicomOrderTag(unicomOrderTagDao.get(unicomOrder.getUnicomOrderTag().getUnicomOrderTagId()));
         if (unicomOrder.getUnicomOrderType() != null) newUnicomOrder.setUnicomOrderType(unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId()));
         if (unicomOrder.getStaff() != null) newUnicomOrder.setStaff(staffDao.get(unicomOrder.getStaff().getStaffId()));
