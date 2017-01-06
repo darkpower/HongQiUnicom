@@ -37,16 +37,20 @@ public class UnicomOrder implements Serializable {
 
     /**
      * 业务受理状态
-     *
+     * <p>
      * 1 = 未完工  2 = 已完工 3 = 有问题
      */
     @Column(name = "unicom_order_state")
     private Integer unicomOrderState;
 
     /**
+     * 业务验收状态
+     */
+    @Column(name = "unicom_order_verify")
+    private Integer unicomOrderVerify;
+
+    /**
      * 业务受理续费标识
-     *
-     *
      */
     @ManyToOne
     @JoinColumn(name = "unicom_order_tag_id")
@@ -122,5 +126,13 @@ public class UnicomOrder implements Serializable {
 
     public void setUnicomOrderTag(UnicomOrderTag unicomOrderTag) {
         this.unicomOrderTag = unicomOrderTag;
+    }
+
+    public Integer getUnicomOrderVerify() {
+        return unicomOrderVerify;
+    }
+
+    public void setUnicomOrderVerify(Integer unicomOrderVerify) {
+        this.unicomOrderVerify = unicomOrderVerify;
     }
 }

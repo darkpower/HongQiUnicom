@@ -75,7 +75,7 @@
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
+                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">详细</button>
                             </td>
                         </tr>
                         </tbody>
@@ -98,10 +98,10 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" state="全部">全部</a>
-                    <a class="list-group-item active" state="未完工">未完工</a>
-                    <a class="list-group-item" state="已完工">已完工</a>
-                    <a class="list-group-item" state="留单">留单</a>
+                    <a class="list-group-item" verify="全部">全部</a>
+                    <a class="list-group-item active" verify="尚未验收">尚未验收</a>
+                    <a class="list-group-item" verify="验收合格">验收合格</a>
+                    <a class="list-group-item" verify="业务差错">业务差错</a>
                 </div>
 
                 <div class="list-group">
@@ -122,7 +122,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">手工调整</h4>
+                        <h4 class="modal-title" id="myModalLabel">详细信息</h4>
                     </div>
                     <div class="modal-body">
 
@@ -156,18 +156,18 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="unicomOrderState" class="col-sm-2 control-label">业务状态</label>
-                                <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderState" ms-duplex="@unicomOrder.unicomOrderState">
-                                        <option value="1">未完工</option>
-                                        <option value="2">已完工</option>
-                                        <option value="3">留单</option>
-                                    </select>
-                                </div>
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
                                         <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    </select>
+                                </div>
+                                <label for="unicomOrderState" class="col-sm-2 control-label">验收状态</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderState" ms-duplex="@unicomOrder.unicomOrderVerify">
+                                        <option value="1">尚未验收</option>
+                                        <option value="2">验收合格</option>
+                                        <option value="3">业务差错</option>
                                     </select>
                                 </div>
                             </div>
@@ -269,8 +269,8 @@
         var vm = avalon.define({
             $id: "broadband_list",
             option: {
-                state: "未完工",
-                verify: "全部"
+                state: "已完工",
+                verify: "尚未验收"
             },
             page: {
                 nowPage: 1,
@@ -300,6 +300,7 @@
             $(this).prevAll().removeClass("active");
             $(this).addClass("active");
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
+            vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
             vm.page.nowPage = 1;
             UnicomOrder.ajaxGetListByOption(vm);
             UnicomOrder.ajaxGetPageByOption(vm);

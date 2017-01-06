@@ -78,19 +78,19 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public Integer getCountsWithOptions(String state) {
-        return businessDao.getCount(this.getCriteriaWithOptions(state));
+    public Integer getCountsWithOptions(String state, String verify) {
+        return businessDao.getCount(this.getCriteriaWithOptions(state, verify));
     }
 
 
     @Override
-    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state) {
+    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state, String verify) {
 
         Page<UnicomOrder> page = new Page<>();
         page.setOrderBy("unicomOrderDate");
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
-        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state), page);
+        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state, verify), page);
     }
 
     @Override
@@ -99,6 +99,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         UnicomOrderType unicomOrderType = unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId());
         UnicomOrderTag unicomOrderTag = unicomOrderTagDao.get(unicomOrder.getUnicomOrderTag().getUnicomOrderTagId());
         UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
+        pUnicomOrder.setUnicomOrderVerify(unicomOrder.getUnicomOrderVerify());
         pUnicomOrder.setUnicomOrderState(unicomOrder.getUnicomOrderState());
         pUnicomOrder.setUnicomOrderTag(unicomOrderTag);
         pUnicomOrder.setStaff(staff);
@@ -106,7 +107,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         return pUnicomOrder;
     }
 
-    private DetachedCriteria getCriteriaWithOptions(String state) {
+    private DetachedCriteria getCriteriaWithOptions(String state, String verify) {
         DetachedCriteria criteria = DetachedCriteria.forClass(UnicomOrder.class);
         switch (state) {
             case "全部":
@@ -121,6 +122,22 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
                 criteria.add(Restrictions.eq("unicomOrderState", 3));
                 break;
         }
+
+        switch(verify){
+            case "全部":
+                break;
+            case "尚未验收":
+                criteria.add(Restrictions.eq("unicomOrderVerify", 1));
+                break;
+            case "验收合格":
+                criteria.add(Restrictions.eq("unicomOrderVerify", 2));
+                break;
+            case "业务差错":
+                criteria.add(Restrictions.eq("unicomOrderVerify", 3));
+                break;
+        }
+
+
         return criteria;
     }
 }

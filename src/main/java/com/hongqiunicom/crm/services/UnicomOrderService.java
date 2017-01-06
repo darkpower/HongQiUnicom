@@ -12,9 +12,9 @@ public interface UnicomOrderService extends BaseService<UnicomOrder, Integer> {
 
     UnicomOrder updateUnicomOrderJoinBusiness(UnicomOrder unicomOrder);
 
-    Integer getCountsWithOptions(String state);
+    Integer getCountsWithOptions(String state, String verify);
 
-    Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state);
+    Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state, String verify);
 
     UnicomOrder updateUnicomOrder(UnicomOrder unicomOrder);
 }

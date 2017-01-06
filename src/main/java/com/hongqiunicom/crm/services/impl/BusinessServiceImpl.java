@@ -32,7 +32,6 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
     @Resource(type = BusinessTypeDao.class)
     private BusinessTypeDao businessTypeDao;
 
-
     @Override
     public Page<Business> getBusinessPageWithOptions(Integer pageSize, Integer nowPage, String state) {
         Page<Business> page = new Page<Business>();
@@ -41,7 +40,6 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
         page.setNowPage(nowPage);
         return businessDao.getPage(this.getCriteriaWithOptions(state), page);
     }
-
 
     @Override
     public Integer getCountsWithOptions(String state) {
@@ -110,7 +108,6 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
         return true;
     }
 
-
     private DetachedCriteria getCriteriaWithOptions(String state) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Business.class);
         switch (state) {
@@ -124,6 +121,9 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
                 break;
             case "停机工单":
                 criteria.add(Restrictions.eq("businessState", 3));
+                break;
+            case "号卡工单":
+                criteria.add(Restrictions.eq("businessState", 4));
                 break;
             case "其他工单":
                 criteria.add(Restrictions.eq("businessState", 0));

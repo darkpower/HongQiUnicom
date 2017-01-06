@@ -120,13 +120,15 @@
                     <a class="list-group-item active" state="初检工单">初检工单</a>
                     <a class="list-group-item" state="营业工单">营业工单</a>
                     <a class="list-group-item" state="停机工单">停机工单</a>
+                    <a class="list-group-item" state="开卡工单">开卡工单</a>
                     <a class="list-group-item" state="其他工单">其他工单</a>
                 </div>
 
                 <div class="list-group">
-                    <a href="#" class="list-group-item">业务受理清单</a>
+                    <a href="#" class="list-group-item active">业务受理清单</a>
+                    <a href="/Accept/Businesses/" class="list-group-item">流水工单</a>
                     <a href="/Accept/UnicomOrder/" class="list-group-item">受理明细</a>
-                    <a href="/Accept/Businesses/" class="list-group-item active">流水工单</a>
+                    <a href="/Accept/Verify/" class="list-group-item">受理验收</a>
                 </div>
             </div>
             <!-- 右侧导航内容 End -->
