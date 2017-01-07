@@ -125,10 +125,9 @@
                 </div>
 
                 <div class="list-group">
-                    <a href="#" class="list-group-item active">业务受理清单</a>
-                    <a href="/Accept/Businesses/" class="list-group-item">流水工单</a>
+                    <a href="#" class="list-group-item">业务受理清单</a>
                     <a href="/Accept/UnicomOrder/" class="list-group-item">受理明细</a>
-                    <a href="/Accept/Verify/" class="list-group-item">受理验收</a>
+                    <a href="/Accept/Businesses/" class="list-group-item active">流水工单</a>
                 </div>
             </div>
             <!-- 右侧导航内容 End -->
@@ -380,7 +379,7 @@
         var vm = avalon.define({
             $id: "business_list",
             option: {
-                state: "初检工单"
+                state: "未分拣工单"
             },
             page: {
                 nowPage: 1,

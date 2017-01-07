@@ -41,7 +41,7 @@ var FastJson = {
     }
 };
 
-avalon.filters.trim = function(str){//str为管道符之前计算得到的结果，默认框架会帮你传入，此方法必须返回一个值
+avalon.filters.trim = function (str) {//str为管道符之前计算得到的结果，默认框架会帮你传入，此方法必须返回一个值
     return $.trim(str);
 }
 
@@ -83,7 +83,7 @@ function Broadband() {
                 vm.broadband = Broadband.createEntity(data);
             },
             error: function (data) {
-                alert(error);
+                alert("error");
             }
         });
     };
@@ -122,7 +122,7 @@ function Broadband() {
                 vm.page.totalPages = data / 10;
                 if (vm.page.totalCounts % 10 != 0) {
                     vm.page.totalPages++;
-                } else if (vm.totalCounts == 0) {
+                } else if (vm.page.totalCounts == 0) {
                     vm.page.totalPages++;
                 }
                 var options = {
@@ -166,6 +166,7 @@ function Customer() {
     o.customerTelphone = "";
     o.customerQualityVoice = 0;
     o.customerQualityData = 0;
+    o.broadbands = [];
     Customer.createEntity = function (data) {
         o.customerId = data.customerId;
         o.customerCardId = data.customerCardId;
@@ -173,8 +174,69 @@ function Customer() {
         o.customerTelphone = data.customerTelphone;
         o.customerQualityVoice = data.customerQualityVoice;
         o.customerQualityData = data.customerQualityData;
+        o.broadbands = data.broadbands;
         return o;
-    }
+    };
+    Customer.ajaxGetEntityById = function (customerId, vm) {
+        $.ajax({
+            url: "/Ajax/Customer/Show",
+            type: "post",
+            dataType: "json",
+            data: {'customerId': customerId},
+            success: function (data) {
+                vm.customer = Customer.createEntity(data);
+            },
+            error: function (data) {
+                alert("error");
+            }
+        });
+    };
+    Customer.ajaxGetListByOption = function (vm) {
+        $.ajax({
+            url: "/Ajax/Customer/List",
+            type: "post",
+            dataType: "json",
+            data: {
+                'page': vm.page.nowPage
+            },
+            success: function (data) {
+                vm.customers = [];
+                vm.customers = data;
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    };
+    Customer.ajaxGetPageByOption = function (vm) {
+        $.ajax({
+            url: "/Ajax/Customer/Page",
+            type: "post",
+            dataType: "json",
+            data: {
+                'page': vm.page.nowPage
+            },
+            success: function (data) {
+                vm.page.totalCounts = data;
+                vm.page.totalPages = data / 10;
+                if (vm.page.totalCounts % 10 != 0) {
+                    vm.page.totalPages++;
+                } else if (vm.page.totalCounts == 0) {
+                    vm.page.totalPages++;
+                }
+                var options = {
+                    bootstrapMajorVersion: 3,
+                    currentPage: vm.page.nowPage,//当前页面
+                    totalPages: vm.page.totalPages, //总页数
+                    numberOfPages: 10//一页显示几个按钮（在ul里面生成5个li）
+                }
+                $('#page').bootstrapPaginator("setOptions", options);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+    };
     return o;
 }
 
@@ -248,7 +310,7 @@ function Business() {
                 vm.page.totalPages = data / 10;
                 if (vm.page.totalCounts % 10 != 0) {
                     vm.page.totalPages++;
-                } else if (vm.totalCounts == 0) {
+                } else if (vm.page.totalCounts == 0) {
                     vm.page.totalPages++;
                 }
                 var options = {
@@ -354,7 +416,7 @@ function UnicomOrder() {
                 vm.page.totalPages = data / 10;
                 if (vm.page.totalCounts % 10 != 0) {
                     vm.page.totalPages++;
-                } else if (vm.totalCounts == 0) {
+                } else if (vm.page.totalCounts == 0) {
                     vm.page.totalPages++;
                 }
                 var options = {
@@ -484,7 +546,6 @@ function Staff() {
     }
     return o;
 }
-
 
 function defineBroadbandProduct(vm) {
 

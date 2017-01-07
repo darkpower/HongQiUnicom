@@ -51,7 +51,7 @@
 
 
     <!-- 内容 Start -->
-    <div class="content" ms-controller="broadband_list">
+    <div class="content" ms-controller="customer_list">
 
 
         <div class="row row-offcanvas row-offcanvas-right">
@@ -61,21 +61,23 @@
                     <table id="vmTable" class="table table-striped">
                         <thead>
                         <tr>
-                            <th style="width: 15%">受理日期</th>
-                            <th>受理业务</th>
-                            <th>联系人</th>
-                            <th>受理人</th>
-                            <th>相关操作</th>
+                            <th width="5%"></th>
+                            <th width="12%">客户编号</th>
+                            <th width="10%">客户姓名</th>
+                            <th width="13%">身份证号</th>
+                            <th>联系电话</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr ms-for="($index, $unicomOrder) in @unicomOrders">
-                            <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
-                            <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
-                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
-                            <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
+                        <tr ms-for="($index, $customer) in @customers">
+                            <td><input type="checkbox" name="customerIds" ms-attr="{'value': $customer.customerId}"></td>
+                            <td>{{$customer.customerId }}</td>
+                            <td>{{$customer.customerName }}</td>
+                            <td>{{$customer.customerCardId }}</td>
+                            <td>{{$customer.customerTelphone }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
+                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($customer.customerId)">详细</button>
                             </td>
                         </tr>
                         </tbody>
@@ -123,53 +125,29 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">手工调整</h4>
+                        <h4 class="modal-title" id="myModalLabel">详细信息</h4>
                     </div>
                     <div class="modal-body">
 
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
+                                <label for="customerId" class="col-sm-2 control-label">客户编号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
+                                    <input type="text" class="form-control" id="customerId" ms-duplex="@customer.customerId" disabled>
                                 </div>
-                                <label for="unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
+                                <label for="customerCardId" class="col-sm-2 control-label">身份证号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
-                                <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
-                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
-                                            }}
-                                        </option>
-                                    </select>
-                                </div>
-                                <label for="unicomOrderTag" class="col-sm-2 control-label">业务标签</label>
-                                <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderTag" ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
-                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags" ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">{{$unicomOrderTag.unicomOrderTagName
-                                            }}
-                                        </option>
-                                    </select>
+                                    <input type="text" class="form-control" id="customerCardId" ms-duplex="@customer.customerCardId" >
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="unicomOrderState" class="col-sm-2 control-label">业务状态</label>
+                                <label for="customerName" class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderState" ms-duplex="@unicomOrder.unicomOrderState">
-                                        <option value="1">未完工</option>
-                                        <option value="2">已完工</option>
-                                        <option value="3">留单</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="customerName" ms-duplex="@customer.customerName" >
                                 </div>
-                                <label for="staff" class="col-sm-2 control-label">受理人</label>
+                                <label for="customerTelphone" class="col-sm-2 control-label">联系电话</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
-                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="customerTelphone" ms-duplex="@customer.customerTelphone" >
                                 </div>
                             </div>
 
@@ -178,22 +156,18 @@
                                     <table id="selectBusinessTable" class="table table-striped" style="word-break:break-all">
                                         <thead>
                                         <tr>
-                                            <th width="14%">工单时间</th>
-                                            <th width="15%">工单流水</th>
-                                            <th width="14%">工单类型</th>
-                                            <th width="14%">对应账号</th>
-                                            <th width="14%">对应姓名</th>
-                                            <th>工单备注</th>
+                                            <th>系统标识</th>
+                                            <th>宽带账号</th>
+                                            <th>宽带状态</th>
+                                            <th>续费状态</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr ms-for="($index, $business) in @unicomOrder.businesses">
-                                            <td>{{$business.businessDate | date('yy-MM-dd hh:mm:ss') }}</td>
-                                            <td>{{$business.businessSerialNumber | trim()  }}</td>
-                                            <td>{{$business.businessType.businessTypeName }}</td>
-                                            <td>{{$business.businessAccount }}</td>
-                                            <td>{{$business.businessUserName }}</td>
-                                            <td>{{$business.businessDescription | truncate(21, '…') }}</td>
+                                        <tr ms-for="($index, $broadband) in @customer.broadbands">
+                                            <td>{{$broadband.broadbandSystemType }}</td>
+                                            <td>{{$broadband.broadbandAccount }}</td>
+                                            <td>{{$broadband.broadbandState }}</td>
+                                            <td>{{$broadband.broadbandXuFeiState }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -256,7 +230,7 @@
             },
             onPageChanged: function (event, oldPage, newPage) {
                 vm.page.nowPage = newPage;
-                UnicomOrder.ajaxGetListByOption(vm);
+                Customer.ajaxGetListByOption(vm);
             }
         });
 
@@ -265,7 +239,7 @@
          *  初始化avalon
          */
         var vm = avalon.define({
-            $id: "broadband_list",
+            $id: "customer_list",
             option: {
                 state: "未完工",
                 verify: "全部"
@@ -275,21 +249,18 @@
                 totalPages: 1,
                 totalCounts: 1
             },
-            unicomOrder: new UnicomOrder(),
-            unicomOrders: [],
+            customer: new Customer(),
+            customers : [],
             staffs: [],
             unicomOrderTypes: [],
             unicomOrderTags: [],
             businesses: [],
-            openModal: function (unicomOrderId) {
-                UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
+            openModal: function (customerId) {
+                Customer.ajaxGetEntityById(customerId, vm);
             }
         });
-        UnicomOrder.ajaxGetListByOption(vm);
-        UnicomOrder.ajaxGetPageByOption(vm);
-        Staff.ajaxGetSelectList(vm);
-        UnicomOrderType.ajaxGetSelectList(vm);
-        UnicomOrderTag.ajaxGetSelectList(vm);
+        Customer.ajaxGetListByOption(vm);
+        Customer.ajaxGetPageByOption(vm);
         avalon.scan(document.body);
 
 
