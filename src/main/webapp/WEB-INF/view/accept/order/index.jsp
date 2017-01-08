@@ -63,9 +63,10 @@
                         <tr>
                             <th style="width: 15%">受理日期</th>
                             <th>受理业务</th>
-                            <th>联系人</th>
+                            <th>客户姓名</th>
+                            <th>客户电话</th>
                             <th>受理人</th>
-                            <th>相关操作</th>
+                            <th class="text-right" width="15%">相关操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -73,9 +74,10 @@
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
                             <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
+                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerTelphone }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
-                            <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
+                            <td class="text-right">
+                                <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
                             </td>
                         </tr>
                         </tbody>
