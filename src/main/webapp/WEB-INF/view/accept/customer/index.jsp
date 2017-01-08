@@ -57,8 +57,10 @@
         <div class="row row-offcanvas row-offcanvas-right">
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
-
-                <div class="col-sm-offset-8 col-sm-4 btn-group text-right">
+                <div class="col-sm-3">
+                    <input id="createCustomerButton" type="text" class="btn btn-default" value="新建客户" />
+                </div>
+                <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
                     <div class="input-group">
                         <input type="text" id="searchCustomerInput" class="form-control"/>
                         <span class="input-group-btn">
@@ -175,6 +177,54 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
+
+
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="createCustomerModal" tabindex="-1" role="dialog" aria-labelledby="createCustomerLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="createCustomerLabel">新建客户</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="customerId" class="col-sm-2 control-label">客户编号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="newCustomerId" ms-duplex="@customer.customerId" disabled>
+                                </div>
+                                <label for="customerCardId" class="col-sm-2 control-label">身份证号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="newCustomerCardId" ms-duplex="@customer.customerCardId">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="customerName" class="col-sm-2 control-label">客户姓名</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="newCustomerName" ms-duplex="@customer.customerName">
+                                </div>
+                                <label for="customerTelphone" class="col-sm-2 control-label">联系电话</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="newCustomerTelphone" ms-duplex="@customer.customerTelphone">
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="createCustomerSubmitButton" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
 
         <!-- joinUnicomOrder模态框（Modal） -->
         <div class="modal fade" id="joinUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="joinUnicomOrderLabel"
@@ -336,6 +386,31 @@
                 }
             });
         });
+
+        $('#createCustomerButton').click(function(){
+            vm.customer = new Customer();
+            $('#createCustomerModal').modal("show");
+        });
+
+        $('#createCustomerSubmitButton').click(function(){
+            $.ajax({
+                url: "/Ajax/Customer/Create",
+                type: "post",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(vm.customer),
+                success: function (data) {
+                    alert("success");
+                    vm.unicomOrder = data;
+                    Customer.ajaxGetListByOption(vm);
+                    Customer.ajaxGetPageByOption(vm);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        });
+
 
 
     });

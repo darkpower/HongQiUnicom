@@ -3,10 +3,7 @@ package com.hongqiunicom.crm.web.springmvc.controller.ajax;
 import com.alibaba.fastjson.JSON;
 import com.hongqiunicom.crm.entity.Customer;
 import com.hongqiunicom.crm.services.CustomerService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -55,6 +52,13 @@ public class CustomerController {
     public Integer page(HttpServletRequest request) {
         return customerService.getCountsWithOptions(request.getParameter("search"));
 
+    }
+
+
+    @RequestMapping(value = "/Create", method = RequestMethod.POST)
+    @ResponseBody
+    public Customer create(@RequestBody Customer customer) {
+        return customerService.createCustomer(customer);
     }
 
 

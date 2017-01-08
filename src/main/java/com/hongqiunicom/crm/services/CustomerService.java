@@ -13,4 +13,6 @@ public interface CustomerService extends BaseService<Customer, Integer> {
 
     Page<Customer> getCustomerPageWithOptions(int pageSize, int nowPage,String search);
 
+    Customer createCustomer(Customer customer);
+
 }

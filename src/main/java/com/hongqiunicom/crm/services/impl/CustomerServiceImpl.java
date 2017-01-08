@@ -39,6 +39,12 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Integer> impl
         return customerDao.getPage(this.getCriteriaWithOptions(search), page);
     }
 
+    @Override
+    public Customer createCustomer(Customer customer) {
+        customerDao.save(customer);
+        return customer;
+    }
+
 
     private DetachedCriteria getCriteriaWithOptions(String search) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Customer.class);
