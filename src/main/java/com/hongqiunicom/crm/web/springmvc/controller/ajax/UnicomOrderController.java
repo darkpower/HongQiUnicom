@@ -37,11 +37,17 @@ public class UnicomOrderController extends BaseController {
         return unicomOrderService.createUnicomOrder(unicomOrder);
     }
 
-    @RequestMapping(value = "/Join", method = RequestMethod.POST)
+    @RequestMapping(value = "/JoinBusinesses", method = RequestMethod.POST)
     @ResponseBody
-    public UnicomOrder join(@RequestBody UnicomOrder unicomOrder) {
+    public UnicomOrder joinBusinesses(@RequestBody UnicomOrder unicomOrder) {
+        return unicomOrderService.updateUnicomOrderJoinBusinesses(unicomOrder);
 
-            return unicomOrderService.updateUnicomOrderJoinBusiness(unicomOrder);
+    }
+
+    @RequestMapping(value = "/JoinCustomer", method = RequestMethod.POST)
+    @ResponseBody
+    public UnicomOrder joinCustomer(@RequestBody UnicomOrder unicomOrder) {
+        return unicomOrderService.updateUnicomOrderJoinCustomer(unicomOrder);
 
     }
 

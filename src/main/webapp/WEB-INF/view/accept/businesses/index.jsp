@@ -481,7 +481,7 @@
             });
 
             $.ajax({
-                url: "/Ajax/UnicomOrder/Join",
+                url: "/Ajax/UnicomOrder/JoinBusinesses",
                 type: "post",
                 contentType: "application/json",
                 dataType: "json",

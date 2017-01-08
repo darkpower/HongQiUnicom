@@ -35,6 +35,9 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     @Resource(type = StaffDao.class)
     private StaffDao staffDao;
 
+    @Resource(type = CustomerDao.class)
+    private CustomerDao customerDao;
+
 
     @Override
     public UnicomOrder createUnicomOrder(UnicomOrder unicomOrder) {
@@ -64,7 +67,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public UnicomOrder updateUnicomOrderJoinBusiness(UnicomOrder unicomOrder) {
+    public UnicomOrder updateUnicomOrderJoinBusinesses(UnicomOrder unicomOrder) {
 
         UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
         Iterator<Business> iteratorBusinesses = unicomOrder.getBusinesses().iterator();
@@ -75,6 +78,15 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
             business.setBusinessState(2);
             pUnicomOrder.getBusinesses().add(business);
         }
+        return pUnicomOrder;
+    }
+
+    @Override
+    public UnicomOrder updateUnicomOrderJoinCustomer(UnicomOrder unicomOrder) {
+
+        UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
+        Customer customer = customerDao.get(unicomOrder.getCustomer().getCustomerId());
+        pUnicomOrder.setCustomer(customer);
         return pUnicomOrder;
     }
 
@@ -124,7 +136,7 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
                 break;
         }
 
-        switch(verify){
+        switch (verify) {
             case "全部":
                 break;
             case "尚未验收":

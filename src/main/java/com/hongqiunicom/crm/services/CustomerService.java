@@ -9,8 +9,8 @@ import com.hongqiunicom.crm.entity.Customer;
 public interface CustomerService extends BaseService<Customer, Integer> {
 
 
-    Integer getCountsWithOptions();
+    Integer getCountsWithOptions(String search);
 
-    Page<Customer> getCustomerPageWithOptions(int pageSize, int nowPage);
+    Page<Customer> getCustomerPageWithOptions(int pageSize, int nowPage,String search);
 
 }

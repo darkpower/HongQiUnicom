@@ -26,476 +26,524 @@
     <table id="21" parent="1" name="unicom_order"/>
     <table id="22" parent="1" name="staff"/>
     <table id="23" parent="1" name="unicom_order_type"/>
-    <column id="24" parent="7" name="broadband_id">
+    <table id="24" parent="1" name="unicom_order_tag"/>
+    <column id="25" parent="7" name="broadband_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="25" parent="7" name="broadband_account">
+    <column id="26" parent="7" name="broadband_account">
       <mandatory>1</mandatory>
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="26" parent="7" name="broadband_expire_date">
+    <column id="27" parent="7" name="broadband_expire_date">
       <data-type>date|0</data-type>
     </column>
-    <column id="27" parent="7" name="broadband_renewal_date">
+    <column id="28" parent="7" name="broadband_renewal_date">
       <data-type>date|0</data-type>
     </column>
-    <column id="28" parent="7" name="broadband_retention_content">
+    <column id="29" parent="7" name="broadband_retention_content">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="29" parent="7" name="broadband_retention_date">
+    <column id="30" parent="7" name="broadband_retention_date">
       <data-type>date|0</data-type>
     </column>
-    <column id="30" parent="7" name="broadband_state">
+    <column id="31" parent="7" name="broadband_state">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="31" parent="7" name="broadband_system_type">
+    <column id="32" parent="7" name="broadband_system_type">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="32" parent="7" name="broadband_xufei_state">
+    <column id="33" parent="7" name="broadband_xufei_state">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="33" parent="7" name="broadband_product_id">
+    <column id="34" parent="7" name="broadband_product_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="34" parent="7" name="customer_id">
+    <column id="35" parent="7" name="customer_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="35" parent="7" name="FKapy70wyspn3mgnfc5amqthaa5">
+    <index id="36" parent="7" name="FKapy70wyspn3mgnfc5amqthaa5">
       <columns>customer_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="36" parent="7" name="FKfqglgd15gcc3ie4glxl5mqbbh">
+    <index id="37" parent="7" name="FKfqglgd15gcc3ie4glxl5mqbbh">
       <columns>broadband_product_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="37" parent="7" name="PRIMARY">
+    <key id="38" parent="7" name="PRIMARY">
       <columns>broadband_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="38" parent="7" name="FKfqglgd15gcc3ie4glxl5mqbbh">
+    <foreign-key id="39" parent="7" name="FKfqglgd15gcc3ie4glxl5mqbbh">
       <columns>broadband_product_id</columns>
       <ref-key>~.broadband_product.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="39" parent="7" name="FKapy70wyspn3mgnfc5amqthaa5">
+    <foreign-key id="40" parent="7" name="FKapy70wyspn3mgnfc5amqthaa5">
       <columns>customer_id</columns>
       <ref-key>~.customer.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="40" parent="8" name="customer_id">
+    <column id="41" parent="8" name="customer_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="41" parent="8" name="customer_card_id">
+    <column id="42" parent="8" name="customer_card_id">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="42" parent="8" name="customer_name">
+    <column id="43" parent="8" name="customer_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="43" parent="8" name="customer_quality_data">
+    <column id="44" parent="8" name="customer_quality_data">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="44" parent="8" name="customer_quality_voice">
+    <column id="45" parent="8" name="customer_quality_voice">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="45" parent="8" name="customer_telphone">
+    <column id="46" parent="8" name="customer_telphone">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="46" parent="8" name="PRIMARY">
+    <key id="47" parent="8" name="PRIMARY">
       <columns>customer_id</columns>
       <primary>1</primary>
     </key>
-    <column id="47" parent="9" name="remark_id">
+    <column id="48" parent="9" name="remark_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="48" parent="9" name="remark_content">
+    <column id="49" parent="9" name="remark_content">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="49" parent="9" name="remark_date">
+    <column id="50" parent="9" name="remark_date">
       <data-type>date|0</data-type>
     </column>
-    <column id="50" parent="9" name="broadband_id">
+    <column id="51" parent="9" name="broadband_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="51" parent="9" name="FKs1oaxsglq857n3ieei7sd6mvj">
+    <index id="52" parent="9" name="FKs1oaxsglq857n3ieei7sd6mvj">
       <columns>broadband_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="52" parent="9" name="PRIMARY">
+    <key id="53" parent="9" name="PRIMARY">
       <columns>remark_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="53" parent="9" name="FKs1oaxsglq857n3ieei7sd6mvj">
+    <foreign-key id="54" parent="9" name="FKs1oaxsglq857n3ieei7sd6mvj">
       <columns>broadband_id</columns>
       <ref-key>~.broadband.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="54" parent="10" name="id">
+    <column id="55" parent="10" name="id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="55" parent="10" name="password">
+    <column id="56" parent="10" name="password">
       <mandatory>1</mandatory>
       <data-type>varchar(50)|0</data-type>
     </column>
-    <column id="56" parent="10" name="username">
+    <column id="57" parent="10" name="username">
       <mandatory>1</mandatory>
       <data-type>varchar(20)|0</data-type>
     </column>
-    <key id="57" parent="10" name="PRIMARY">
+    <key id="58" parent="10" name="PRIMARY">
       <columns>id</columns>
       <primary>1</primary>
     </key>
-    <column id="58" parent="11" name="mobile_id">
+    <column id="59" parent="11" name="mobile_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="59" parent="11" name="mobile_model_id">
+    <column id="60" parent="11" name="mobile_model_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="60" parent="11" name="FKfg8fvqxopv17k641xxysnd9l4">
+    <index id="61" parent="11" name="FKfg8fvqxopv17k641xxysnd9l4">
       <columns>mobile_model_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="61" parent="11" name="PRIMARY">
+    <key id="62" parent="11" name="PRIMARY">
       <columns>mobile_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="62" parent="11" name="FKfg8fvqxopv17k641xxysnd9l4">
+    <foreign-key id="63" parent="11" name="FKfg8fvqxopv17k641xxysnd9l4">
       <columns>mobile_model_id</columns>
       <ref-key>~.mobile_model.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="63" parent="12" name="mobile_brand_id">
+    <column id="64" parent="12" name="mobile_brand_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="64" parent="12" name="mobile_brand_name">
+    <column id="65" parent="12" name="mobile_brand_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="65" parent="12" name="PRIMARY">
+    <key id="66" parent="12" name="PRIMARY">
       <columns>mobile_brand_id</columns>
       <primary>1</primary>
     </key>
-    <column id="66" parent="13" name="mobile_model_id">
+    <column id="67" parent="13" name="mobile_model_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="67" parent="13" name="mobile_model_name">
+    <column id="68" parent="13" name="mobile_model_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="68" parent="13" name="mobile_brand_id">
+    <column id="69" parent="13" name="mobile_brand_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="69" parent="13" name="FKdcvrc5r0go1tuaeg798w189d6">
+    <index id="70" parent="13" name="FKdcvrc5r0go1tuaeg798w189d6">
       <columns>mobile_brand_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="70" parent="13" name="PRIMARY">
+    <key id="71" parent="13" name="PRIMARY">
       <columns>mobile_model_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="71" parent="13" name="FKdcvrc5r0go1tuaeg798w189d6">
+    <foreign-key id="72" parent="13" name="FKdcvrc5r0go1tuaeg798w189d6">
       <columns>mobile_brand_id</columns>
       <ref-key>~.mobile_brand.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="72" parent="14" name="card_id">
+    <column id="73" parent="14" name="card_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="73" parent="14" name="card_iccid">
+    <column id="74" parent="14" name="card_iccid">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="74" parent="14" name="card_telphone_number">
+    <column id="75" parent="14" name="card_telphone_number">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="75" parent="14" name="card_type">
+    <column id="76" parent="14" name="card_type">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="76" parent="14" name="card_company_id">
+    <column id="77" parent="14" name="card_company_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="77" parent="14" name="retailer_id">
+    <column id="78" parent="14" name="retailer_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="78" parent="14" name="business_type_id">
+    <column id="79" parent="14" name="business_type_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="79" parent="14" name="FKoapl9w1afa48nwd43m5htdjeu">
+    <index id="80" parent="14" name="FKoapl9w1afa48nwd43m5htdjeu">
       <columns>card_company_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="80" parent="14" name="FKqa1wumccan3p0d8rifv0kfb38">
+    <index id="81" parent="14" name="FKqa1wumccan3p0d8rifv0kfb38">
       <columns>retailer_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="81" parent="14" name="FKsuqe62pvobijktcxem12q0fms">
+    <index id="82" parent="14" name="FKsuqe62pvobijktcxem12q0fms">
       <columns>business_type_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="82" parent="14" name="PRIMARY">
+    <key id="83" parent="14" name="PRIMARY">
       <columns>card_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="83" parent="14" name="FKoapl9w1afa48nwd43m5htdjeu">
+    <foreign-key id="84" parent="14" name="FKoapl9w1afa48nwd43m5htdjeu">
       <columns>card_company_id</columns>
       <ref-key>~.card_company.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="84" parent="14" name="FKqa1wumccan3p0d8rifv0kfb38">
+    <foreign-key id="85" parent="14" name="FKqa1wumccan3p0d8rifv0kfb38">
       <columns>retailer_id</columns>
       <ref-key>~.retailer.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="85" parent="14" name="FKsuqe62pvobijktcxem12q0fms">
+    <foreign-key id="86" parent="14" name="FKsuqe62pvobijktcxem12q0fms">
       <columns>business_type_id</columns>
       <ref-key>~.business_type.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="86" parent="15" name="card_company_id">
+    <column id="87" parent="15" name="card_company_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="87" parent="15" name="card_company_name">
+    <column id="88" parent="15" name="card_company_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="88" parent="15" name="PRIMARY">
+    <key id="89" parent="15" name="PRIMARY">
       <columns>card_company_id</columns>
       <primary>1</primary>
     </key>
-    <column id="89" parent="16" name="card_package_id">
+    <column id="90" parent="16" name="card_package_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="90" parent="16" name="card_cost">
+    <column id="91" parent="16" name="card_cost">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="91" parent="16" name="card_package_name">
+    <column id="92" parent="16" name="card_package_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="92" parent="16" name="card_company_id">
+    <column id="93" parent="16" name="card_company_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="93" parent="16" name="FKj8fau96ndda6bdkj2fv9pmm2x">
+    <index id="94" parent="16" name="FKj8fau96ndda6bdkj2fv9pmm2x">
       <columns>card_company_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="94" parent="16" name="PRIMARY">
+    <key id="95" parent="16" name="PRIMARY">
       <columns>card_package_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="95" parent="16" name="FKj8fau96ndda6bdkj2fv9pmm2x">
+    <foreign-key id="96" parent="16" name="FKj8fau96ndda6bdkj2fv9pmm2x">
       <columns>card_company_id</columns>
       <ref-key>~.card_company.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="96" parent="17" name="retailer_id">
+    <column id="97" parent="17" name="retailer_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="97" parent="17" name="retailer_account">
+    <column id="98" parent="17" name="retailer_account">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="98" parent="17" name="retailer_address">
+    <column id="99" parent="17" name="retailer_address">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="99" parent="17" name="retailer_code">
+    <column id="100" parent="17" name="retailer_code">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="100" parent="17" name="retailer_name">
+    <column id="101" parent="17" name="retailer_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="101" parent="17" name="PRIMARY">
+    <key id="102" parent="17" name="PRIMARY">
       <columns>retailer_id</columns>
       <primary>1</primary>
     </key>
-    <column id="102" parent="18" name="broadband_product_id">
+    <column id="103" parent="18" name="broadband_product_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="103" parent="18" name="broadband_product_deposit">
+    <column id="104" parent="18" name="broadband_product_deposit">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="104" parent="18" name="broadband_product_download_speed">
+    <column id="105" parent="18" name="broadband_product_download_speed">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="105" parent="18" name="broadband_product_length">
+    <column id="106" parent="18" name="broadband_product_length">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="106" parent="18" name="broadband_product_monthly">
+    <column id="107" parent="18" name="broadband_product_monthly">
       <data-type>double|0</data-type>
     </column>
-    <column id="107" parent="18" name="broadband_product_name">
+    <column id="108" parent="18" name="broadband_product_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="108" parent="18" name="broadband_product_state">
+    <column id="109" parent="18" name="broadband_product_state">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="109" parent="18" name="broadband_product_type">
+    <column id="110" parent="18" name="broadband_product_type">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="110" parent="18" name="PRIMARY">
+    <key id="111" parent="18" name="PRIMARY">
       <columns>broadband_product_id</columns>
       <primary>1</primary>
     </key>
-    <column id="111" parent="19" name="business_id">
+    <column id="112" parent="19" name="business_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="112" parent="19" name="business_account">
+    <column id="113" parent="19" name="business_account">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="113" parent="19" name="business_date">
+    <column id="114" parent="19" name="business_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="114" parent="19" name="business_description">
+    <column id="115" parent="19" name="business_description">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="115" parent="19" name="business_serial_number">
+    <column id="116" parent="19" name="business_serial_number">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="116" parent="19" name="business_state">
+    <column id="117" parent="19" name="business_state">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="117" parent="19" name="business_user_name">
+    <column id="118" parent="19" name="business_user_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="118" parent="19" name="business_type_id">
+    <column id="119" parent="19" name="business_type_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="119" parent="19" name="unicom_order_id">
+    <column id="120" parent="19" name="unicom_order_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="120" parent="19" name="FK60fvlj21omlx52mxe9icas0vx">
+    <index id="121" parent="19" name="FK60fvlj21omlx52mxe9icas0vx">
       <columns>unicom_order_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="121" parent="19" name="FK9tptepg8otfhm1j8arxq2mk75">
+    <index id="122" parent="19" name="FK9tptepg8otfhm1j8arxq2mk75">
       <columns>business_type_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="122" parent="19" name="PRIMARY">
+    <key id="123" parent="19" name="PRIMARY">
       <columns>business_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="123" parent="19" name="FK9tptepg8otfhm1j8arxq2mk75">
+    <foreign-key id="124" parent="19" name="FK9tptepg8otfhm1j8arxq2mk75">
       <columns>business_type_id</columns>
       <ref-key>~.business_type.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="124" parent="19" name="FK60fvlj21omlx52mxe9icas0vx">
+    <foreign-key id="125" parent="19" name="FK60fvlj21omlx52mxe9icas0vx">
       <columns>unicom_order_id</columns>
       <ref-key>~.unicom_order.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="125" parent="20" name="business_type_id">
+    <column id="126" parent="20" name="business_type_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="126" parent="20" name="business_type_name">
+    <column id="127" parent="20" name="business_type_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <key id="127" parent="20" name="PRIMARY">
+    <key id="128" parent="20" name="PRIMARY">
       <columns>business_type_id</columns>
       <primary>1</primary>
     </key>
-    <column id="128" parent="21" name="unicom_order_id">
+    <column id="129" parent="21" name="unicom_order_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="129" parent="21" name="unicom_order_date">
+    <column id="130" parent="21" name="unicom_order_date">
       <data-type>datetime|0</data-type>
     </column>
-    <column id="130" parent="21" name="staff_id">
+    <column id="131" parent="21" name="staff_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="131" parent="21" name="unicom_order_type_id">
+    <column id="132" parent="21" name="unicom_order_type_id">
       <data-type>int(11)|0</data-type>
     </column>
-    <column id="132" parent="21" name="unicom_order_state">
+    <column id="133" parent="21" name="unicom_order_state">
       <data-type>int(11)|0</data-type>
     </column>
-    <index id="133" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
+    <column id="134" parent="21" name="unicom_order_renewal_tag">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="135" parent="21" name="unicom_order_tag_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="136" parent="21" name="unicom_order_verify">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <column id="137" parent="21" name="customer_id">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <index id="138" parent="21" name="FK1ywbjdjfnkjfjv692wbftwuba">
+      <columns>customer_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <index id="139" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
       <columns>staff_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <index id="134" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
+    <index id="140" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
       <columns>unicom_order_type_id</columns>
       <desc-columns></desc-columns>
     </index>
-    <key id="135" parent="21" name="PRIMARY">
+    <index id="141" parent="21" name="FKrqy48jctffxijnxb4w5p3pgpf">
+      <columns>unicom_order_tag_id</columns>
+      <desc-columns></desc-columns>
+    </index>
+    <key id="142" parent="21" name="PRIMARY">
       <columns>unicom_order_id</columns>
       <primary>1</primary>
     </key>
-    <foreign-key id="136" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
+    <foreign-key id="143" parent="21" name="FK4fg6dh3fogebnnxx2veg4d5yb">
       <columns>staff_id</columns>
       <ref-key>~.staff.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <foreign-key id="137" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
+    <foreign-key id="144" parent="21" name="FK8ipadgqgaq9gq0cmwe42c4gsu">
       <columns>unicom_order_type_id</columns>
       <ref-key>~.unicom_order_type.PRIMARY</ref-key>
       <cascade-update-rule>restrict</cascade-update-rule>
       <cascade-delete-rule>restrict</cascade-delete-rule>
     </foreign-key>
-    <column id="138" parent="22" name="staff_id">
+    <foreign-key id="145" parent="21" name="FKrqy48jctffxijnxb4w5p3pgpf">
+      <columns>unicom_order_tag_id</columns>
+      <ref-key>~.unicom_order_tag.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <foreign-key id="146" parent="21" name="FK1ywbjdjfnkjfjv692wbftwuba">
+      <columns>customer_id</columns>
+      <ref-key>~.customer.PRIMARY</ref-key>
+      <cascade-update-rule>restrict</cascade-update-rule>
+      <cascade-delete-rule>restrict</cascade-delete-rule>
+    </foreign-key>
+    <column id="147" parent="22" name="staff_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="139" parent="22" name="staff_name">
+    <column id="148" parent="22" name="staff_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="140" parent="22" name="staff_state">
+    <column id="149" parent="22" name="staff_state">
       <data-type>int(11)|0</data-type>
     </column>
-    <key id="141" parent="22" name="PRIMARY">
+    <key id="150" parent="22" name="PRIMARY">
       <columns>staff_id</columns>
       <primary>1</primary>
     </key>
-    <column id="142" parent="23" name="unicom_order_type_id">
+    <column id="151" parent="23" name="unicom_order_type_id">
       <mandatory>1</mandatory>
       <data-type>int(11)|0</data-type>
       <sequence-identity>1</sequence-identity>
     </column>
-    <column id="143" parent="23" name="unicom_order_type_name">
+    <column id="152" parent="23" name="unicom_order_type_name">
       <data-type>varchar(255)|0</data-type>
     </column>
-    <column id="144" parent="23" name="unicom_order_type_state">
+    <column id="153" parent="23" name="unicom_order_type_state">
       <data-type>int(11)|0</data-type>
     </column>
-    <key id="145" parent="23" name="PRIMARY">
+    <key id="154" parent="23" name="PRIMARY">
       <columns>unicom_order_type_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="155" parent="24" name="unicom_order_tag_id">
+      <mandatory>1</mandatory>
+      <data-type>int(11)|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="156" parent="24" name="unicom_order_type_name">
+      <data-type>varchar(255)|0</data-type>
+    </column>
+    <column id="157" parent="24" name="unicom_order_type_state">
+      <data-type>int(11)|0</data-type>
+    </column>
+    <key id="158" parent="24" name="PRIMARY">
+      <columns>unicom_order_tag_id</columns>
       <primary>1</primary>
     </key>
   </database-model>

@@ -10,7 +10,9 @@ public interface UnicomOrderService extends BaseService<UnicomOrder, Integer> {
 
     UnicomOrder createUnicomOrder(UnicomOrder unicomOrder);
 
-    UnicomOrder updateUnicomOrderJoinBusiness(UnicomOrder unicomOrder);
+    UnicomOrder updateUnicomOrderJoinBusinesses(UnicomOrder unicomOrder);
+
+    UnicomOrder updateUnicomOrderJoinCustomer(UnicomOrder unicomOrder);
 
     Integer getCountsWithOptions(String state, String verify);
 

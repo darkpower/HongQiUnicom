@@ -1,6 +1,7 @@
 package com.hongqiunicom.crm.entity;
 
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
@@ -59,6 +60,10 @@ public class UnicomOrder implements Serializable {
     @ManyToOne
     @JoinColumn(name = "unicom_order_type_id")
     private UnicomOrderType unicomOrderType;
+
+    @ManyToOne
+    @JoinColumn(name = "customer_id")
+    private Customer customer;
 
     @ManyToOne
     @JoinColumn(name = "staff_id")
@@ -134,5 +139,13 @@ public class UnicomOrder implements Serializable {
 
     public void setUnicomOrderVerify(Integer unicomOrderVerify) {
         this.unicomOrderVerify = unicomOrderVerify;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

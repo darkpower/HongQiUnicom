@@ -197,7 +197,8 @@ function Customer() {
             type: "post",
             dataType: "json",
             data: {
-                'page': vm.page.nowPage
+                'page': vm.page.nowPage,
+                'search': vm.option.search
             },
             success: function (data) {
                 vm.customers = [];
@@ -214,7 +215,8 @@ function Customer() {
             type: "post",
             dataType: "json",
             data: {
-                'page': vm.page.nowPage
+                'page': vm.page.nowPage,
+                'search': vm.option.search
             },
             success: function (data) {
                 vm.page.totalCounts = data;

@@ -1,8 +1,8 @@
 package com.hongqiunicom.crm.entity;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
-import org.hibernate.annotations.CollectionId;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -40,7 +40,14 @@ public class Customer implements Serializable {
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "customer_id")
-    private Set<Broadband> broadbands = new HashSet<Broadband>();
+    @JSONField(serialize = false)
+    private Set<UnicomOrder> unicomOrders = new HashSet<>();
+
+    @OneToMany
+    @Cascade(value = {CascadeType.ALL})
+    @JoinColumn(name = "customer_id")
+    @JSONField(serialize = false)
+    private Set<Broadband> broadbands = new HashSet<>();
 
     public Integer getCustomerId() {
         return customerId;
@@ -99,12 +106,20 @@ public class Customer implements Serializable {
         this.customerQualityData = customerQualityData;
     }
 
-    public void toPrint(){
+    public void toPrint() {
         System.out.println("客户序号：" + this.customerId);
         System.out.println("身份证号：" + this.customerCardId);
         System.out.println("客户姓名：" + this.customerName);
         System.out.println("客户电话：" + this.customerTelphone);
         System.out.println("客户分钟使用量：" + this.customerQualityVoice);
         System.out.println("客户数据使用量：" + this.customerQualityData);
+    }
+
+    public Set<UnicomOrder> getUnicomOrders() {
+        return unicomOrders;
+    }
+
+    public void setUnicomOrders(Set<UnicomOrder> unicomOrders) {
+        this.unicomOrders = unicomOrders;
     }
 }

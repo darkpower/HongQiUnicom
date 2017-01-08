@@ -20,6 +20,7 @@ public class BaseController {
          response.setHeader("Pragma", "No-cache");
          response.setHeader("Cache-Control", "no-cache");
          response.setDateHeader("Expires", 0);
+         System.out.println("jsontext:" + content);
          response.getWriter().write(content);
          response.getWriter().flush();
       } catch (IOException e) {

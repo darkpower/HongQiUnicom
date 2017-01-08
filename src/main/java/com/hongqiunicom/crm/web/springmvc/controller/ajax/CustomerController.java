@@ -29,8 +29,8 @@ public class CustomerController {
     @ResponseBody
     public Customer show(HttpServletRequest request) {
 //        return customerService.get(Integer.parseInt(request.getParameter("customerId")));
-        Customer customer = customerService.get(Integer.parseInt(request.getParameter("customerId")));
-        System.out.println("asdfasdf" + JSON.toJSONString(customer));
+        Customer customer =  customerService.get(Integer.parseInt(request.getParameter("customerId")));
+        System.out.println(JSON.toJSONString(customer));
         return customer;
     }
 
@@ -39,7 +39,7 @@ public class CustomerController {
     @ResponseBody
     public List<Customer> list(HttpServletRequest request) {
         try {
-            return customerService.getCustomerPageWithOptions(10, Integer.parseInt(request.getParameter("page"))).getList();
+            return customerService.getCustomerPageWithOptions(10, Integer.parseInt(request.getParameter("page")), request.getParameter("search")).getList();
         } catch (
                 Exception e)
 
@@ -52,8 +52,8 @@ public class CustomerController {
 
     @RequestMapping(value = "/Page", method = RequestMethod.POST)
     @ResponseBody
-    public Integer page() {
-        return customerService.getCountsWithOptions();
+    public Integer page(HttpServletRequest request) {
+        return customerService.getCountsWithOptions(request.getParameter("search"));
 
     }
 

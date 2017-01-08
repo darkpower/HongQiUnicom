@@ -57,6 +57,16 @@
         <div class="row row-offcanvas row-offcanvas-right">
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
+
+                <div class="col-sm-offset-8 col-sm-4 btn-group text-right">
+                    <div class="input-group">
+                        <input type="text" id="searchCustomerInput" class="form-control"/>
+                        <span class="input-group-btn">
+                            <input type="button" id="searchCustomerButton" class="btn btn-default" type="button" value="搜索"/>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
@@ -76,8 +86,12 @@
                             <td>{{$customer.customerName }}</td>
                             <td>{{$customer.customerCardId }}</td>
                             <td>{{$customer.customerTelphone }}</td>
-                            <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($customer.customerId)">详细</button>
+                            <td class="text-right">
+                                <div class="btn-group">
+                                    <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($customer.customerId)">详细</button>
+                                    <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#joinUnicomOrderModal" ms-click="@joinUnicomOrderModal($customer.customerId)">受理
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -137,43 +151,19 @@
                                 </div>
                                 <label for="customerCardId" class="col-sm-2 control-label">身份证号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerCardId" ms-duplex="@customer.customerCardId" >
+                                    <input type="text" class="form-control" id="customerCardId" ms-duplex="@customer.customerCardId">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="customerName" class="col-sm-2 control-label">客户姓名</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerName" ms-duplex="@customer.customerName" >
+                                    <input type="text" class="form-control" id="customerName" ms-duplex="@customer.customerName">
                                 </div>
                                 <label for="customerTelphone" class="col-sm-2 control-label">联系电话</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="customerTelphone" ms-duplex="@customer.customerTelphone" >
+                                    <input type="text" class="form-control" id="customerTelphone" ms-duplex="@customer.customerTelphone">
                                 </div>
                             </div>
-
-                            <div>
-                                <div class="table-responsive">
-                                    <table id="selectBusinessTable" class="table table-striped" style="word-break:break-all">
-                                        <thead>
-                                        <tr>
-                                            <th>系统标识</th>
-                                            <th>宽带账号</th>
-                                            <th>宽带状态</th>
-                                            <th>续费状态</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ms-for="($index, $broadband) in @customer.broadbands">
-                                            <td>{{$broadband.broadbandSystemType }}</td>
-                                            <td>{{$broadband.broadbandAccount }}</td>
-                                            <td>{{$broadband.broadbandState }}</td>
-                                            <td>{{$broadband.broadbandXuFeiState }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-
                         </form>
 
 
@@ -181,6 +171,36 @@
                     <div class="modal-footer">
                         <button type="button" id="updateUnicomOrderButton" class="btn btn-primary">保存</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+        <!-- joinUnicomOrder模态框（Modal） -->
+        <div class="modal fade" id="joinUnicomOrderModal" tabindex="-1" role="dialog" aria-labelledby="joinUnicomOrderLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="joinUnicomOrderLabel">加入受理信息</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="joinUnicomOrderId" class="col-sm-2 control-label">受理编号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="joinUnicomOrderId"/>
+                                </div>
+                            </div>
+                        </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="joinUnicomOrderSubmitButton" class="btn btn-primary">导入</button>
+                        <button type="button" id="joinUnicomOrderCloseButton" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
@@ -242,7 +262,8 @@
             $id: "customer_list",
             option: {
                 state: "未完工",
-                verify: "全部"
+                verify: "全部",
+                search: "全部"
             },
             page: {
                 nowPage: 1,
@@ -250,12 +271,12 @@
                 totalCounts: 1
             },
             customer: new Customer(),
-            customers : [],
-            staffs: [],
-            unicomOrderTypes: [],
-            unicomOrderTags: [],
-            businesses: [],
+            customers: [],
+            unicomOrder: new UnicomOrder(),
             openModal: function (customerId) {
+                Customer.ajaxGetEntityById(customerId, vm);
+            },
+            joinUnicomOrderModal: function (customerId) {
                 Customer.ajaxGetEntityById(customerId, vm);
             }
         });
@@ -285,6 +306,35 @@
                 "action": "Export",
                 "method": "POST"
             }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
+        });
+
+        $('#searchCustomerButton').click(function () {
+            if ($('#searchCustomerInput').val() != null)
+                vm.option.search = $('#searchCustomerInput').val();
+            Customer.ajaxGetListByOption(vm);
+            Customer.ajaxGetPageByOption(vm);
+        })
+
+        $('#joinUnicomOrderSubmitButton').click(function () {
+            vm.unicomOrder = new UnicomOrder();
+            vm.unicomOrder.customer = new Customer();
+            vm.unicomOrder.unicomOrderId = $("#joinUnicomOrderId").val();
+            vm.unicomOrder.customer.customerId = vm.customer.customerId;
+            $.ajax({
+                url: "/Ajax/UnicomOrder/JoinCustomer",
+                type: "post",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(vm.unicomOrder),
+                success: function (data) {
+                    alert("success");
+                    Customer.ajaxGetListByOption(vm);
+                    Customer.ajaxGetPageByOption(vm);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
         });
 
 
