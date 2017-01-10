@@ -15,4 +15,6 @@ public interface CustomerService extends BaseService<Customer, Integer> {
 
     Customer createCustomer(Customer customer);
 
+    Customer updateCustomer(Customer customer);
+
 }

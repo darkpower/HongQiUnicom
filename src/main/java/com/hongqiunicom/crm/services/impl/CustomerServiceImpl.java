@@ -45,6 +45,15 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Integer> impl
         return customer;
     }
 
+    @Override
+    public Customer updateCustomer(Customer customer){
+        Customer pCustomer = customerDao.get(customer.getCustomerId());
+        pCustomer.setCustomerName(customer.getCustomerName());
+        pCustomer.setCustomerCardId(customer.getCustomerCardId());
+        pCustomer.setCustomerTelphone(customer.getCustomerTelphone());
+        return pCustomer;
+    }
+
 
     private DetachedCriteria getCriteriaWithOptions(String search) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Customer.class);
@@ -62,4 +71,7 @@ public class CustomerServiceImpl extends BaseServiceImpl<Customer, Integer> impl
         }
         return criteria;
     }
+
+
+
 }

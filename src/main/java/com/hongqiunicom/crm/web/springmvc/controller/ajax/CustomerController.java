@@ -26,7 +26,7 @@ public class CustomerController {
     @ResponseBody
     public Customer show(HttpServletRequest request) {
 //        return customerService.get(Integer.parseInt(request.getParameter("customerId")));
-        Customer customer =  customerService.get(Integer.parseInt(request.getParameter("customerId")));
+        Customer customer = customerService.get(Integer.parseInt(request.getParameter("customerId")));
         System.out.println(JSON.toJSONString(customer));
         return customer;
     }
@@ -59,6 +59,12 @@ public class CustomerController {
     @ResponseBody
     public Customer create(@RequestBody Customer customer) {
         return customerService.createCustomer(customer);
+    }
+
+    @RequestMapping(value = "/Update", method = RequestMethod.POST)
+    @ResponseBody
+    public Customer update(@RequestBody Customer customer) {
+        return customerService.updateCustomer(customer);
     }
 
 

@@ -58,7 +58,7 @@
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
                 <div class="col-sm-3">
-                    <input id="createCustomerButton" type="text" class="btn btn-default" value="新建客户" />
+                    <input id="createCustomerButton" type="text" class="btn btn-default" value="新建客户"/>
                 </div>
                 <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
                     <div class="input-group">
@@ -171,13 +171,12 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="updateUnicomOrderButton" class="btn btn-primary">保存</button>
+                        <button type="button" id="updateCustomerSubmitButton" class="btn btn-primary">保存</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
-
 
 
         <!-- 模态框（Modal） -->
@@ -223,7 +222,6 @@
                 </div><!-- /.modal-content -->
             </div><!-- /.modal -->
         </div>
-
 
 
         <!-- joinUnicomOrder模态框（Modal） -->
@@ -274,6 +272,7 @@
 <script src="/lib/bootstrap-paginator/build/bootstrap-paginator.min.js"></script>
 <script src="/lib/js/global.js"></script>
 <script>
+
 
     $(function () {
 
@@ -345,11 +344,6 @@
             UnicomOrder.ajaxGetPageByOption(vm);
         });
 
-        $('#updateUnicomOrderButton').click(function () {
-            UnicomOrder.ajaxModifyEntity(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-        });
 
         $('#exportExcelButton').click(function () {
             $("<form>").attr({
@@ -387,12 +381,12 @@
             });
         });
 
-        $('#createCustomerButton').click(function(){
+        $('#createCustomerButton').click(function () {
             vm.customer = new Customer();
             $('#createCustomerModal').modal("show");
         });
 
-        $('#createCustomerSubmitButton').click(function(){
+        $('#createCustomerSubmitButton').click(function () {
             $.ajax({
                 url: "/Ajax/Customer/Create",
                 type: "post",
@@ -402,8 +396,8 @@
                 success: function (data) {
                     alert("success");
                     vm.unicomOrder = data;
-                    Customer.ajaxGetListByOption(vm);
-                    Customer.ajaxGetPageByOption(vm);
+                    flush();
+
                 },
                 error: function () {
                     alert("error");
@@ -411,6 +405,32 @@
             });
         });
 
+        $('#updateCustomerSubmitButton').click(function () {
+            $.ajax({
+                url: "/Ajax/Customer/Update",
+                type: "post",
+                contentType: "application/json",
+                dataType: "json",
+                data: JSON.stringify(vm.customer),
+                success: function (data) {
+                    alert("success");
+                    vm.unicomOrder = data;
+                    flush();
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+        });
+
+
+        function flush() {
+            alert("刷新");
+            Customer.ajaxGetListByOption(vm);
+            Customer.ajaxGetPageByOption(vm);
+            avalon.scan(document.body);
+        }
 
 
     });
