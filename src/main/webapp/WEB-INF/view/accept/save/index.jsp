@@ -63,10 +63,9 @@
                         <tr>
                             <th style="width: 15%">受理日期</th>
                             <th>受理业务</th>
-                            <th>客户姓名</th>
-                            <th>客户电话</th>
+                            <th>联系人</th>
                             <th>受理人</th>
-                            <th class="text-right" width="15%">相关操作</th>
+                            <th>相关操作</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -74,10 +73,15 @@
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
                             <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
-                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerTelphone }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td class="text-right">
-                                <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">手工调整</button>
+                                <div class="btn-group">
+                                    <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#unicomOrderDetailModal" ms-click="@unicomOrderDetail($unicomOrder.unicomOrderId)">
+                                        详细
+                                    </button>
+                                    <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#unicomOrderSaveModal" ms-click="@unicomOrderSave($unicomOrder.unicomOrderId)">存档
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
@@ -100,10 +104,9 @@
             <div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar" role="navigation">
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
-                    <a class="list-group-item" state="全部">全部</a>
-                    <a class="list-group-item active" state="未完工">未完工</a>
-                    <a class="list-group-item" state="已完工">已完工</a>
-                    <a class="list-group-item" state="留单">留单</a>
+                    <a class="list-group-item" savedata="全部">全部</a>
+                    <a class="list-group-item active" savedata="未存档">未存档</a>
+                    <a class="list-group-item" savedata="已存档">已存档</a>
                 </div>
 
                 <div class="list-group">
@@ -120,13 +123,13 @@
 
 
         <!-- 模态框（Modal） -->
-        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+        <div class="modal fade" id="unicomOrderDetailModal" tabindex="-1" role="dialog" aria-labelledby="unicomOrderDetailLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                        <h4 class="modal-title" id="myModalLabel">手工调整</h4>
+                        <h4 class="modal-title" id="unicomOrderDetailLabel">详细信息</h4>
                     </div>
                     <div class="modal-body">
 
@@ -160,46 +163,25 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="unicomOrderState" class="col-sm-2 control-label">业务状态</label>
-                                <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderState" ms-duplex="@unicomOrder.unicomOrderState">
-                                        <option value="1">未完工</option>
-                                        <option value="2">已完工</option>
-                                        <option value="3">留单</option>
-                                    </select>
-                                </div>
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
                                     <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
                                         <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
                                     </select>
                                 </div>
+                                <label for="unicomOrderSaveData" class="col-sm-2 control-label">存档状态</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderSaveData" ms-duplex="@unicomOrder.unicomOrderSaveData">
+                                        <option value="1">未存档</option>
+                                        <option value="2">已存档</option>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div>
-                                <div class="table-responsive">
-                                    <table id="selectBusinessTable" class="table table-striped" style="word-break:break-all">
-                                        <thead>
-                                        <tr>
-                                            <th width="14%">工单时间</th>
-                                            <th width="15%">工单流水</th>
-                                            <th width="14%">工单类型</th>
-                                            <th width="14%">对应账号</th>
-                                            <th width="14%">对应姓名</th>
-                                            <th>工单备注</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr ms-for="($index, $business) in @unicomOrder.businesses">
-                                            <td>{{$business.businessDate | date('yy-MM-dd hh:mm:ss') }}</td>
-                                            <td>{{$business.businessSerialNumber | trim()  }}</td>
-                                            <td>{{$business.businessType.businessTypeName }}</td>
-                                            <td>{{$business.businessAccount }}</td>
-                                            <td>{{$business.businessUserName }}</td>
-                                            <td>{{$business.businessDescription | truncate(21, '…') }}</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <img style="width: 100%" id="unicomOrderDetailPic" ms-attr="{src : '/Accept/Data/' + @unicomOrder.unicomOrderId + '.jpg' }" />
                                 </div>
                             </div>
 
@@ -208,7 +190,81 @@
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="updateUnicomOrderButton" class="btn btn-primary">保存</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal -->
+        </div>
+
+
+        <!-- 模态框（Modal） -->
+        <div class="modal fade" id="unicomOrderSaveModal" tabindex="-1" role="dialog" aria-labelledby="unicomOrderSaveLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="unicomOrderSaveLabel">详细信息</h4>
+                    </div>
+                    <div class="modal-body">
+
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="unicomOrderSave_unicomOrderId" class="col-sm-2 control-label">受理编号</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="unicomOrderSave_unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
+                                </div>
+                                <label for="unicomOrderSave_unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="unicomOrderSave_unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="unicomOrderSave_unicomOrderType" class="col-sm-2 control-label">受理业务</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
+                                            }}
+                                        </option>
+                                    </select>
+                                </div>
+                                <label for="unicomOrderSave_unicomOrderTag" class="col-sm-2 control-label">业务标签</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderTag" ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
+                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags" ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">{{$unicomOrderTag.unicomOrderTagName
+                                            }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="unicomOrderSave_staff" class="col-sm-2 control-label">受理人</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderSave_staff" ms-duplex="@unicomOrder.staff.staffId">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    </select>
+                                </div>
+                                <label for="unicomOrderSave_unicomOrderSaveData" class="col-sm-2 control-label">存档状态</label>
+                                <div class="col-sm-4">
+                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderSaveData" ms-duplex="@unicomOrder.unicomOrderSaveData">
+                                        <option value="1">未存档</option>
+                                        <option value="2">已存档</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <input id="unicomOrderSavePicInput" name="picFile" type="file" class="file-loading col-sm-10" data-show-preview="false">
+                                </div>
+                            </div>
+
+
+                        </form>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="UnicomOrderSaveSubmitButton" class="btn btn-primary">保存</button>
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                     </div>
                 </div><!-- /.modal-content -->
@@ -234,7 +290,20 @@
 <script src="/lib/js/global.js"></script>
 <script>
 
+
     $(function () {
+
+
+        $("#unicomOrderSavePicInput").fileinput({
+            language: "zh",
+            uploadUrl: "/Accept/Save/Upload",
+            allowedFileExtensions: ['jpg', 'bmp'],
+            maxFileSize: 0,
+            enctype: 'multipart/form-data',
+            uploadExtraData: function () {
+                return {unicomOrderId: vm.unicomOrder.unicomOrderId}
+            }
+        });
 
 
         //初始化分页
@@ -270,8 +339,8 @@
         var vm = avalon.define({
             $id: "broadband_list",
             option: {
-                state: "未完工",
-                verify: "全部"
+                state: "已完工",
+                verify: "验收合格"
             },
             page: {
                 nowPage: 1,
@@ -284,7 +353,10 @@
             unicomOrderTypes: [],
             unicomOrderTags: [],
             businesses: [],
-            openModal: function (unicomOrderId) {
+            unicomOrderDetail: function (unicomOrderId) {
+                UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
+            },
+            unicomOrderSave: function (unicomOrderId) {
                 UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
             }
         });
@@ -301,22 +373,10 @@
             $(this).prevAll().removeClass("active");
             $(this).addClass("active");
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
+            vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
             vm.page.nowPage = 1;
             UnicomOrder.ajaxGetListByOption(vm);
             UnicomOrder.ajaxGetPageByOption(vm);
-        });
-
-        $('#updateUnicomOrderButton').click(function () {
-            UnicomOrder.ajaxModifyEntity(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-        });
-
-        $('#exportExcelButton').click(function () {
-            $("<form>").attr({
-                "action": "Export",
-                "method": "POST"
-            }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
         });
 
 

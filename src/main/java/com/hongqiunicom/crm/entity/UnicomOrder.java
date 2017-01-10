@@ -50,6 +50,10 @@ public class UnicomOrder implements Serializable {
     @Column(name = "unicom_order_verify")
     private Integer unicomOrderVerify;
 
+    @Column(name = "unicom_order_save_data")
+    private Integer unicomOrderSaveData;
+
+
     /**
      * 业务受理续费标识
      */
@@ -147,5 +151,13 @@ public class UnicomOrder implements Serializable {
 
     public void setCustomer(Customer customer) {
         this.customer = customer;
+    }
+
+    public Integer getUnicomOrderSaveData() {
+        return unicomOrderSaveData;
+    }
+
+    public void setUnicomOrderSaveData(Integer unicomOrderSaveData) {
+        this.unicomOrderSaveData = unicomOrderSaveData;
     }
 }

@@ -110,6 +110,7 @@
                     <a href="/Accept/Customer/" class="list-group-item">客户信息</a>
                     <a href="/Accept/UnicomOrder/" class="list-group-item">受理明细</a>
                     <a href="/Accept/Verify/" class="list-group-item">受理验收</a>
+                    <a href="/Accept/Save/" class="list-group-item">数据存档</a>
                 </div>
             </div>
             <!-- 右侧导航内容 End -->
@@ -175,28 +176,25 @@
 
                             <div>
                                 <div class="table-responsive">
-                                    <table id="selectBusinessTable" class="table table-striped">
+                                    <table id="selectBusinessTable" class="table table-striped" style="word-break:break-all">
                                         <thead>
                                         <tr>
-                                            <th width="15%">工单时间</th>
-                                            <th width="10%">对应账号</th>
-                                            <th width="15%">对应姓名</th>
-                                            <th>备注</th>
-                                            <th width="7%">操作</th>
+                                            <th width="14%">工单时间</th>
+                                            <th width="15%">工单流水</th>
+                                            <th width="14%">工单类型</th>
+                                            <th width="14%">对应账号</th>
+                                            <th width="14%">对应姓名</th>
+                                            <th>工单备注</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <tr ms-for="($index, $business) in @unicomOrder.businesses">
-                                            <td>{{$business.businessDate | date('yyyy-MM-dd') }}</td>
+                                            <td>{{$business.businessDate | date('yy-MM-dd hh:mm:ss') }}</td>
+                                            <td>{{$business.businessSerialNumber | trim()  }}</td>
+                                            <td>{{$business.businessType.businessTypeName }}</td>
                                             <td>{{$business.businessAccount }}</td>
-                                            <td>{{$business.businessUserName | truncate(5, '…') }}</td>
-                                            <td>{{$business.businessDescription | truncate(25, '…') }}</td>
-                                            <td>
-                                                <div class="btn-group">
-                                                    <a class="btn btn-default" data-toggle="modal" data-target="#oldUnicomOrder"
-                                                       ms-click="@openModal($business.businessId)">删除</a>
-                                                </div>
-                                            </td>
+                                            <td>{{$business.businessUserName }}</td>
+                                            <td>{{$business.businessDescription | truncate(21, '…') }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -271,7 +269,7 @@
             $id: "broadband_list",
             option: {
                 state: "已完工",
-                verify: "w"
+                verify: "尚未验收"
             },
             page: {
                 nowPage: 1,

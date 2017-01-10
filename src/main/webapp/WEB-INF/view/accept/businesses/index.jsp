@@ -130,6 +130,7 @@
                     <a href="/Accept/Customer/" class="list-group-item">客户信息</a>
                     <a href="/Accept/UnicomOrder/" class="list-group-item">受理明细</a>
                     <a href="/Accept/Verify/" class="list-group-item">受理验收</a>
+                    <a href="/Accept/Save/" class="list-group-item">数据存档</a>
                 </div>
             </div>
             <!-- 右侧导航内容 End -->

@@ -351,6 +351,7 @@ function UnicomOrder() {
     o.unicomOrderTag = new UnicomOrderTag();
     o.unicomOrderType = new UnicomOrderType();
     o.unicomOrderVerify = 0;
+    o.unicomOrderSaveData = 0;
     o.staff = new Staff();
     o.businesses = [];
     UnicomOrder.createEntity = function (data) {
@@ -359,11 +360,13 @@ function UnicomOrder() {
         o.unicomOrderState = data.unicomOrderState;
         o.businesses = data.businesses;
         o.unicomOrderVerify = data.unicomOrderVerify;
+        o.unicomOrderSaveData = data.unicomOrderSaveData;
         o.unicomOrderTag = UnicomOrderTag.createEntity(data.unicomOrderTag);
         o.unicomOrderType = UnicomOrderType.createEntity(data.unicomOrderType);
         o.staff = Staff.createEntity(data.staff);
         return o;
     }
+
 
     UnicomOrder.ajaxGetEntityById = function (unicomOrderId, vm) {
         $.ajax({
