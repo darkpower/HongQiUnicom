@@ -396,7 +396,8 @@ function UnicomOrder() {
             data: {
                 'page': vm.page.nowPage,
                 'state': vm.option.state,
-                'verify': vm.option.verify
+                'verify': vm.option.verify,
+                'savedata': vm.option.savedata
             },
             success: function (data) {
                 vm.unicomOrders = [];
@@ -414,7 +415,8 @@ function UnicomOrder() {
             dataType: "json",
             data: {
                 'state': vm.option.state,
-                'verify': vm.option.verify
+                'verify': vm.option.verify,
+                'savedata': vm.option.savedata
             },
             success: function (data) {
                 vm.page.totalCounts = data;

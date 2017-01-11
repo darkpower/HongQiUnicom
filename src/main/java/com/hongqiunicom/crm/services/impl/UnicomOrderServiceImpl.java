@@ -45,8 +45,11 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         newUnicomOrder.setUnicomOrderDate(new Date());
         newUnicomOrder.setUnicomOrderState(1);
         newUnicomOrder.setUnicomOrderVerify(1);
-        if (unicomOrder.getUnicomOrderTag() != null) newUnicomOrder.setUnicomOrderTag(unicomOrderTagDao.get(unicomOrder.getUnicomOrderTag().getUnicomOrderTagId()));
-        if (unicomOrder.getUnicomOrderType() != null) newUnicomOrder.setUnicomOrderType(unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId()));
+        newUnicomOrder.setUnicomOrderSaveData(1);
+        if (unicomOrder.getUnicomOrderTag() != null)
+            newUnicomOrder.setUnicomOrderTag(unicomOrderTagDao.get(unicomOrder.getUnicomOrderTag().getUnicomOrderTagId()));
+        if (unicomOrder.getUnicomOrderType() != null)
+            newUnicomOrder.setUnicomOrderType(unicomOrderTypeDao.get(unicomOrder.getUnicomOrderType().getUnicomOrderTypeId()));
         if (unicomOrder.getStaff() != null) newUnicomOrder.setStaff(staffDao.get(unicomOrder.getStaff().getStaffId()));
         unicomOrderDao.save(newUnicomOrder);
         try {
@@ -91,19 +94,19 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public Integer getCountsWithOptions(String state, String verify) {
-        return businessDao.getCount(this.getCriteriaWithOptions(state, verify));
+    public Integer getCountsWithOptions(String state, String verify, String savedata) {
+        return businessDao.getCount(this.getCriteriaWithOptions(state, verify, savedata));
     }
 
 
     @Override
-    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state, String verify) {
+    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state, String verify, String saveData) {
 
         Page<UnicomOrder> page = new Page<>();
         page.setOrderBy("unicomOrderDate");
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
-        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state, verify), page);
+        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state, verify, saveData), page);
     }
 
     @Override
@@ -114,13 +117,14 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         UnicomOrder pUnicomOrder = unicomOrderDao.get(unicomOrder.getUnicomOrderId());
         pUnicomOrder.setUnicomOrderVerify(unicomOrder.getUnicomOrderVerify());
         pUnicomOrder.setUnicomOrderState(unicomOrder.getUnicomOrderState());
+        pUnicomOrder.setUnicomOrderSaveData(unicomOrder.getUnicomOrderSaveData());
         pUnicomOrder.setUnicomOrderTag(unicomOrderTag);
         pUnicomOrder.setStaff(staff);
         pUnicomOrder.setUnicomOrderType(unicomOrderType);
         return pUnicomOrder;
     }
 
-    private DetachedCriteria getCriteriaWithOptions(String state, String verify) {
+    private DetachedCriteria getCriteriaWithOptions(String state, String verify, String savedata) {
         DetachedCriteria criteria = DetachedCriteria.forClass(UnicomOrder.class);
         switch (state) {
             case "全部":
@@ -147,6 +151,17 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
                 break;
             case "业务差错":
                 criteria.add(Restrictions.eq("unicomOrderVerify", 3));
+                break;
+        }
+
+        switch (savedata) {
+            case "全部":
+                break;
+            case "未存档":
+                criteria.add(Restrictions.eq("unicomOrderSaveData", 1));
+                break;
+            case "已存档":
+                criteria.add(Restrictions.eq("unicomOrderSaveData", 2));
                 break;
         }
 

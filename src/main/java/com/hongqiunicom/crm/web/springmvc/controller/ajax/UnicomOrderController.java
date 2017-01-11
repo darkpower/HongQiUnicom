@@ -53,9 +53,14 @@ public class UnicomOrderController extends BaseController {
 
     @RequestMapping(value = "/List", method = RequestMethod.POST)
     public void list(HttpServletRequest request, HttpServletResponse response) {
-        String state = request.getParameter("state");
-        String verify = request.getParameter("verify");
-        ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), state, verify).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
+        try {
+            String state = request.getParameter("state");
+            String verify = request.getParameter("verify");
+            String savedata = request.getParameter("savedata");
+            ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), state, verify, savedata).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
 //        return unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), list, startDay, endDay).getList();
     }
 
@@ -64,7 +69,8 @@ public class UnicomOrderController extends BaseController {
     public Integer page(HttpServletRequest request) {
         String state = request.getParameter("state");
         String verify = request.getParameter("verify");
-        return unicomOrderService.getCountsWithOptions(state, verify);
+        String savedata = request.getParameter("savedata");
+        return unicomOrderService.getCountsWithOptions(state, verify, savedata);
 
     }
 
@@ -74,8 +80,6 @@ public class UnicomOrderController extends BaseController {
         return unicomOrderService.updateUnicomOrder(unicomOrder);
 
     }
-
-
 
 
 }

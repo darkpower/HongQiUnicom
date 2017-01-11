@@ -22,7 +22,8 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -71,15 +72,21 @@
                         <tbody>
                         <tr ms-for="($index, $unicomOrder) in @unicomOrders">
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
-                            <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
+                            <td>{{$unicomOrder.unicomOrderType == null ? "" :
+                                $unicomOrder.unicomOrderType.unicomOrderTypeName }}
+                            </td>
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td class="text-right">
                                 <div class="btn-group">
-                                    <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#unicomOrderDetailModal" ms-click="@unicomOrderDetail($unicomOrder.unicomOrderId)">
+                                    <button option="manual" class="btn btn-default" data-toggle="modal"
+                                            data-target="#unicomOrderDetailModal"
+                                            ms-click="@unicomOrderDetail($unicomOrder.unicomOrderId)">
                                         详细
                                     </button>
-                                    <button option="manual" class="btn btn-default" data-toggle="modal" data-target="#unicomOrderSaveModal" ms-click="@unicomOrderSave($unicomOrder.unicomOrderId)">存档
+                                    <button option="manual" class="btn btn-default" data-toggle="modal"
+                                            data-target="#unicomOrderSaveModal"
+                                            ms-click="@unicomOrderSave($unicomOrder.unicomOrderId)">存档
                                     </button>
                                 </div>
                             </td>
@@ -123,7 +130,8 @@
 
 
         <!-- 模态框（Modal） -->
-        <div class="modal fade" id="unicomOrderDetailModal" tabindex="-1" role="dialog" aria-labelledby="unicomOrderDetailLabel"
+        <div class="modal fade" id="unicomOrderDetailModal" tabindex="-1" role="dialog"
+             aria-labelledby="unicomOrderDetailLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -137,26 +145,34 @@
                             <div class="form-group">
                                 <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderId"
+                                           ms-duplex="@unicomOrder.unicomOrderId" disabled>
                                 </div>
                                 <label for="unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderDate"
+                                           ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
-                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
+                                    <select type="text" class="form-control" id="unicomOrderType"
+                                            ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes"
+                                                ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">
+                                            {{$unicomOrderType.unicomOrderTypeName
                                             }}
                                         </option>
                                     </select>
                                 </div>
                                 <label for="unicomOrderTag" class="col-sm-2 control-label">业务标签</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderTag" ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
-                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags" ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">{{$unicomOrderTag.unicomOrderTagName
+                                    <select type="text" class="form-control" id="unicomOrderTag"
+                                            ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
+                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags"
+                                                ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">
+                                            {{$unicomOrderTag.unicomOrderTagName
                                             }}
                                         </option>
                                     </select>
@@ -165,13 +181,17 @@
                             <div class="form-group">
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
-                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    <select type="text" class="form-control" id="staff"
+                                            ms-duplex="@unicomOrder.staff.staffId">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">
+                                            {{$staff.staffName }}
+                                        </option>
                                     </select>
                                 </div>
                                 <label for="unicomOrderSaveData" class="col-sm-2 control-label">存档状态</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderSaveData" ms-duplex="@unicomOrder.unicomOrderSaveData">
+                                    <select type="text" class="form-control" id="unicomOrderSaveData"
+                                            ms-duplex="@unicomOrder.unicomOrderSaveData">
                                         <option value="1">未存档</option>
                                         <option value="2">已存档</option>
                                     </select>
@@ -181,7 +201,8 @@
 
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <img style="width: 100%" id="unicomOrderDetailPic" ms-attr="{src : '/Accept/Data/' + @unicomOrder.unicomOrderId + '.jpg' }" />
+                                    <img style="width: 100%" id="unicomOrderDetailPic"
+                                         ms-attr="{src : '/Accept/Data/' + @unicomOrder.unicomOrderId + '.jpg' }"/>
                                 </div>
                             </div>
 
@@ -198,7 +219,8 @@
 
 
         <!-- 模态框（Modal） -->
-        <div class="modal fade" id="unicomOrderSaveModal" tabindex="-1" role="dialog" aria-labelledby="unicomOrderSaveLabel"
+        <div class="modal fade" id="unicomOrderSaveModal" tabindex="-1" role="dialog"
+             aria-labelledby="unicomOrderSaveLabel"
              aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -212,26 +234,34 @@
                             <div class="form-group">
                                 <label for="unicomOrderSave_unicomOrderId" class="col-sm-2 control-label">受理编号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderSave_unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderSave_unicomOrderId"
+                                           ms-duplex="@unicomOrder.unicomOrderId" disabled>
                                 </div>
                                 <label for="unicomOrderSave_unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderSave_unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderSave_unicomOrderDate"
+                                           ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="unicomOrderSave_unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
-                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
+                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderType"
+                                            ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes"
+                                                ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">
+                                            {{$unicomOrderType.unicomOrderTypeName
                                             }}
                                         </option>
                                     </select>
                                 </div>
                                 <label for="unicomOrderSave_unicomOrderTag" class="col-sm-2 control-label">业务标签</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderTag" ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
-                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags" ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">{{$unicomOrderTag.unicomOrderTagName
+                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderTag"
+                                            ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
+                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags"
+                                                ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">
+                                            {{$unicomOrderTag.unicomOrderTagName
                                             }}
                                         </option>
                                     </select>
@@ -240,13 +270,18 @@
                             <div class="form-group">
                                 <label for="unicomOrderSave_staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderSave_staff" ms-duplex="@unicomOrder.staff.staffId">
-                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    <select type="text" class="form-control" id="unicomOrderSave_staff"
+                                            ms-duplex="@unicomOrder.staff.staffId">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">
+                                            {{$staff.staffName }}
+                                        </option>
                                     </select>
                                 </div>
-                                <label for="unicomOrderSave_unicomOrderSaveData" class="col-sm-2 control-label">存档状态</label>
+                                <label for="unicomOrderSave_unicomOrderSaveData"
+                                       class="col-sm-2 control-label">存档状态</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderSaveData" ms-duplex="@unicomOrder.unicomOrderSaveData">
+                                    <select type="text" class="form-control" id="unicomOrderSave_unicomOrderSaveData"
+                                            ms-duplex="@unicomOrder.unicomOrderSaveData">
                                         <option value="1">未存档</option>
                                         <option value="2">已存档</option>
                                     </select>
@@ -254,7 +289,8 @@
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-12">
-                                    <input id="unicomOrderSavePicInput" name="picFile" type="file" class="file-loading col-sm-10" data-show-preview="false">
+                                    <input id="unicomOrderSavePicInput" name="picFile" type="file"
+                                           class="file-loading col-sm-10" data-show-preview="false">
                                 </div>
                             </div>
 
@@ -340,7 +376,8 @@
             $id: "broadband_list",
             option: {
                 state: "已完工",
-                verify: "验收合格"
+                verify: "验收合格",
+                savedata: "未存档"
             },
             page: {
                 nowPage: 1,
@@ -374,9 +411,16 @@
             $(this).addClass("active");
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
             vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
+            vm.option.savedata = $(this).attr("savedata") != null ? $(this).attr("savedata") : vm.option.savedata;
             vm.page.nowPage = 1;
             UnicomOrder.ajaxGetListByOption(vm);
             UnicomOrder.ajaxGetPageByOption(vm);
+        });
+
+        $('#UnicomOrderSaveSubmitButton').click(function(){
+            UnicomOrder.ajaxModifyEntity(vm);
+            UnicomOrder.ajaxGetListByOption(vm);
+            UnicomOrder.ajaxGetListByOption(vm);
         });
 
 

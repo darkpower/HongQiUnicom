@@ -269,7 +269,8 @@
             $id: "broadband_list",
             option: {
                 state: "已完工",
-                verify: "尚未验收"
+                verify: "尚未验收",
+                savedata:"全部"
             },
             page: {
                 nowPage: 1,

@@ -271,7 +271,8 @@
             $id: "broadband_list",
             option: {
                 state: "未完工",
-                verify: "全部"
+                verify: "全部",
+                savedata: "全部"
             },
             page: {
                 nowPage: 1,
