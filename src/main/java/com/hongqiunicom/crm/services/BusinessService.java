@@ -4,7 +4,7 @@ import com.hongqiunicom.crm.bean.Page;
 import com.hongqiunicom.crm.entity.Business;
 
 import java.io.File;
-import java.util.Set;
+import java.util.List;
 
 /**
  * 业务受理Service
@@ -19,10 +19,5 @@ public interface BusinessService extends BaseService<Business, Integer> {
 
     Boolean batchUpdateByExcel(File excelFile);
 
-    Boolean updateBusinessToHalt(Set<Business> businesses);
-
-    Boolean updateBusinessToOther(Set<Business> businesses);
-
-    Boolean updateBusinessToCard(Set<Business> businesses);
-
+    Boolean batchUpdate(List<Business> businesses, String option);
 }

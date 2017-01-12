@@ -66,9 +66,9 @@
                 <div class="col-sm-6 pull-right btn-group text-right" style=" padding-left: 0px; padding-right: 0px;">
                     <input id="createUnicomOrderButton" type="button" class="btn btn-default" value="生成营业"/>
                     <input id="joinUnicomOrderButton" type="button" class="btn btn-default" value="并入营业"/>
-                    <input id="updateBusinessToHaltButton" type="button" class="btn btn-default" value="停机工单"/>
-                    <input id="updateBusinessToCardButton" type="button" class="btn btn-default" value="开卡工单"/>
-                    <input id="updateBusinessToOtherButton" type="button" class="btn btn-default" value="其他工单"/>
+                    <input type="button" class="btn btn-default batchUpdateBusiness" value="停机工单"/>
+                    <input type="button" class="btn btn-default batchUpdateBusiness" value="开卡工单"/>
+                    <input type="button" class="btn btn-default batchUpdateBusiness" value="其他工单"/>
                 </div>
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
@@ -328,6 +328,12 @@
 
     $(function () {
 
+        function flush() {
+            Business.ajaxGetListByOption(vm);
+            Business.ajaxGetPageByOption(vm);
+            avalon.scan(document.body);
+        }
+
         $("#excelFileUploadInput").fileinput({
             language: "zh",
             uploadUrl: "/Accept/Businesses/Upload",
@@ -400,11 +406,10 @@
                 $('#showBusinessModal').modal("show");
             }
         });
-        Business.ajaxGetListByOption(vm);
-        Business.ajaxGetPageByOption(vm);
+
         Staff.ajaxGetSelectList(vm);
         UnicomOrderType.ajaxGetSelectList(vm);
-        avalon.scan(document.body);
+        flush();
 
         $('#updateUnicomOrderModal').on('hidden.bs.modal', function () {
             $('updateUnicomOrderId').val("");
@@ -504,89 +509,53 @@
             $('#updateUnicomOrderId').val("");
         });
 
-        $('#updateBusinessToHaltButton').click(function () {
-            var unicomOrder = new UnicomOrder();
-            $("input[name='businessIds']:checked").each(function () {
-                var business = new Business();
-                business.businessId = $(this).val();
-                unicomOrder.businesses.push(business);
-            });
 
-            if (confirm("确认批量注册为停机工单？")) {
+        $('.batchUpdateBusiness').click(function () {
 
-                $.ajax({
-                    url: "/Ajax/Business/Halt",
-                    type: "post",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: JSON.stringify(unicomOrder),
-                    success: function (data) {
-                        alert("success");
-                        Business.ajaxGetListByOption(vm);
-                        Business.ajaxGetPageByOption(vm);
-                    },
-                    error: function () {
-                        alert("error");
-                    }
+            if (confirm("确认批量注册为" + $(this).val() + "？")) {
+                var businesses = [];
+                $("input[name='businessIds']:checked").each(function () {
+                    var business = new Business();
+                    business.businessId = $(this).val();
+                    businesses.push(business);
                 });
+                Business.ajaxBatchUpdateByOption(businesses, $(this).val());
+                flush();
             }
+
+
         });
 
-        $('#updateBusinessToOtherButton').click(function () {
-            var unicomOrder = new UnicomOrder();
-            $("input[name='businessIds']:checked").each(function () {
-                var business = new Business();
-                business.businessId = $(this).val();
-                unicomOrder.businesses.push(business);
-            });
 
-            if (confirm("确认批量注册为其他工单？")) {
+//        $('#updateBusinessToHaltButton').click(function () {
+//
+//            var unicomOrder = new UnicomOrder();
+//            $("input[name='businessIds']:checked").each(function () {
+//                var business = new Business();
+//                business.businessId = $(this).val();
+//                unicomOrder.businesses.push(business);
+//            });
+//
+//            if (confirm("确认批量注册为停机工单？")) {
+//
+//                $.ajax({
+//                    url: "/Ajax/Business/Halt",
+//                    type: "post",
+//                    contentType: "application/json",
+//                    dataType: "json",
+//                    data: JSON.stringify(unicomOrder),
+//                    success: function (data) {
+//                        alert("success");
+//                        Business.ajaxGetListByOption(vm);
+//                        Business.ajaxGetPageByOption(vm);
+//                    },
+//                    error: function () {
+//                        alert("error");
+//                    }
+//                });
+//            }
+//        });
 
-                $.ajax({
-                    url: "/Ajax/Business/Other",
-                    type: "post",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: JSON.stringify(unicomOrder),
-                    success: function (data) {
-                        alert("success");
-                        Business.ajaxGetListByOption(vm);
-                        Business.ajaxGetPageByOption(vm);
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-            }
-        });
-
-        $('#updateBusinessToCardButton').click(function () {
-            var unicomOrder = new UnicomOrder();
-            $("input[name='businessIds']:checked").each(function () {
-                var business = new Business();
-                business.businessId = $(this).val();
-                unicomOrder.businesses.push(business);
-            });
-
-            if (confirm("确认批量注册为其他工单？")) {
-
-                $.ajax({
-                    url: "/Ajax/Business/Card",
-                    type: "post",
-                    contentType: "application/json",
-                    dataType: "json",
-                    data: JSON.stringify(unicomOrder),
-                    success: function (data) {
-                        alert("success");
-                        Business.ajaxGetListByOption(vm);
-                        Business.ajaxGetPageByOption(vm);
-                    },
-                    error: function () {
-                        alert("error");
-                    }
-                });
-            }
-        });
 
         $('#exportExcelButton').click(function () {
             $("<form>").attr({

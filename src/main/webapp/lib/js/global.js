@@ -265,6 +265,24 @@ function Business() {
         o.businessType = BusinessType.createEntity(data.businessType);
         return o;
     }
+    Business.ajaxBatchUpdateByOption = function (businesses, option) {
+        $.ajax({
+            url: "/Ajax/Business/BatchUpdate",
+            type: "post",
+            dataType: "json",
+            data: {
+                "businesses": JSON.stringify(businesses),
+                "option" : option
+            },
+            success: function (data) {
+                alert("Ajax批量更新Business成功！");
+            },
+            error: function (data) {
+                alert("Ajax批量更新Business时报错！");
+            }
+        });
+    }
+
     Business.ajaxGetEntityById = function (businessId, vm) {
         $.ajax({
             url: "/Ajax/Business/Show",

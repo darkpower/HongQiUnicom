@@ -1,7 +1,6 @@
 package com.hongqiunicom.crm.services.impl;
 
 import com.hongqiunicom.crm.bean.Page;
-import com.hongqiunicom.crm.common.Common;
 import com.hongqiunicom.crm.common.Excel;
 import com.hongqiunicom.crm.dao.BusinessDao;
 import com.hongqiunicom.crm.dao.BusinessTypeDao;
@@ -16,7 +15,6 @@ import javax.annotation.Resource;
 import java.io.File;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> implements BusinessService {
@@ -61,9 +59,9 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
                 Business business = businessDao.get("businessSerialNumber", excelBusiness.getBusinessSerialNumber());
                 if (business == null) {
                     BusinessType pBusinessType = businessTypeDao.get("businessTypeName", excelBusiness.getBusinessType().getBusinessTypeName());
-                    if(pBusinessType == null){
+                    if (pBusinessType == null) {
                         businessTypeDao.save(excelBusiness.getBusinessType());
-                    }else{
+                    } else {
                         excelBusiness.setBusinessType(pBusinessType);
                     }
                     businessDao.save(excelBusiness);
@@ -78,35 +76,31 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
 
     }
 
-    @Override
-    public Boolean updateBusinessToHalt(Set<Business> businesses) {
-        Iterator<Business> iterator = businesses.iterator();
-        while(iterator.hasNext()){
-            Business pBusiness = businessDao.get(iterator.next().getBusinessId());
-            pBusiness.setBusinessState(3);
-        }
-        return true;
-    }
 
     @Override
-    public Boolean updateBusinessToOther(Set<Business> businesses) {
-        Iterator<Business> iterator = businesses.iterator();
-        while(iterator.hasNext()){
-            Business pBusiness = businessDao.get(iterator.next().getBusinessId());
-            pBusiness.setBusinessState(0);
+    public Boolean batchUpdate(List<Business> businesses, String option) {
+        try {
+            for (Business business : businesses) {
+                Business pBusiness = businessDao.get(business.getBusinessId());
+                switch (option) {
+                    case "停机工单":
+                        pBusiness.setBusinessState(3);
+                        break;
+                    case "号卡工单":
+                        pBusiness.setBusinessState(4);
+                        break;
+                    case "其他工单":
+                        pBusiness.setBusinessState(0);
+                        break;
+
+                }
+            }
+            return true;
+        } catch (Exception e) {
+            return false;
         }
-        return true;
     }
 
-    @Override
-    public Boolean updateBusinessToCard(Set<Business> businesses) {
-        Iterator<Business> iterator = businesses.iterator();
-        while(iterator.hasNext()){
-            Business pBusiness = businessDao.get(iterator.next().getBusinessId());
-            pBusiness.setBusinessState(4);
-        }
-        return true;
-    }
 
     private DetachedCriteria getCriteriaWithOptions(String state) {
         DetachedCriteria criteria = DetachedCriteria.forClass(Business.class);

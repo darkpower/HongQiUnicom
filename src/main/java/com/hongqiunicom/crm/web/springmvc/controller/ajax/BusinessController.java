@@ -1,7 +1,7 @@
 package com.hongqiunicom.crm.web.springmvc.controller.ajax;
 
+import com.alibaba.fastjson.JSON;
 import com.hongqiunicom.crm.entity.Business;
-import com.hongqiunicom.crm.entity.UnicomOrder;
 import com.hongqiunicom.crm.services.BusinessService;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,7 +45,6 @@ public class BusinessController {
     @ResponseBody
     public Integer page(HttpServletRequest request) {
         return businessService.getCountsWithOptions(request.getParameter("state"));
-
     }
 
     @RequestMapping(value = "/Update", method = RequestMethod.POST)
@@ -54,25 +53,9 @@ public class BusinessController {
         return businessService.manualUpdate(business);
     }
 
-    @RequestMapping(value = "/Halt", method = RequestMethod.POST)
-    @ResponseBody
-    public UnicomOrder invalid(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
-        businessService.updateBusinessToHalt(unicomOrder.getBusinesses());
-        return unicomOrder;
-    }
-
-    @RequestMapping(value = "/Other", method = RequestMethod.POST)
-    @ResponseBody
-    public UnicomOrder other(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
-        businessService.updateBusinessToOther(unicomOrder.getBusinesses());
-        return unicomOrder;
-    }
-
-    @RequestMapping(value = "/Card", method = RequestMethod.POST)
-    @ResponseBody
-    public UnicomOrder card(@RequestBody UnicomOrder unicomOrder, HttpServletRequest request) {
-        businessService.updateBusinessToCard(unicomOrder.getBusinesses());
-        return unicomOrder;
+    @RequestMapping(value = "BatchUpdate", method = RequestMethod.POST)
+    public Boolean batchUpdate(HttpServletRequest request) {
+        return businessService.batchUpdate(JSON.parseArray(request.getParameter("businesses"), Business.class), request.getParameter("option"));
     }
 
 
