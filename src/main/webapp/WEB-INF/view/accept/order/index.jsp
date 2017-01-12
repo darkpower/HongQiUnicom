@@ -73,7 +73,7 @@
                         <tr ms-for="($index, $unicomOrder) in @unicomOrders">
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
                             <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
-                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
+                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName | truncate(5, '…')  }}</td>
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerTelphone }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td class="text-right">

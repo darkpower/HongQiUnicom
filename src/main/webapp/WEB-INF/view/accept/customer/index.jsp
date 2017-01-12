@@ -85,7 +85,7 @@
                         <tr ms-for="($index, $customer) in @customers">
                             <td><input type="checkbox" name="customerIds" ms-attr="{'value': $customer.customerId}"></td>
                             <td>{{$customer.customerId }}</td>
-                            <td>{{$customer.customerName }}</td>
+                            <td>{{$customer.customerName | truncate(5, '…')  }}</td>
                             <td>{{$customer.customerCardId }}</td>
                             <td>{{$customer.customerTelphone }}</td>
                             <td class="text-right">
