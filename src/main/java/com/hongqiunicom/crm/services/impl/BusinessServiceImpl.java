@@ -83,6 +83,9 @@ public class BusinessServiceImpl extends BaseServiceImpl<Business, Integer> impl
             for (Business business : businesses) {
                 Business pBusiness = businessDao.get(business.getBusinessId());
                 switch (option) {
+                    case "开卡工单":
+                        pBusiness.setBusinessState(2);
+                        break;
                     case "停机工单":
                         pBusiness.setBusinessState(3);
                         break;
