@@ -24,6 +24,7 @@ public class BaseController {
          response.getWriter().write(content);
          response.getWriter().flush();
       } catch (IOException e) {
+         e.printStackTrace();
          log.error("ajax", e);
       }
       return null;

@@ -4,11 +4,17 @@ import com.hongqiunicom.crm.bean.Page;
 import com.hongqiunicom.crm.dao.*;
 import com.hongqiunicom.crm.entity.*;
 import com.hongqiunicom.crm.services.UnicomOrderService;
+import org.hibernate.criterion.CriteriaSpecification;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Disjunction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.transform.Transformers;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -94,19 +100,19 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
     }
 
     @Override
-    public Integer getCountsWithOptions(String state, String verify, String savedata) {
-        return businessDao.getCount(this.getCriteriaWithOptions(state, verify, savedata));
+    public Integer getCountsWithOptions(String state, String verify, String savedata, String search) {
+        return businessDao.getCount(this.getCriteriaWithOptions(state, verify, savedata, search));
     }
 
 
     @Override
-    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state, String verify, String saveData) {
+    public Page<UnicomOrder> getUnicomOrderPageWithOptions(int pageSize, int nowPage, String state, String verify, String saveData, String search) {
 
         Page<UnicomOrder> page = new Page<>();
         page.setOrderBy("unicomOrderDate");
         page.setPageSize(pageSize);
         page.setNowPage(nowPage);
-        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state, verify, saveData), page);
+        return unicomOrderDao.getPage(this.getCriteriaWithOptions(state, verify, saveData, search), page);
     }
 
     @Override
@@ -118,13 +124,14 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
         pUnicomOrder.setUnicomOrderVerify(unicomOrder.getUnicomOrderVerify());
         pUnicomOrder.setUnicomOrderState(unicomOrder.getUnicomOrderState());
         pUnicomOrder.setUnicomOrderSaveData(unicomOrder.getUnicomOrderSaveData());
+        pUnicomOrder.setUnicomOrderMistakeDescription(unicomOrder.getUnicomOrderMistakeDescription());
         pUnicomOrder.setUnicomOrderTag(unicomOrderTag);
         pUnicomOrder.setStaff(staff);
         pUnicomOrder.setUnicomOrderType(unicomOrderType);
         return pUnicomOrder;
     }
 
-    private DetachedCriteria getCriteriaWithOptions(String state, String verify, String savedata) {
+    private DetachedCriteria getCriteriaWithOptions(String state, String verify, String savedata, String search) {
         DetachedCriteria criteria = DetachedCriteria.forClass(UnicomOrder.class);
         switch (state) {
             case "全部":
@@ -162,6 +169,37 @@ public class UnicomOrderServiceImpl extends BaseServiceImpl<UnicomOrder, Integer
                 break;
             case "已存档":
                 criteria.add(Restrictions.eq("unicomOrderSaveData", 2));
+                break;
+        }
+
+        switch (search) {
+            case "全部":
+                break;
+            default:
+                Date date = null;
+                try {
+                    date = new SimpleDateFormat("yyyyMMdd").parse(search);
+                } catch (ParseException pe) {
+                    date = null;
+                }
+
+                if (date != null) {
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(date);
+                    calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),0, 0, 0);
+                    Date startDate = calendar.getTime();
+                    calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH),23, 59, 59);
+                    Date endDate = calendar.getTime();
+                    criteria.add(Restrictions.between("unicomOrderDate", startDate, endDate));
+                } else {
+                    criteria.createAlias("customer", "c");
+                    criteria.createAlias("staff", "s");
+                    Disjunction disjunction = Restrictions.disjunction();
+                    disjunction.add(Restrictions.eq("c.customerName", search));
+                    disjunction.add(Restrictions.eq("c.customerCardId", search));
+                    disjunction.add(Restrictions.eq("s.staffName", search));
+                    criteria.add(disjunction);
+                }
                 break;
         }
 

@@ -5,10 +5,7 @@ import com.hongqiunicom.crm.dao.BaseDao;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.criterion.Order;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.Resource;
@@ -206,8 +203,12 @@ public class BaseDaoImpl<T, PK extends Serializable> implements BaseDao<T, PK> {
      * {@inheritDoc}
      */
     @SuppressWarnings("unchecked")
-    public List<T> page(DetachedCriteria criteria, Integer pageSize, Integer pageNumber) {
-        return criteria.getExecutableCriteria(getSession()).setFirstResult((pageNumber - 1) * pageSize).setMaxResults(pageSize).list();
+    public List<T> page(DetachedCriteria detachedCriteria, Integer pageSize, Integer pageNumber) {
+        Criteria criteria = detachedCriteria.getExecutableCriteria(getSession());
+        detachedCriteria.setResultTransformer(CriteriaSpecification.ROOT_ENTITY);
+        criteria.setFirstResult((pageNumber - 1) * pageSize);
+        criteria.setMaxResults(pageSize);
+        return criteria.list();
     }
 
     /**

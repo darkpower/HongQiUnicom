@@ -58,6 +58,20 @@
         <div class="row row-offcanvas row-offcanvas-right">
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
+
+                <div class="col-sm-3">
+
+                </div>
+                <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
+                    <div class="input-group">
+                        <input type="text" id="searchUnicomOrderInput" class="form-control"/>
+                        <span class="input-group-btn">
+                            <input type="button" id="searchUnicomOrderButton" class="btn btn-default" type="button"
+                                   value="搜索"/>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
@@ -377,7 +391,8 @@
             option: {
                 state: "已完工",
                 verify: "验收合格",
-                savedata: "未存档"
+                savedata: "未存档",
+                search : "全部"
             },
             page: {
                 nowPage: 1,
@@ -421,6 +436,16 @@
             UnicomOrder.ajaxModifyEntity(vm);
             UnicomOrder.ajaxGetListByOption(vm);
             UnicomOrder.ajaxGetListByOption(vm);
+        });
+
+
+        $('#searchUnicomOrderButton').click(function () {
+            if ($('#searchUnicomOrderInput').val() != null && $('#searchUnicomOrderInput').val() != "")
+                vm.option.search = $('#searchUnicomOrderInput').val();
+            else
+                vm.option.search = "全部";
+            UnicomOrder.ajaxGetListByOption(vm);
+            UnicomOrder.ajaxGetPageByOption(vm);
         });
 
 

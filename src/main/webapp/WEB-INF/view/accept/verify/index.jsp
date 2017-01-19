@@ -22,7 +22,8 @@
     <nav class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -55,8 +56,26 @@
 
 
         <div class="row row-offcanvas row-offcanvas-right">
+
+
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
+
+
+                <div class="col-sm-3">
+
+                </div>
+                <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
+                    <div class="input-group">
+                        <input type="text" id="searchUnicomOrderInput" class="form-control"/>
+                        <span class="input-group-btn">
+                            <input type="button" id="searchUnicomOrderButton" class="btn btn-default" type="button"
+                                   value="搜索"/>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
+
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
@@ -71,11 +90,15 @@
                         <tbody>
                         <tr ms-for="($index, $unicomOrder) in @unicomOrders">
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
-                            <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
+                            <td>{{$unicomOrder.unicomOrderType == null ? "" :
+                                $unicomOrder.unicomOrderType.unicomOrderTypeName }}
+                            </td>
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td>
-                                <button option="manual" class="btn-block btn-default" data-toggle="modal" data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">详细</button>
+                                <button option="manual" class="btn-block btn-default" data-toggle="modal"
+                                        data-target="#myModal" ms-click="@openModal($unicomOrder.unicomOrderId)">详细
+                                </button>
                             </td>
                         </tr>
                         </tbody>
@@ -132,26 +155,34 @@
                             <div class="form-group">
                                 <label for="unicomOrderId" class="col-sm-2 control-label">受理编号</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderId" ms-duplex="@unicomOrder.unicomOrderId" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderId"
+                                           ms-duplex="@unicomOrder.unicomOrderId" disabled>
                                 </div>
                                 <label for="unicomOrderDate" class="col-sm-2 control-label">受理日期</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="unicomOrderDate" ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
+                                    <input type="text" class="form-control" id="unicomOrderDate"
+                                           ms-duplex="@unicomOrder.unicomOrderDate | date('yyyy-MM-dd')" disabled>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="unicomOrderType" class="col-sm-2 control-label">受理业务</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderType" ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
-                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes" ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">{{$unicomOrderType.unicomOrderTypeName
+                                    <select type="text" class="form-control" id="unicomOrderType"
+                                            ms-duplex="@unicomOrder.unicomOrderType.unicomOrderTypeId">
+                                        <option ms-for="($index, $unicomOrderType) in @unicomOrderTypes"
+                                                ms-attr="{value: $unicomOrderType.unicomOrderTypeId }">
+                                            {{$unicomOrderType.unicomOrderTypeName
                                             }}
                                         </option>
                                     </select>
                                 </div>
                                 <label for="unicomOrderTag" class="col-sm-2 control-label">业务标签</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderTag" ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
-                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags" ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">{{$unicomOrderTag.unicomOrderTagName
+                                    <select type="text" class="form-control" id="unicomOrderTag"
+                                            ms-duplex="@unicomOrder.unicomOrderTag.unicomOrderTagId">
+                                        <option ms-for="($index, $unicomOrderTag) in @unicomOrderTags"
+                                                ms-attr="{value: $unicomOrderTag.unicomOrderTagId }">
+                                            {{$unicomOrderTag.unicomOrderTagName
                                             }}
                                         </option>
                                     </select>
@@ -160,23 +191,35 @@
                             <div class="form-group">
                                 <label for="staff" class="col-sm-2 control-label">受理人</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="staff" ms-duplex="@unicomOrder.staff.staffId">
-                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">{{$staff.staffName }}</option>
+                                    <select type="text" class="form-control" id="staff"
+                                            ms-duplex="@unicomOrder.staff.staffId">
+                                        <option ms-for="($index, $staff) in @staffs" ms-attr="{value: $staff.staffId }">
+                                            {{$staff.staffName }}
+                                        </option>
                                     </select>
                                 </div>
                                 <label for="unicomOrderState" class="col-sm-2 control-label">验收状态</label>
                                 <div class="col-sm-4">
-                                    <select type="text" class="form-control" id="unicomOrderState" ms-duplex="@unicomOrder.unicomOrderVerify">
+                                    <select type="text" class="form-control" id="unicomOrderState"
+                                            ms-duplex="@unicomOrder.unicomOrderVerify">
                                         <option value="1">尚未验收</option>
                                         <option value="2">验收合格</option>
                                         <option value="3">业务差错</option>
                                     </select>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="unicomOrderMistakeDescription" class="col-sm-2 control-label">差错明细</label>
+                                <div class="col-sm-4">
+                                    <input type="text" class="form-control" id="unicomOrderMistakeDescription"
+                                           ms-duplex="@unicomOrder.unicomOrderMistakeDescription">
+                                </div>
+                            </div>
 
                             <div>
                                 <div class="table-responsive">
-                                    <table id="selectBusinessTable" class="table table-striped" style="word-break:break-all">
+                                    <table id="selectBusinessTable" class="table table-striped"
+                                           style="word-break:break-all">
                                         <thead>
                                         <tr>
                                             <th width="14%">工单时间</th>
@@ -190,7 +233,7 @@
                                         <tbody>
                                         <tr ms-for="($index, $business) in @unicomOrder.businesses">
                                             <td>{{$business.businessDate | date('yy-MM-dd hh:mm:ss') }}</td>
-                                            <td>{{$business.businessSerialNumber | trim()  }}</td>
+                                            <td>{{$business.businessSerialNumber | trim() }}</td>
                                             <td>{{$business.businessType.businessTypeName }}</td>
                                             <td>{{$business.businessAccount }}</td>
                                             <td>{{$business.businessUserName }}</td>
@@ -270,7 +313,8 @@
             option: {
                 state: "已完工",
                 verify: "尚未验收",
-                savedata:"全部"
+                savedata: "全部",
+                search: "全部"
             },
             page: {
                 nowPage: 1,
@@ -317,6 +361,15 @@
                 "action": "Export",
                 "method": "POST"
             }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
+        });
+
+        $('#searchUnicomOrderButton').click(function () {
+            if ($('#searchUnicomOrderInput').val() != null && $('#searchUnicomOrderInput').val() != "")
+                vm.option.search = $('#searchUnicomOrderInput').val();
+            else
+                vm.option.search = "全部";
+            UnicomOrder.ajaxGetListByOption(vm);
+            UnicomOrder.ajaxGetPageByOption(vm);
         });
 
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * Modify by XieJiaXin on 2017-1-3
@@ -57,7 +58,10 @@ public class UnicomOrderController extends BaseController {
             String state = request.getParameter("state");
             String verify = request.getParameter("verify");
             String savedata = request.getParameter("savedata");
-            ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), state, verify, savedata).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
+            String search = request.getParameter("search");
+            ajaxJson(JSON.toJSONString(unicomOrderService.getUnicomOrderPageWithOptions(10, Integer.parseInt(request.getParameter("page")), state, verify, savedata, search).getList(), SerializerFeature.DisableCircularReferenceDetect), response);
+
+
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -70,7 +74,8 @@ public class UnicomOrderController extends BaseController {
         String state = request.getParameter("state");
         String verify = request.getParameter("verify");
         String savedata = request.getParameter("savedata");
-        return unicomOrderService.getCountsWithOptions(state, verify, savedata);
+        String search = request.getParameter("search");
+        return unicomOrderService.getCountsWithOptions(state, verify, savedata, search);
 
     }
 

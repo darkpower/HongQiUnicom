@@ -73,6 +73,9 @@ public class UnicomOrder implements Serializable {
     @JoinColumn(name = "staff_id")
     private Staff staff;
 
+    @JoinColumn(name = "unicom_order_mistake_description")
+    private String unicomOrderMistakeDescription;
+
     @OneToMany
     @Cascade(value = {CascadeType.ALL})
     @JoinColumn(name = "unicom_order_id")
@@ -159,5 +162,13 @@ public class UnicomOrder implements Serializable {
 
     public void setUnicomOrderSaveData(Integer unicomOrderSaveData) {
         this.unicomOrderSaveData = unicomOrderSaveData;
+    }
+
+    public String getUnicomOrderMistakeDescription() {
+        return unicomOrderMistakeDescription;
+    }
+
+    public void setUnicomOrderMistakeDescription(String unicomOrderMistakeDescription) {
+        this.unicomOrderMistakeDescription = unicomOrderMistakeDescription;
     }
 }

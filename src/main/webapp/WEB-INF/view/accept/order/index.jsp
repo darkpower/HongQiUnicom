@@ -57,6 +57,20 @@
         <div class="row row-offcanvas row-offcanvas-right">
             <!-- 左侧表格内容 Start -->
             <div id="tableData" class="col-xs-12 col-sm-9">
+
+                <div class="col-sm-3">
+
+                </div>
+                <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
+                    <div class="input-group">
+                        <input type="text" id="searchUnicomOrderInput" class="form-control"/>
+                        <span class="input-group-btn">
+                            <input type="button" id="searchUnicomOrderButton" class="btn btn-default" type="button"
+                                   value="搜索"/>
+                        </span>
+                    </div><!-- /input-group -->
+                </div>
+
                 <div class="col-sm-12 pull-left table-responsive">
                     <table id="vmTable" class="table table-striped">
                         <thead>
@@ -272,7 +286,8 @@
             option: {
                 state: "未完工",
                 verify: "全部",
-                savedata: "全部"
+                savedata: "全部",
+                search : "全部"
             },
             page: {
                 nowPage: 1,
@@ -319,6 +334,17 @@
                 "method": "POST"
             }).append("<input type='text' name='list' value='" + vm.option.list + "' />").append("<input type='text' name='xuFeiType' value='" + vm.option.xuFeiType + "' />").append("<input type='text' name='systemType' value='" + vm.option.systemType + "' />").submit();
         });
+
+        $('#searchUnicomOrderButton').click(function () {
+            if ($('#searchUnicomOrderInput').val() != null && $('#searchUnicomOrderInput').val() != "")
+                vm.option.search = $('#searchUnicomOrderInput').val();
+            else
+                vm.option.search = "全部";
+            UnicomOrder.ajaxGetListByOption(vm);
+            UnicomOrder.ajaxGetPageByOption(vm);
+        });
+
+
 
 
     });

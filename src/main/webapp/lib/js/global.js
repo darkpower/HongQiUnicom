@@ -370,6 +370,7 @@ function UnicomOrder() {
     o.unicomOrderType = new UnicomOrderType();
     o.unicomOrderVerify = 0;
     o.unicomOrderSaveData = 0;
+    o.unicomOrderMistakeDescription = "";
     o.staff = new Staff();
     o.businesses = [];
     UnicomOrder.createEntity = function (data) {
@@ -379,6 +380,7 @@ function UnicomOrder() {
         o.businesses = data.businesses;
         o.unicomOrderVerify = data.unicomOrderVerify;
         o.unicomOrderSaveData = data.unicomOrderSaveData;
+        o.unicomOrderMistakeDescription = data.unicomOrderMistakeDescription;
         o.unicomOrderTag = UnicomOrderTag.createEntity(data.unicomOrderTag);
         o.unicomOrderType = UnicomOrderType.createEntity(data.unicomOrderType);
         o.staff = Staff.createEntity(data.staff);
@@ -415,7 +417,8 @@ function UnicomOrder() {
                 'page': vm.page.nowPage,
                 'state': vm.option.state,
                 'verify': vm.option.verify,
-                'savedata': vm.option.savedata
+                'savedata': vm.option.savedata,
+                'search': vm.option.search
             },
             success: function (data) {
                 vm.unicomOrders = [];
@@ -434,7 +437,8 @@ function UnicomOrder() {
             data: {
                 'state': vm.option.state,
                 'verify': vm.option.verify,
-                'savedata': vm.option.savedata
+                'savedata': vm.option.savedata,
+                'search': vm.option.search
             },
             success: function (data) {
                 vm.page.totalCounts = data;
