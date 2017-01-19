@@ -60,7 +60,7 @@
             <div id="tableData" class="col-xs-12 col-sm-9">
 
                 <div class="col-sm-3">
-
+                    <input type="button" id="flushButton" class="btn btn-default" value="刷新"/>
                 </div>
                 <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
                     <div class="input-group">
@@ -126,7 +126,7 @@
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
                     <a class="list-group-item" savedata="全部">全部</a>
-                    <a class="list-group-item active" savedata="未存档">未存档</a>
+                    <a id="optionSavedataDefault" class="list-group-item active" savedata="未存档">未存档</a>
                     <a class="list-group-item" savedata="已存档">已存档</a>
                 </div>
 
@@ -392,7 +392,7 @@
                 state: "已完工",
                 verify: "验收合格",
                 savedata: "未存档",
-                search : "全部"
+                search: "全部"
             },
             page: {
                 nowPage: 1,
@@ -410,14 +410,18 @@
             },
             unicomOrderSave: function (unicomOrderId) {
                 UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
+            },
+            flush: function () {
+                UnicomOrder.ajaxGetListByOption(vm);
+                UnicomOrder.ajaxGetPageByOption(vm);
+                $("#page").bootstrapPaginator("show", 1);
+                avalon.scan(document.body);
             }
         });
-        UnicomOrder.ajaxGetListByOption(vm);
-        UnicomOrder.ajaxGetPageByOption(vm);
         Staff.ajaxGetSelectList(vm);
         UnicomOrderType.ajaxGetSelectList(vm);
         UnicomOrderTag.ajaxGetSelectList(vm);
-        avalon.scan(document.body);
+        vm.flush();
 
 
         $('.optionSwitch a').click(function () {
@@ -428,14 +432,11 @@
             vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
             vm.option.savedata = $(this).attr("savedata") != null ? $(this).attr("savedata") : vm.option.savedata;
             vm.page.nowPage = 1;
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetPageByOption(vm);
+            vm.flush();
         });
 
-        $('#UnicomOrderSaveSubmitButton').click(function(){
+        $('#UnicomOrderSaveSubmitButton').click(function () {
             UnicomOrder.ajaxModifyEntity(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
         });
 
 
@@ -444,8 +445,18 @@
                 vm.option.search = $('#searchUnicomOrderInput').val();
             else
                 vm.option.search = "全部";
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetPageByOption(vm);
+            vm.flush();
+        });
+
+        $('#flushButton').click(function () {
+            vm.option.state = "已完工";
+            vm.option.verify = "验收合格";
+            vm.option.savedata = "未存档";
+            vm.option.search = "全部";
+            $("#optionSavedataDefault").nextAll().removeClass("active");
+            $("#optionSavedataDefault").prevAll().removeClass("active");
+            $("#optionSavedataDefault").addClass("active");
+            vm.flush();
         });
 
 

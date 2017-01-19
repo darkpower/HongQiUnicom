@@ -63,7 +63,7 @@
 
 
                 <div class="col-sm-3">
-
+                    <input type="button" id="flushButton" class="btn btn-default" value="刷新"/>
                 </div>
                 <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
                     <div class="input-group">
@@ -122,7 +122,7 @@
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
                     <a class="list-group-item" verify="全部">全部</a>
-                    <a class="list-group-item active" verify="尚未验收">尚未验收</a>
+                    <a id="optionVerifyDefault" class="list-group-item active" verify="尚未验收">尚未验收</a>
                     <a class="list-group-item" verify="验收合格">验收合格</a>
                     <a class="list-group-item" verify="业务差错">业务差错</a>
                 </div>
@@ -329,14 +329,20 @@
             businesses: [],
             openModal: function (unicomOrderId) {
                 UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
+            },
+            flush: function () {
+                UnicomOrder.ajaxGetListByOption(vm);
+                UnicomOrder.ajaxGetPageByOption(vm);
+                $("#page").bootstrapPaginator("show", 1);
+                avalon.scan(document.body);
             }
+
         });
-        UnicomOrder.ajaxGetListByOption(vm);
-        UnicomOrder.ajaxGetPageByOption(vm);
         Staff.ajaxGetSelectList(vm);
         UnicomOrderType.ajaxGetSelectList(vm);
         UnicomOrderTag.ajaxGetSelectList(vm);
-        avalon.scan(document.body);
+        vm.flush();
+
 
 
         $('.optionSwitch a').click(function () {
@@ -346,14 +352,11 @@
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
             vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
             vm.page.nowPage = 1;
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetPageByOption(vm);
+            vm.flush();
         });
 
         $('#updateUnicomOrderButton').click(function () {
             UnicomOrder.ajaxModifyEntity(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
         });
 
         $('#exportExcelButton').click(function () {
@@ -368,8 +371,19 @@
                 vm.option.search = $('#searchUnicomOrderInput').val();
             else
                 vm.option.search = "全部";
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetPageByOption(vm);
+            vm.flush();
+
+        });
+
+        $('#flushButton').click(function () {
+            vm.option.state = "已完工";
+            vm.option.verify = "尚未验收";
+            vm.option.savedata = "全部";
+            vm.option.search = "全部";
+            $("#optionVerifyDefault").nextAll().removeClass("active");
+            $("#optionVerifyDefault").prevAll().removeClass("active");
+            $("#optionVerifyDefault").addClass("active");
+            vm.flush();
         });
 
 

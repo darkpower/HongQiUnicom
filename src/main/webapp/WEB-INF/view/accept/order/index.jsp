@@ -59,7 +59,7 @@
             <div id="tableData" class="col-xs-12 col-sm-9">
 
                 <div class="col-sm-3">
-
+                    <input type="button" id="flushButton" class="btn btn-default" value="刷新"/>
                 </div>
                 <div class="col-sm-offset-5 col-sm-4 btn-group text-right">
                     <div class="input-group">
@@ -87,7 +87,7 @@
                         <tr ms-for="($index, $unicomOrder) in @unicomOrders">
                             <td>{{$unicomOrder.unicomOrderDate | date('yyyy-MM-dd')}}</td>
                             <td>{{$unicomOrder.unicomOrderType == null ? "" : $unicomOrder.unicomOrderType.unicomOrderTypeName }}</td>
-                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName | truncate(5, '…')  }}</td>
+                            <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerName | truncate(5, '…') }}</td>
                             <td>{{$unicomOrder.customer == null ? "" : $unicomOrder.customer.customerTelphone }}</td>
                             <td>{{$unicomOrder.staff == null ? "" : $unicomOrder.staff.staffName }}</td>
                             <td class="text-right">
@@ -115,7 +115,7 @@
 
                 <div class="optionSwitch list-group" style="margin-top: 0px; margin-bottom: 20px;">
                     <a class="list-group-item" state="全部">全部</a>
-                    <a class="list-group-item active" state="未完工">未完工</a>
+                    <a id="optionStateDefault" class="list-group-item active" state="未完工">未完工</a>
                     <a class="list-group-item" state="已完工">已完工</a>
                     <a class="list-group-item" state="留单">留单</a>
                 </div>
@@ -206,7 +206,7 @@
                                         <tbody>
                                         <tr ms-for="($index, $business) in @unicomOrder.businesses">
                                             <td>{{$business.businessDate | date('yy-MM-dd hh:mm:ss') }}</td>
-                                            <td>{{$business.businessSerialNumber | trim()  }}</td>
+                                            <td>{{$business.businessSerialNumber | trim() }}</td>
                                             <td>{{$business.businessType.businessTypeName }}</td>
                                             <td>{{$business.businessAccount }}</td>
                                             <td>{{$business.businessUserName }}</td>
@@ -251,6 +251,8 @@
     $(function () {
 
 
+
+
         //初始化分页
         $("#page").bootstrapPaginator({
             bootstrapMajorVersion: 3,
@@ -287,7 +289,7 @@
                 state: "未完工",
                 verify: "全部",
                 savedata: "全部",
-                search : "全部"
+                search: "全部"
             },
             page: {
                 nowPage: 1,
@@ -302,14 +304,18 @@
             businesses: [],
             openModal: function (unicomOrderId) {
                 UnicomOrder.ajaxGetEntityById(unicomOrderId, vm);
+            },
+            flush: function () {
+                UnicomOrder.ajaxGetListByOption(vm);
+                UnicomOrder.ajaxGetPageByOption(vm);
+                $("#page").bootstrapPaginator("show", 1);
+                avalon.scan(document.body);
             }
         });
-        UnicomOrder.ajaxGetListByOption(vm);
-        UnicomOrder.ajaxGetPageByOption(vm);
         Staff.ajaxGetSelectList(vm);
         UnicomOrderType.ajaxGetSelectList(vm);
         UnicomOrderTag.ajaxGetSelectList(vm);
-        avalon.scan(document.body);
+        vm.flush();
 
 
         $('.optionSwitch a').click(function () {
@@ -318,14 +324,11 @@
             $(this).addClass("active");
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
             vm.page.nowPage = 1;
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetPageByOption(vm);
+            vm.flush();
         });
 
         $('#updateUnicomOrderButton').click(function () {
             UnicomOrder.ajaxModifyEntity(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetListByOption(vm);
         });
 
         $('#exportExcelButton').click(function () {
@@ -340,11 +343,19 @@
                 vm.option.search = $('#searchUnicomOrderInput').val();
             else
                 vm.option.search = "全部";
-            UnicomOrder.ajaxGetListByOption(vm);
-            UnicomOrder.ajaxGetPageByOption(vm);
+            vm.flush();
         });
 
-
+        $('#flushButton').click(function () {
+            vm.option.state = "未完工";
+            vm.option.verify = "全部";
+            vm.option.savedata = "全部";
+            vm.option.search = "全部";
+            $("#optionStateDefault").nextAll().removeClass("active");
+            $("#optionStateDefault").prevAll().removeClass("active");
+            $("#optionStateDefault").addClass("active");
+            vm.flush();
+        });
 
 
     });

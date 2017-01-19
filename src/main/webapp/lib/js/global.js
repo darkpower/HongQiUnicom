@@ -470,6 +470,7 @@ function UnicomOrder() {
             data: JSON.stringify(vm.unicomOrder),
             success: function (data) {
                 alert("success");
+                vm.flush();
             },
             error: function () {
                 alert("error");
