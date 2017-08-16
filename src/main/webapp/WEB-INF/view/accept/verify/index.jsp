@@ -210,7 +210,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="unicomOrderMistakeDescription" class="col-sm-2 control-label">差错明细</label>
-                                <div class="col-sm-4">
+                                <div class="col-sm-10">
                                     <input type="text" class="form-control" id="unicomOrderMistakeDescription"
                                            ms-duplex="@unicomOrder.unicomOrderMistakeDescription">
                                 </div>
@@ -333,7 +333,6 @@
             flush: function () {
                 UnicomOrder.ajaxGetListByOption(vm);
                 UnicomOrder.ajaxGetPageByOption(vm);
-                $("#page").bootstrapPaginator("show", 1);
                 avalon.scan(document.body);
             }
 
@@ -352,6 +351,7 @@
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
             vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
             vm.page.nowPage = 1;
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 
@@ -371,6 +371,7 @@
                 vm.option.search = $('#searchUnicomOrderInput').val();
             else
                 vm.option.search = "全部";
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
 
         });
@@ -383,6 +384,7 @@
             $("#optionVerifyDefault").nextAll().removeClass("active");
             $("#optionVerifyDefault").prevAll().removeClass("active");
             $("#optionVerifyDefault").addClass("active");
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 

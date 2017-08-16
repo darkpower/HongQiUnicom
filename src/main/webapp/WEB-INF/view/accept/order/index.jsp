@@ -308,7 +308,6 @@
             flush: function () {
                 UnicomOrder.ajaxGetListByOption(vm);
                 UnicomOrder.ajaxGetPageByOption(vm);
-                $("#page").bootstrapPaginator("show", 1);
                 avalon.scan(document.body);
             }
         });
@@ -324,6 +323,7 @@
             $(this).addClass("active");
             vm.option.state = $(this).attr("state") != null ? $(this).attr("state") : vm.option.state;
             vm.page.nowPage = 1;
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 
@@ -343,6 +343,7 @@
                 vm.option.search = $('#searchUnicomOrderInput').val();
             else
                 vm.option.search = "全部";
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 
@@ -351,6 +352,7 @@
             vm.option.verify = "全部";
             vm.option.savedata = "全部";
             vm.option.search = "全部";
+            $("#page").bootstrapPaginator("show", 1);
             $("#optionStateDefault").nextAll().removeClass("active");
             $("#optionStateDefault").prevAll().removeClass("active");
             $("#optionStateDefault").addClass("active");

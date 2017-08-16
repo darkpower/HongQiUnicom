@@ -414,7 +414,6 @@
             flush: function () {
                 UnicomOrder.ajaxGetListByOption(vm);
                 UnicomOrder.ajaxGetPageByOption(vm);
-                $("#page").bootstrapPaginator("show", 1);
                 avalon.scan(document.body);
             }
         });
@@ -432,6 +431,7 @@
             vm.option.verify = $(this).attr("verify") != null ? $(this).attr("verify") : vm.option.verify;
             vm.option.savedata = $(this).attr("savedata") != null ? $(this).attr("savedata") : vm.option.savedata;
             vm.page.nowPage = 1;
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 
@@ -445,6 +445,7 @@
                 vm.option.search = $('#searchUnicomOrderInput').val();
             else
                 vm.option.search = "全部";
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 
@@ -456,6 +457,7 @@
             $("#optionSavedataDefault").nextAll().removeClass("active");
             $("#optionSavedataDefault").prevAll().removeClass("active");
             $("#optionSavedataDefault").addClass("active");
+            $("#page").bootstrapPaginator("show", 1);
             vm.flush();
         });
 
