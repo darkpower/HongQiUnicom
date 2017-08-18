@@ -7,12 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="../favicon.ico">
 
 
-    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="../lib/css/global.css" />
 </head>
 <body>
 
@@ -32,8 +32,8 @@
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <li class="active"><a href="/">首页</a></li>
-                    <li><a href="/Store/">店铺管理</a></li>
+                    <li><a href="/">首页</a></li>
+                    <li class="active"><a href="/Store/">店铺管理</a></li>
                     <%--<li><a href="/Task/">沃店考核</a></li>--%>
                     <%--<li><a href="/ERP/">进销存</a></li>--%>
                     <%--<li><a href="/Accept/">业务受理明细</a></li>--%>
@@ -60,71 +60,71 @@
                 <p class="pull-right visible-xs">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
                 </p>
-                <div class="jumbotron">
-                    <h1>XXXXXXXXXXXXXXX</h1>
-                    <p>xxxxxxxxxx</p>
-                </div>
+                <%--<div class="jumbotron">--%>
+                    <%--<h1>XXXXXXXXXXXXXXX</h1>--%>
+                    <%--<p>xxxxxxxxxx</p>--%>
+                <%--</div>--%>
                 <div class="row">
                     <div class="col-xs-6 col-lg-4">
-                        <h2>XXXXXXXXXXXXXXX</h2>
-                        <p>
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                        </p>
-                        <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
+                        <div class="jumbotron" style="padding: 20px;">
+                            <h2>万宝智能数码</h2>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：吉林剧场电脑城副1层1018B</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：移动号卡，移动宽带</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：刘国军，贾学志</p>
+                            <p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>
+                        </div>
                     </div>
                     <div class="col-xs-6 col-lg-4">
-                        <h2>XXXXXXXXXXXXXXX</h2>
-                        <p>
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                        </p>
-                        <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
+                        <div class="jumbotron" style="padding: 20px;">
+                            <h2>森清通讯</h2>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：吉丰公路红旗营业厅</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：联通号卡，联通宽带</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：葛玉杰，王营</p>
+                            <p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>
+                        </div>
                     </div>
                     <div class="col-xs-6 col-lg-4">
-                        <h2>XXXXXXXXXXXXXXX</h2>
-                        <p>
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                        </p>
-                        <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
+                        <div class="jumbotron" style="padding: 20px;">
+                            <h2>宝佳数码</h2>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：星光江城星光营业厅</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：电信号卡，电信宽带</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：待定</p>
+                            <p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>
+                        </div>
                     </div>
-                    <div class="col-xs-6 col-lg-4">
-                        <h2>XXXXXXXXXXXXXXX</h2>
-                        <p>
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                        </p>
-                        <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <h2>XXXXXXXXXXXXXXX</h2>
-                        <p>
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                        </p>
-                        <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
-                    </div><!--/.col-xs-6.col-lg-4-->
-                    <div class="col-xs-6 col-lg-4">
-                        <h2>XXXXXXXXXXXXXXX</h2>
-                        <p>
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                            xxxxxxxxxx  <br />
-                        </p>
-                        <p><a class="btn btn-default" href="#" role="button">查看详情</a></p>
-                    </div>
+                    <%--<div class="col-xs-6 col-lg-4">--%>
+                        <%--<h2>XXXXXXXXXXXXXXX</h2>--%>
+                        <%--<p>--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                        <%--</p>--%>
+                        <%--<p><a class="btn btn-default" href="#" role="button">查看详情</a></p>--%>
+                    <%--</div><!--/.col-xs-6.col-lg-4-->--%>
+                    <%--<div class="col-xs-6 col-lg-4">--%>
+                        <%--<h2>XXXXXXXXXXXXXXX</h2>--%>
+                        <%--<p>--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                        <%--</p>--%>
+                        <%--<p><a class="btn btn-default" href="#" role="button">查看详情</a></p>--%>
+                    <%--</div><!--/.col-xs-6.col-lg-4-->--%>
+                    <%--<div class="col-xs-6 col-lg-4">--%>
+                        <%--<h2>XXXXXXXXXXXXXXX</h2>--%>
+                        <%--<p>--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                            <%--xxxxxxxxxx  <br />--%>
+                        <%--</p>--%>
+                        <%--<p><a class="btn btn-default" href="#" role="button">查看详情</a></p>--%>
+                    <%--</div>--%>
                 </div>
             </div>
 
@@ -160,9 +160,9 @@
 
 <!-- javascript -->
 
-<script src="./lib/jquery/jquery.min.js"></script>
-<script src="./lib/bootsrtap/js/bootstrap.min.js"></script>
-<script src="./lib/avalon2/avalon.js"></script>
+<script src="../lib/jquery/jquery.min.js"></script>
+<script src="../lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="../lib/avalon2/avalon.js"></script>
 
 </body>
 </html>

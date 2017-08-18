@@ -8,11 +8,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
-
-
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./lib/bootstrap/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="./css/global.css" />
+    <link rel="stylesheet" href="./lib/css/global.css" />
 </head>
 <body>
 
@@ -161,7 +159,7 @@
 <!-- javascript -->
 
 <script src="./lib/jquery/jquery.min.js"></script>
-<script src="./lib/bootsrtap/js/bootstrap.min.js"></script>
+<script src="./lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="./lib/avalon2/avalon.js"></script>
 
 </body>
