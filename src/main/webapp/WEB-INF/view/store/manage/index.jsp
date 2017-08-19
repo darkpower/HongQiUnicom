@@ -10,9 +10,9 @@
     <link rel="icon" href="../favicon.ico">
 
 
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="../lib/bootstrap/css/bootstrap-theme.min.css" />
-    <link rel="stylesheet" href="../lib/css/global.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap-theme.min.css" />
+    <link rel="stylesheet" href="/lib/css/global.css" />
 </head>
 <body>
 
@@ -60,41 +60,38 @@
                 <p class="pull-right visible-xs">
                     <button type="button" class="btn btn-primary btn-xs" data-toggle="offcanvas">Toggle nav</button>
                 </p>
-                <%--<div class="jumbotron">--%>
-                    <%--<h1>XXXXXXXXXXXXXXX</h1>--%>
-                    <%--<p>xxxxxxxxxx</p>--%>
-                <%--</div>--%>
+                <div class="jumbotron">
+                    <h1>万宝数码</h1>
+                    <p>地址：吉林剧场电脑城副1层1018B</p>
+                </div>
                 <div class="row">
                     <div class="col-xs-6 col-lg-4">
                         <div class="jumbotron" style="padding: 20px;">
-                            <h2>万宝智能数码</h2>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：吉林剧场电脑城副1层1018B</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：移动号卡，移动宽带</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：刘国军，贾学志</p>
-                            <p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>
+                            <h2>基建装修</h2>
+                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">总费用：xxxxx</p>
+                            <p><a class="btn btn-default pull-right" href="#" role="button">查看详细</a></p>
                         </div>
                     </div>
-                    <div class="col-xs-6 col-lg-4">
-                        <div class="jumbotron" style="padding: 20px;">
-                            <h2>森清通讯</h2>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：吉丰公路红旗营业厅</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：联通号卡，联通宽带</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：葛玉杰，王营</p>
-                            <p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>
-                        </div>
-                    </div>
-                    <div class="col-xs-6 col-lg-4">
-                        <div class="jumbotron" style="padding: 20px;">
-                            <h2>宝佳数码</h2>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：星光江城星光营业厅</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：电信号卡，电信宽带</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>
-                            <p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：待定</p>
-                            <p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>
-                        </div>
-                    </div>
+                    <%--<div class="col-xs-6 col-lg-4">--%>
+                        <%--<div class="jumbotron" style="padding: 20px;">--%>
+                            <%--<h2>森清通讯</h2>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：吉丰公路红旗营业厅</p>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：联通号卡，联通宽带</p>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：葛玉杰，王营</p>--%>
+                            <%--<p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
+                    <%--<div class="col-xs-6 col-lg-4">--%>
+                        <%--<div class="jumbotron" style="padding: 20px;">--%>
+                            <%--<h2>宝佳数码</h2>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">地址：星光江城星光营业厅</p>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">权限：电信号卡，电信宽带</p>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">主营：手机销售，号卡，宽带</p>--%>
+                            <%--<p style="margin-top: 20px; margin-bottom: 20px; font-size: 14px;">人员：待定</p>--%>
+                            <%--<p><a class="btn btn-default" href="#" role="button">进入店铺</a></p>--%>
+                        <%--</div>--%>
+                    <%--</div>--%>
                     <%--<div class="col-xs-6 col-lg-4">--%>
                         <%--<h2>XXXXXXXXXXXXXXX</h2>--%>
                         <%--<p>--%>
